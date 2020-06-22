@@ -1,0 +1,555 @@
+/*================ Variable ================*/
+/*============================================================================
+  Grid Breakpoints and Class Names
+    - Do not change the variable names
+    - Breakpoint pixel values are used in the window.theme.breakpoints object
+    - These values are hard-copied within `search.js` and must be kept in sync!
+==============================================================================*/
+$grid-medium: 750px;
+$grid-large: 990px;
+$grid-widescreen: 1400px;
+$grid-gutter: 30px;
+$grid-gutter-mobile: 22px;
+
+$small: 'small';
+$medium: 'medium';
+$medium-down: 'medium-down';
+$medium-up: 'medium-up';
+$large: 'large';
+$large-down: 'large-down';
+$large-up: 'large-up';
+$widescreen: 'widescreen';
+
+/*============================================================================
+  Generate breakpoint-specific column widths and push classes
+    - Default column widths: $grid-breakpoint-has-widths: ($small, $medium-up);
+    - Default is no push classes
+==============================================================================*/
+$grid-breakpoint-has-widths: ($small, $medium-up);
+$grid-breakpoint-has-push: ($small, $medium-up);
+
+/*================ Color Variables ================*/
+
+// Text colors
+$color-text: #0a0a0a;
+$color-text-shadow: rgba(0,0,0,0.4);
+$color-body-text: #8e9398;
+$color-sale-text: #0a0a0a;
+$color-small-button-text-border: #3d4246;
+$color-text-field: #ffffff;
+$color-text-field-text: #000;
+$color-navigation-text: #0a0a0a;
+
+// Button colors
+$color-btn-primary: #d8d8d8;
+$color-btn-primary-text: #060606;
+
+// Hover and focus states
+$color-text-focus: adaptiveColor(#0a0a0a, 10.0);
+$color-overlay-text-focus: adaptiveColor(#fffcfc, 252.9);
+$color-btn-primary-focus: adaptiveColor(#d8d8d8, 216.0);
+$color-btn-social-focus: adaptiveColor(#e8e9eb, 232.93);
+$color-small-button-text-border-focus: adaptiveColor(#3d4246, 64.96);
+$predictive-search-focus: adaptiveBackgroundColor(#fff, 255.0);
+
+// Link buttons and secondary cta
+$color-link: $color-body-text;
+$opacity-link-hover: 0.6;
+
+// Transitions
+$transition-duration-fast: 100ms;
+$transition-duration: 250ms;
+$transition-duration-slow: 400ms;
+$transition-link-hover: $transition-duration-fast cubic-bezier(0.44, 0.13, 0.48, 0.87);
+
+// Backgrounds
+$color-body: #fff;
+$color-bg: #fff;
+$color-drawer-background: rgba(0, 0, 0, 0.6);
+$color-bg-alt: rgba(142, 147, 152, 0.05);
+
+// Overlays
+$color-overlay-title-text: #fffcfc;
+$color-image-overlay: #ffffff;
+$opacity-image-overlay: 0.4;;
+
+
+  ;
+
+$hover-overlay-opacity: 0.8;
+
+// Border colors
+$color-border: #e8e9eb;
+$color-border-form: #949494;
+
+// Helper colors for form error states
+$color-disabled: #f4f4f4;
+$color-disabled-border: #f4f4f4;
+$color-error: #d20000;
+$color-error-message-list: #651818;
+$color-error-bg: #fff8f8;
+$color-success: #1F873D;
+$color-success-bg: #f8fff9;
+
+// Forms
+$color-form-text: #333;
+$color-error-input-text: $color-error;
+$input-padding-top-bottom: 10px;
+$input-padding-left-right: 18px;
+$input-padding-top-bottom-small: 8px;
+$input-padding-left-right-small: 15px;
+$input-group-height: 46px;
+$input-group-height-small: 42px;
+$input-border-width: 1px;
+
+// Social icons
+$color-facebook: #3b5998;
+$color-twitter: #00aced;
+$color-pinterest: #cb2027;
+
+/*================ Sizing Variables ================*/
+$width-site: 1200px;
+$gutter-site: 55px;
+$gutter-site-mobile: 22px;
+$section-spacing: 55px;
+$section-spacing-small: 35px;
+$border-radius: 2px;
+$icon-size: 20px;
+$connected-submit-size: $icon-size * 2.5;
+
+/*================ Footer Variables ================*/
+$footer-spacing-extra-small: 5px;
+$footer-spacing-small: 15px;
+$footer-wrapper-spacing: 18px;
+$footer-hr-bottom-spacing: 20px;
+$footer-spacing-medium: 25px;
+$footer-spacing-large: 45px;
+
+/*================ Z-Index ================*/
+$z-index-base: 1;
+$z-index-dropdown : 7;
+$z-index-sub-nav: 8;
+$z-index-drawer: 9;
+$z-index-announcement-bar: 10;
+$z-index-mobile-nav: 11;
+$z-index-search-bar: 999;
+$z-index-predictive-search-wrapper: 1000;
+$z-index-skip-to-content: 10000; // really high to be safe of app markup
+
+/*================ SVG ================*/
+$svg-select-icon: #{'//cdn.shopify.com/s/files/1/0318/4839/8907/t/1/assets/ico-select.svg?v=3923620043948533822'};
+
+/*================ Drawers ================*/
+$transition-drawer: all $transition-duration-slow cubic-bezier(0.29, 0.63, 0.44, 1);
+
+/*================ Hero Slider ================*/
+$color-slideshow-arrows: #000;
+$color-slideshow-dots: #fff;
+
+/*================ Typography ================*/
+
+
+
+
+@font-face {
+  font-family: Oswald;
+  font-weight: 600;
+  font-style: normal;
+  src: url("https://fonts.shopifycdn.com/oswald/oswald_n6.12ae05b08a526523f8379ba6e10fde2140b133ea.woff2?h1=aXNoa2FyLmNvbQ&hmac=8d72da3d94edc8b424a6aa2234e8ff07161d7114f6f45f1ae3c01d724e1272e3") format("woff2"),
+       url("https://fonts.shopifycdn.com/oswald/oswald_n6.1f460fc9ad98670d0370772496961d620bdca9f0.woff?h1=aXNoa2FyLmNvbQ&hmac=c219e5b9a78c6dfa9b92cc5a6ea3654514d5569a0bc24b87127face9351acf12") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville No 2";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://fonts.shopifycdn.com/baskerville_no_2/baskervilleno2_n4.58c0ec927a99385b0402747b6c157538f4cdc10c.woff2?h1=aXNoa2FyLmNvbQ&hmac=82c5633ea6336889e6a623de173aabb59734e6ac292c39f36025d85716b19259") format("woff2"),
+       url("https://fonts.shopifycdn.com/baskerville_no_2/baskervilleno2_n4.52abb8e92f66631b3778eb51fda69dca851c7d70.woff?h1=aXNoa2FyLmNvbQ&hmac=5edaf27588a6b0a87cc63e76f79269c7871f945ba15b215037a3d22c4ca71f3e") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville No 2";
+  font-weight: 700;
+  font-style: normal;
+  src: url("https://fonts.shopifycdn.com/baskerville_no_2/baskervilleno2_n7.501d0f428fd577e1d91e4e89fce6e8f5a00ac5f6.woff2?h1=aXNoa2FyLmNvbQ&hmac=59c8229fe2f8bdfa168e9056422eadea90964d9891aed3ff0eb24a9433994aeb") format("woff2"),
+       url("https://fonts.shopifycdn.com/baskerville_no_2/baskervilleno2_n7.1186e0187ddc9e28887aaf3d51c6a1d3628fb68a.woff?h1=aXNoa2FyLmNvbQ&hmac=50806cfcad851a9964dbf9a310d7c7062748f9d1e69298b563d8b931acd18653") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville No 2";
+  font-weight: 700;
+  font-style: normal;
+  src: url("https://fonts.shopifycdn.com/baskerville_no_2/baskervilleno2_n7.501d0f428fd577e1d91e4e89fce6e8f5a00ac5f6.woff2?h1=aXNoa2FyLmNvbQ&hmac=59c8229fe2f8bdfa168e9056422eadea90964d9891aed3ff0eb24a9433994aeb") format("woff2"),
+       url("https://fonts.shopifycdn.com/baskerville_no_2/baskervilleno2_n7.1186e0187ddc9e28887aaf3d51c6a1d3628fb68a.woff?h1=aXNoa2FyLmNvbQ&hmac=50806cfcad851a9964dbf9a310d7c7062748f9d1e69298b563d8b931acd18653") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville No 2";
+  font-weight: 400;
+  font-style: italic;
+  src: url("https://fonts.shopifycdn.com/baskerville_no_2/baskervilleno2_i4.bcee02d0935a190b0d96022b92f6115491cb54ee.woff2?h1=aXNoa2FyLmNvbQ&hmac=5f677ffcb8bc76dfc777d08e58b855469af9ec8969e5ed56fc15be3340af506a") format("woff2"),
+       url("https://fonts.shopifycdn.com/baskerville_no_2/baskervilleno2_i4.27fffd0d013cc42bc13fbfae0420bf4eda91ec41.woff?h1=aXNoa2FyLmNvbQ&hmac=d2ec84aaed33147aeeeab251487caf40940eacf0c65487843f8dc2c63826c469") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville No 2";
+  font-weight: 700;
+  font-style: italic;
+  src: url("https://fonts.shopifycdn.com/baskerville_no_2/baskervilleno2_i7.1510826f9f73f447c1e578646a92f0a2359c4eef.woff2?h1=aXNoa2FyLmNvbQ&hmac=f763508dffad3aafa05c0ae3356cf2116705b92ca89dd1c6cee453d171548a96") format("woff2"),
+       url("https://fonts.shopifycdn.com/baskerville_no_2/baskervilleno2_i7.b2cb8392a34ef8b7c71e5f54f4ea0a8467177ee7.woff?h1=aXNoa2FyLmNvbQ&hmac=c41fbbb6ea2dbb42e62afc888029ce405286bcac154b9136c35d94a3c34a6cc9") format("woff");
+}
+
+
+$font-weight-body--bold: 700;
+$font-weight-body--bolder: 700;
+
+$font-stack-header: Oswald, sans-serif;
+$font-style-header: normal;
+$font-weight-header: 600;
+
+$font-stack-body: "Baskerville No 2", serif;
+$font-style-body: normal;
+$font-weight-body: 400;
+
+$font-size-header: 25 * 1px;
+
+$font-size-base: 16px; // Henceforth known as 1em
+
+$font-stack-cart-notification: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$font-size-mobile-input: 16px; // min 16px to prevent zooming
+
+/*================ Gift Cards ================*/
+$color-giftcard-tooltip-fallback: #333;
+$color-giftcard-light: #fff;
+$color-giftcard-tooltip: rgba(0, 0, 0, 0.9);
+$color-giftcard-disabled: #999;
+$color-giftcard-small-text: #b3b3b3;
+$color-giftcard-shadow: rgba(0, 0, 0, 0.1);
+$color-giftcard-print-bg: #fff;
+$color-giftcard-print: #000;
+$color-giftcard-bg: #e95e61;
+
+/*================ Z-index ================*/
+$z-index-giftcard-image: 2;
+$z-index-giftcard-corners: 3;
+$z-index-giftcard-tooltip: 4;
+$z-index-giftcard-code: 5;
+
+/*================ Product video ================*/
+
+$color-video-bg: #f2f2f2;
+
+
+
+/*================ #Giftcard Template ================*/
+
+.giftcard__apple-wallet-image {
+  display: block;
+  margin: 0 auto;
+}
+
+/*================ Print Giftcard Styles ================*/
+@media print {
+  @page {
+    margin: 0.5cm;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  html,
+  body {
+    background-color: $color-giftcard-light;
+    color: $color-giftcard-print;
+  }
+
+  .giftcard__print-link,
+  .giftcard__apple-wallet {
+    display: none;
+  }
+}
+
+/*================ Custom Giftcard Styles ================*/
+.template-giftcard {
+  background: $color-body;
+  padding: 0 ($gutter-site-mobile / 2);
+
+  .site-header__logo {
+    padding-left: 0;
+  }
+
+  .site-header__logo-image {
+    max-width: 200px;
+  }
+
+  .wrapper {
+    max-width: 588px;
+
+    img,
+    object,
+    iframe {
+      max-width: 100%;
+    }
+  }
+}
+
+.giftcard-wrapper {
+  max-width: 31rem;
+  margin: 0 auto;
+}
+
+.giftcard__header {
+  margin-top: $gutter-site * 2;
+}
+
+.giftcard__tag--active {
+  opacity: 0.6;
+}
+
+/*================ Gift Card image ================*/
+.giftcard__wrap {
+  position: relative;
+  margin: ($gutter-site / 2) ($gutter-site / 2) $gutter-site;
+  background-color: $color-giftcard-bg;
+  border-radius: 10px;
+
+  img {
+    position: relative;
+    display: block;
+    border-radius: 10px;
+    z-index: $z-index-giftcard-image;
+  }
+
+  // White corner caps that overlap gift card image
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 47px; // asset width
+    height: 47px; // asset width
+    z-index: $z-index-giftcard-corners;
+  }
+
+  &::before {
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE3LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNDdweCIgaGVpZ2h0PSI0N3B4IiB2aWV3Qm94PSIwIDAgNDcgNDciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDQ3IDQ3IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBvcGFjaXR5PSIwLjEiPgoJCTxwYXRoIGQ9Ik00NC41ODYsMUwxLDQ0LjU4NlYxMGMwLTQuOTYzLDQuMDM3LTksOS05SDQ0LjU4NiBNNDcsMEgxMEM0LjQ3NywwLDAsNC40NzcsMCwxMHYzN0w0NywwTDQ3LDB6Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNDQuNTg2LDFMMSw0NC41ODZWMTBjMC00Ljk2Myw0LjAzNy05LDktOUg0NC41ODYiLz4KCTwvZz4KPC9nPgo8L3N2Zz4K') 0 0 no-repeat;
+    top: -1px;
+    left: -1px;
+  }
+
+  &::after {
+    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE3LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNDdweCIgaGVpZ2h0PSI0N3B4IiB2aWV3Qm94PSIwIDAgNDcgNDciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDQ3IDQ3IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBvcGFjaXR5PSIwLjEiPgoJCTxwYXRoIGQ9Ik0yLjQxNCw0Nkw0NiwyLjQxNFYzN2MwLDQuOTYzLTQuMDM3LDktOSw5SDIuNDE0IE0wLDQ3aDM3YzUuNTIzLDAsMTAtNC40NzcsMTAtMTBWMEwwLDQ3TDAsNDd6Ii8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMi40MTQsNDZMNDYsMi40MTRWMzdjMCw0Ljk2My00LjAzNyw5LTksOUgyLjQxNCIvPgoJPC9nPgo8L2c+Cjwvc3ZnPgo=') 0 0 no-repeat;
+    bottom: -1px;
+    right: -1px;
+  }
+}
+
+/*================ Gift card code ================*/
+.giftcard__code {
+  position: absolute;
+  text-align: center;
+  width: 90%;
+  z-index: $z-index-giftcard-code;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.giftcard__code--medium {
+  font-size: 0.875em;
+}
+
+.giftcard__code--small {
+  font-size: 0.75em;
+}
+
+.giftcard__code__inner {
+  width: 100%;
+  display: inline-block;
+  vertical-align: baseline;
+  background-color: $color-giftcard-light;
+  padding: 0.5em;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 0 0 1px $color-giftcard-shadow;
+  box-shadow: 0 0 0 1px $color-giftcard-shadow;
+}
+
+.giftcard__code__text {
+  font-size: 4vw;
+  text-transform: uppercase;
+  border: 1px dashed $color-border-form;
+  padding: 0.4em 0.5em;
+  display: inline-block;
+  vertical-align: baseline;
+  line-height: 1;
+  text-align: center;
+  width: 100%;
+
+  &.disabled {
+    color: $color-giftcard-disabled;
+    text-decoration: line-through;
+  }
+
+  @media screen and (min-width: 600px) {
+    font-size: 24px; // 600px * 0.04
+  }
+}
+
+/*================ Gift card amount ================*/
+.giftcard__amount {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: $color-giftcard-light;
+  font-size: 8vw;
+  line-height: 1.2;
+  padding: 10px;
+  z-index: $z-index-giftcard-code;
+
+  strong {
+    display: block;
+    text-shadow: 2px 2px 0 $color-giftcard-shadow;
+  }
+
+  @media screen and (min-width: 600px) {
+    font-size: 48px; // 600px * 0.08
+  }
+}
+
+.giftcard__amount--medium {
+  font-size: 2em;
+}
+
+/*================ Tooltip ================*/
+.giftcard__tooltip {
+  display: block;
+  position: absolute;
+  top: -50%;
+  right: 50%;
+  margin-top: 16px;
+  z-index: $z-index-giftcard-tooltip;
+  color: $color-giftcard-light;
+  text-align: center;
+  white-space: nowrap;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 100%;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    margin-left: -5px;
+    margin-bottom: -5px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 5px solid $color-giftcard-tooltip-fallback;
+    border-top: 5px solid $color-giftcard-tooltip;
+  }
+}
+
+.giftcard__tooltip-label {
+  display: block;
+  position: relative;
+  right: -50%;
+  border: 0;
+  border-radius: 4px;
+  background-color: $color-giftcard-tooltip-fallback;
+  background-color: $color-giftcard-tooltip;
+  min-height: 14px;
+  font-size: 12px;
+  text-decoration: none;
+  line-height: 16px;
+  text-shadow: none;
+  padding: 0.5em 0.75em;
+  margin-left: 0.25em;
+
+  small {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: $color-giftcard-small-text;
+    font-size: 0.875em;
+  }
+}
+
+.giftcard-action-list {
+  text-align: center;
+}
+
+.giftcard-action-list__item {
+  margin: 0 0 ($section-spacing-small / 1.8);
+}
+
+/*================ QR code (print only) ================*/
+.giftcard__qr-code {
+  img {
+    padding: 0;
+    border: 1px solid $color-border;
+    border-radius: 4px;
+    margin: 0 auto $gutter-site;
+  }
+}
+
+/*================ Medium-down width ================*/
+@media screen and (max-width: 580px) {
+  .giftcard {
+    padding-top: $gutter-site / 2;
+  }
+
+  .print-link {
+    display: none;
+  }
+}
+
+/*================ Small width ================*/
+@media screen and (max-width: 400px) {
+  .giftcard__wrap::before,
+  .giftcard__wrap::after {
+    display: none;
+  }
+
+  .giftcard__code {
+    font-size: 0.75em;
+  }
+
+  .giftcard__code--medium {
+    font-size: 0.65em;
+  }
+
+  .giftcard__code--small {
+    font-size: 0.55em;
+  }
+}
+
+
+/*============================================================================
+  #Print Styles
+==============================================================================*/
+
+@media print {
+  .giftcard__actions,
+  .giftcard__wrap::before,
+  .giftcard__wrap::after,
+  .giftcard__tooltip {
+    display: none;
+  }
+
+  .shop-url {
+    display: block;
+    text-align: center;
+  }
+
+  .qr-code {
+    display: block;
+  }
+
+  .print-link {
+    display: none;
+  }
+  .giftcard__code {
+    margin-top: -90px;
+  }
+}
