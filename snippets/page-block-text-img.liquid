@@ -1,0 +1,48 @@
+{%- case block.settings.img_size -%}
+	{%- when 'medium' -%}
+	{%- assign img_grid = "half_div_cls" -%}
+	{%- assign text_grid = img_grid -%}
+	{%- when 'large' -%}
+    {%- assign img_grid = "large_left_cls" -%}
+    {%- assign text_grid = "large_right_cls" -%}
+    {%- when 'one-whole' -%}
+    {%- assign img_grid = "hide" -%}
+    {%- assign text_grid = "one-whole image-hide" -%}
+    {%- when 'hide-text' -%}
+    {%- assign img_grid = "one-whole text-hide" -%}
+    {%- assign text_grid = "hide" -%}
+{%- endcase -%}
+<div class="text-img_parent">
+  <div class="wcs_img_wid_text">
+    {%- if img_grid != 'hide' -%}<div class="{{img_grid}} img_grid bg_img_clss verticle_border_bg" {% if block.settings.image != blank %}style="background-image:url({{block.settings.image | img_url:'master'}});"{% endif %}>
+      <div class="img_content">
+        {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}        
+        {%- if block.settings.subtitle != blank or block.settings.title != blank or block.settings.detail != blank -%}<div class="img_text_warpper">
+          {%- if block.settings.subtitle != blank -%}<h3 class="h4 s-subtitle font-normal">{{ block.settings.subtitle }}</h4>{%- endif -%}
+        {%- if block.settings.title != blank -%}<h2 class="h3 s-title text-uppercase">{{ block.settings.title }}</h2>{%- endif -%}
+        {%- if block.settings.detail != blank -%}<div class="detail">{{- block.settings.detail -}}</div>{%- endif -%}
+        </div>{%- endif -%}
+      </div>
+    </div>{%- endif -%}
+    {%- if text_grid != 'hide' -%}<div class="{{text_grid}} text_grid">
+      {%- if img_grid == 'hide' -%}<div class="page-width">{%- endif -%}
+      {%- if block.settings.text_title != blank -%}<h3 class="s-title wc_s-title"><span class="inner_warpper">{{- block.settings.text_title -}}</span></h3>{%- endif -%}
+      <div class="text_grid_warpper">        
+        {%- for i in (1..5) -%}
+        {%- capture title -%}title_{{i}}{%- endcapture -%}
+        {%- capture detail -%}detail_{{i}}{%- endcapture -%}
+        {%- capture readmore_link -%}readmore_link_{{i}}{%- endcapture -%}
+        {%- if block.settings[title] != blank or block.settings[detail] != blank -%}
+        <div class="inner_text">
+          {%- if block.settings[title] != blank -%}<h4>{{block.settings[title]}}</h4>{%- endif -%}
+          {%- if block.settings[detail] != blank -%}<div class="detail">{{block.settings[detail]  }}</div>{%- endif -%}
+          {%- if block.settings[readmore_link] != blank -%}
+          <a class="read_more_btn" href="{{block.settings[readmore_link]}}"  title="{{block.settings[readmore_link] | split:'/' | last | replace:'-',' ' | capitalize }}">Read more +</a>{%- endif -%}
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if img_grid == 'hide' -%}</div>{%- endif -%}
+    </div>{%- endif -%}
+  </div>
+</div>

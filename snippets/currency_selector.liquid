@@ -1,0 +1,68 @@
+{%- assign codes_symbol = "USD_$,EUR_€,GBP_£,CAD_$,ARS_$,AUD_$,BBD_$,BDT_৳,BSD_$,BHD_.د.ب,BRL_R$,BOB_$b,BND_$,BGN_лв,ILS_₪,MMK_K,KYD_$,CLP_$,CNY_¥,COP_$,CRC_₡,HRK_kn,CZK_Kč,DKK_kr,DOP_RD$,XCD_$,EGP_£,XPF_F,FJD_$,GHS_¢,GTQ_Q,GYD_$,GEL_ლ,HKD_$,HUF_Ft,ISK_kr,INR_₹,IDR_Rp,NIS_₪,JMD_J$,JPY_¥,JOD_JD,KZT_лв,KES_KSh,KWD_د.ك,LVL_Ls,LTL_Lt,MXN_$,MYR_RM,MUR_₨,MDL_L,MAD_د.م.,MNT_₮,MZN_MT,ANG_ƒ,NZD_$,NGN_₦,NOK_kr,OMR_﷼,PKR_₨,PYG_Gs,PEN_S/.,PHP_₱,PLN_zł,QAR_﷼,RON_lei,RUB_руб,SAR_﷼,RSD_Дин.,SCR_₨,SGD_$,SYP_£,ZAR_R,KRW_₩,LKR_₨,SEK_kr,CHF_CHF,TWD_NT$,THB_฿,TZS_,TTD_TT$,TRY_₤,UAH_₴,AED_د.إ,UYU_$U,VEF_Bs,VND_₫,ZMK_ZK" | split: ',' -%}
+{%- assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ',' -%}
+{%- assign default_symbol = '' -%}
+{%- for sym in codes_symbol -%}
+{%- if sym contains shop.currency -%}
+{%- assign default_symbol = sym | split:'_' | last -%}
+{%- break -%}
+{%- endif -%}
+{%- endfor -%}
+<ul class="top_bar_nav header-font font-semi-bold">
+  {%- comment -%}<li class="hide">
+    {% comment %}{% assign codes_symbol = "AED_&#1583;.&#1573;,AFN_&#65;&#102;,ALL_&#76;&#101;&#107;,AMD_,ANG_&#402;,AOA_&#75;&#122;,ARS_&#36;,AUD_&#36;,AWG_&#402;,AZN_&#1084;&#1072;&#1085;,BAM_&#75;&#77;,BBD_&#36;,BDT_&#2547;,BGN_&#1083;&#1074;,BHD_.&#1583;.&#1576;,BIF_&#70;&#66;&#117;,BMD_&#36;,BND_&#36;,BOB_&#36;&#98;,BRL_&#82;&#36;,BSD_&#36;,BTN_&#78;&#117;&#46;,BWP_&#80;,BYR_&#112;&#46;,BZD_&#66;&#90;&#36;,CAD_&#36;,CDF_&#70;&#67;,CHF_&#67;&#72;&#70;,CLF_,CLP_&#36;,CNY_&#165;,COP_&#36;,CRC_&#8353;,CUP_&#8396;,CVE_&#36;,CZK_&#75;&#269;,DJF_&#70;&#100;&#106;,DKK_&#107;&#114;,DOP_&#82;&#68;&#36;,DZD_&#1583;&#1580;,EGP_&#163;,ETB_&#66;&#114;,EUR_&#8364;,FJD_&#36;,FKP_&#163;,GBP_&#163;,GEL_&#4314;,GHS_&#162;,GIP_&#163;,GMD_&#68;,GNF_&#70;&#71;,GTQ_&#81;,GYD_&#36;,HKD_&#36;,HNL_&#76;,HRK_&#107;&#110;,HTG_&#71;,HUF_&#70;&#116;,IDR_&#82;&#112;,ILS_&#8362;,INR_&#8377;,IQD_&#1593;.&#1583;,IRR_&#65020;,ISK_&#107;&#114;,JEP_&#163;,JMD_&#74;&#36;,JOD_&#74;&#68;,JPY_&#165;,KES_&#75;&#83;&#104;,KGS_&#1083;&#1074;,KHR_&#6107;,KMF_&#67;&#70;,KPW_&#8361;,KRW_&#8361;,KWD_&#1583;.&#1603;,KYD_&#36;,KZT_&#1083;&#1074;,LAK_&#8365;,LBP_&#163;,LKR_&#8360;,LRD_&#36;,LSL_&#76;,LTL_&#76;&#116;,LVL_&#76;&#115;,LYD_&#1604;.&#1583;,MAD_&#1583;.&#1605;.,MDL_&#76;,MGA_&#65;&#114;,MKD_&#1076;&#1077;&#1085;,MMK_&#75;,MNT_&#8366;,MOP_&#77;&#79;&#80;&#36;,MRO_&#85;&#77;,MUR_&#8360;,MVR_.&#1923;,MWK_&#77;&#75;,MXN_&#36;,MYR_&#82;&#77;,MZN_&#77;&#84;,NAD_&#36;,NGN_&#8358;,NIO_&#67;&#36;,NOK_&#107;&#114;,NPR_&#8360;,NZD_&#36;,OMR_&#65020;,PAB_&#66;&#47;&#46;,PEN_&#83;&#47;&#46;,PGK_&#75;,PHP_&#8369;,PKR_&#8360;,PLN_&#122;&#322;,PYG_&#71;&#115;,QAR_&#65020;,RON_&#108;&#101;&#105;,RSD_&#1044;&#1080;&#1085;&#46;,RUB_&#1088;&#1091;&#1073;,RWF_&#1585;.&#1587;,SAR_&#65020;,SBD_&#36;,SCR_&#8360;,SDG_&#163;,SEK_&#107;&#114;,SGD_&#36;,SHP_&#163;,SLL_&#76;&#101;,SOS_&#83;,SRD_&#36;,STD_&#68;&#98;,SVC_&#36;,SYP_&#163;,SZL_&#76;,THB_&#3647;,TJS_&#84;&#74;&#83;,TJS (guess)TMT_&#109;,TND_&#1583;.&#1578;,TOP_&#84;&#36;,TRY_&#8356;,TTD_TT&#36;,TWD_&#78;&#84;&#36;,TZS_,UAH_&#8372;,UGX_&#85;&#83;&#104;,USD_&#36;,UYU_&#36;&#85;,UZS_&#1083;&#1074;,VEF_&#66;&#115;,VND_&#8363;,VUV_&#86;&#84;,WST_&#87;&#83;&#36;,XAF_&#70;&#67;&#70;&#65;,XCD_&#36;,XDR_,XOF_,XPF_&#70;,YER_&#65020;,ZAR_&#82;,ZMK_&#90;&#75;,ZWL_&#90;&#36;" | split: ',' %}{% endcomment %}
+    <select class="currency-picker header-font font-semi-bold light-color" id="currencies" name="currencies">      
+      {%- assign supported_codes = settings.supported_currencies | split: ' ' -%}
+      <option value="{{ shop.currency }}" selected="selected" {% if default_symbol != blank %}data-symbol="{{ default_symbol }}"{%- endif -%} >{{ shop.currency }}</option>
+      {% for code in supported_codes %}
+      {% if code != shop.currency and codes contains code %}
+      {%- assign symbol = '' -%}
+      {%- for sym in codes_symbol -%}
+      	{%- if sym contains code -%}
+      	{%- assign symbol = sym | split:'_' | last -%}
+      	{%- break -%}
+      	{%- endif -%}
+      {%- endfor -%}
+      <option value="{{ code }}" data-symbol="{%- if symbol != blank -%}{{ symbol }}{%- endif -%}">{{ code }}</option>
+      {% endif %}
+      {% endfor %}
+    </select>    
+  </li>{%- endcomment -%}
+  {%- assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ',' -%}
+  {%- assign supported_codes = settings.supported_currencies | split: ' ' -%}
+  <li class="currency_picker_cls"><a href="#{{- default_symbol -}}" class="selected_currency">{{- default_symbol -}}</a><div class="currency-modal"><div class="currency-container"><ul><li class="currency_li_cls"><a href="#{{ default_symbol }}" data-value="{{- shop.currency -}}" data-symbol="{{ default_symbol }}">{{ default_symbol }}</a></li>
+          {%- for code in supported_codes -%}
+          {%- if code != shop.currency and codes contains code -%}
+          {%- assign symbol = '' -%}
+          {%- for sym in codes_symbol -%}
+          {%- if sym contains code -%}
+          {%- assign symbol = sym | split:'_' | last -%}
+          {%- break -%}
+          {%- endif -%}
+          {%- endfor -%}<li class="currency_li_cls"><a href="#{{- symbol -}}" data-value="{{ code }}" data-currency="{{ code }}" data-symbol="{{- symbol -}}">{{- symbol -}}</a></li>{%- endif -%}{%- endfor -%}</ul></div></div></li></ul>
+
+<script type="text/javascript" defer="defer">$(document).ready(function() { function change_class(){$('.currency_li_cls').removeClass('selected_li');$('.currency_li_cls a').removeClass('selected');var selected_currency = $('#currency-list .disclosure-list__item--current .disclosure-list__option').data('value');$('.currency_li_cls a[data-value="'+selected_currency+'"]').addClass('selected');$('.currency_li_cls a[data-value="'+selected_currency+'"]').parent().addClass('selected_li');$('.currency_picker_cls .selected_currency').text($('.currency_li_cls a[data-value="'+selected_currency+'"]').text());
+                            {%- comment -%}
+//       $('.currency_li_cls a').each(function(){
+//         $(this).removeClass('selected');
+//         var cookie_val = $.cookie("currency");
+//         if($(this).attr('data-value') == cookie_val){
+//           var temp_val = '';
+//           var code = ''
+//           code = ''+$(this).attr('data-value');
+//           $('.currency_picker_cls .selected_currency').text( $(this).data('symbol') );
+//           /*$(".selected_currency").html('<span class="currency-flag selected" data-flag="'+ code +'" aria-hidden="true"></span>' + code);*/          
+//           $(this).addClass('selected');
+//           $(this).parent().addClass('selected_li');
+//           /*$(this).closest('.currency_picker_cls').find('.selected_currency').text($(this).data('symbol'));*/
+//         }
+//         if( $('.currency_picker_cls .selected_currency').length > 0 && ( cookie_val == '' || cookie_val == null ) ){
+//           console.log('ele')
+//           	var default_value = $('.currency_picker_cls .selected_currency').text();
+//             if( $(this).text() == default_value){
+//               $(this).addClass('selected');
+//               $(this).parent().addClass('selected_li');
+//             }
+//           }
+//       });{%- endcomment %}
+    }
+    change_class();$('.currency_li_cls a').click(function(e){e.preventDefault();$(this).closest('.currency-modal').slideUp();var cty_opt = $(this).attr('data-value');$(this).addClass('selected');$('#currency-list .disclosure-list__item .disclosure-list__option[data-value="'+cty_opt+'"]').trigger('click');change_class();});$(document).on('click','.currency_picker_cls .selected_currency',function(){$(this).next().slideToggle();})});</script>

@@ -1,0 +1,170 @@
+{%- case block.settings.height -%}
+  {%- when 'small' -%}
+    {%- assign mobile_height = 175 -%}
+    {%- assign desktop_height = 475 -%}
+  {%- when 'medium' -%}
+    {%- assign mobile_height = 270 -%}
+    {%- assign desktop_height = 650 -%}
+  {%- when 'large' -%}
+    {%- assign mobile_height = 375 -%}
+    {%- assign desktop_height = 775 -%}
+{%- endcase -%}
+
+{%- if block.settings.image == blank -%}
+  {% style %}
+    @media screen and (max-width: 749px) {
+      .video-section-wrapper--{{ section.id }} .video__image {
+        opacity: 0;
+      }
+    }
+  {% endstyle %}
+{%- endif -%}
+<div class="{% if block.settings.full_width %}full-width-video{% else %}page-width{%- endif -%}{% if block.settings.side_image %} d-flex flex-wrap{% endif %}" data-section-id="page-block-{{block.type}}-{{ block.id }}" >
+  
+  {%- if block.settings.video_link != blank -%}
+    <div class="{%- if block.settings.side_image -%}video_side--image_show {% endif %}wc_video_box video-section-wrapper video-section-wrapper--{{ block.settings.height }} video-section-wrapper--min-height
+                {%- if block.settings.style == 'background' %} video-background-wrapper
+                  {%- unless block.settings.show_overlay %} video-background-wrapper--no-overlay{% endunless %}
+                {%- endif %} video-section-wrapper--{{ section.id }}" data-desktop-height="{{ desktop_height }}" data-mobile-height="{{ mobile_height }}">
+      {%- if block.settings.show_overlay -%}<div class="video__overlay"></div>{%- endif -%}
+      <button type="button"
+              class="text-link video-control__close-wrapper
+              {% if block.settings.style == 'background' %} video-control__close-background{% endif %}"
+              data-controls="Video-{{ section.id }}">
+        <span class="video-control video-control__close">
+          {% include 'icon-close' %}
+          <span class="icon__fallback-text">{{ 'sections.video.close' | t: video_title: '[video_title]' }}</span>
+        </span>
+      </button>
+      {%- if block.settings.video_link != blank -%}
+      {%- if block.settings.video_link contains 'vimeo' -%}
+      {%- assign video_id = block.settings.video_link | split: '.com/' -%}
+      {%- assign video_id = video_id[1] | split: '/' | first -%}
+
+      <iframe class="video video--image_with_play" src="https://player.vimeo.com/video/{{ video_id }}?controls=0&autoplay=0&loop=0&playlist={{ video_id }}&autopause=0" 
+              frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" webkitallowfullscreen   mozallowfullscreen allowfullscreen></iframe>
+      {%- else -%}      
+        <div id="Video-{{ section.id }}"
+            class="video{% if block.settings.style == 'background' %} video--background{% endif %}
+            video--{{ block.settings.style }}"
+            data-id="{{ block.settings.video_link.id }}"
+            data-type="{{ block.settings.style }}"
+            data-custom-player="{{ block.settings.show_custom_player }}"
+             ></div>
+      {%- endif -%}
+      <div class="custom_player_div{% if block.settings.video_link contains 'youtube' -%} hide{% endif %}">
+        <div class="progress_bar">
+          <div class="total_pro"></div>
+          <div class="pro-ing"></div>
+        </div>
+        <div class="pp-time_div">
+          <div class="pp-time">
+            <div class="paush-play" data-controls="Video-{{ section.id }}">
+              <img class="playing-video {% if block.settings.video_link contains 'vimeo' %}play-btn-video{% endif %}"
+                   data-vedio-type="{% if block.settings.video_link contains 'vimeo' %}vimeo{% else %}youtube{% endif %}"
+                   src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhbHF1ZV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgNzUuMSA4MC44IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA3NS4xIDgwLjg7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7ZmlsbDpub25lO3N0cm9rZTojRkZGRkZGO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1taXRlcmxpbWl0OjEwO30KPC9zdHlsZT4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxLDc5LjIgMSwxLjcgNzMsNDAuNCAiLz4KPC9zdmc+Cg==" alt="play" />
+              <img class="paush-video" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhbHF1ZV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgNzQgNzkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDc0IDc5OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbGw6bm9uZTtzdHJva2U6I0ZGRkZGRjtzdHJva2Utd2lkdGg6MjtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9Cjwvc3R5bGU+CjxnPgoJPGc+CgkJPHBhdGggY2xhc3M9InN0MCIgZD0iTTQ1LjIsMXY3N0g3M1YxSDQ1LjJ6IE0xLDc4aDI3LjhWMUgxVjc4eiIvPgoJPC9nPgo8L2c+Cjwvc3ZnPgo=" alt="pause" />
+            </div>
+            <div class="remaining-time">00:00</div>
+          </div>
+          <div class="total-time">
+            <div class="tt-time"></div>
+          </div>
+        </div>
+      </div>
+      {%- endif -%}
+
+      {%- if block.settings.image == blank -%}
+        <div class="video__image js">
+          <div class="placeholder-background">
+            {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+            {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        </div>
+      {%- else -%}
+        <div class="video__image box ratio-container lazyload js"
+              data-bgset="{% include 'bgset', image: block.settings.image %}"
+              data-sizes="auto"
+              data-parent-fit="contain"
+              style="background-position: {{ block.settings.image_position }};
+                    background-image: url('{{ block.settings.image | img_url: '300x300' }}');">
+        </div>
+      {%- endif -%}
+
+      <noscript>
+        <div class="video__image"{% if block.settings.image %} style="background-image: url('{{ block.settings.image | img_url: '2048x' }}'); background-position: {{ block.settings.image_position }};"{% endif %}>
+          {%- if block.settings.image == blank -%}
+            <div class="placeholder-background">
+              {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+              {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+      </noscript>
+{% if block.settings.video_link contains 'youtube' -%}
+      <div class="video__text-content text-center">
+        <div class="page-width">
+          {%- unless block.settings.video_title == blank -%}
+            <h2 class="h1 mega-title video__title{% if block.settings.text_size == 'large' %} mega-title--large{% endif %}">
+              {{ block.settings.video_title | escape }}
+            </h2>
+          {%- endunless -%}
+
+          {%- unless block.settings.style == 'background' -%}
+            <div class="video-control__play-wrapper{% if block.settings.video_title != blank %} video-control__play-wrapper--with-text{% endif %}">
+              {%- if block.settings.video_link != blank -%}
+                <div class="video-play-loader"></div>
+              {%- endif -%}
+              <button type="button" class="btn video-control video-control__play" data-controls="Video-{{ section.id }}">
+                {% include 'icon-play' %}
+                <span class="icon__fallback-text">{{ 'sections.video.play' | t: video_title: '[video_title]' }}</span>
+              </button>
+            </div>
+          {%- endunless -%}
+        </div>
+      </div>
+
+      <div class="video-control__play-wrapper-mobile">
+        {%- if block.settings.video_link != blank -%}
+          <div class="video-play-loader"></div>
+        {%- endif -%}
+        <button type="button" class="btn video-control video-control__play" data-controls="Video-{{ section.id }}">
+          {% include 'icon-play' %}
+          <span class="icon__fallback-text">{{ 'sections.video.play' | t: video_title: '[video_title]' }}</span>
+        </button>
+      </div>
+
+      <button type="button" class="video__pause{% unless block.settings.style == 'background' %} visually-hidden" tabindex="-1{% endunless %}" data-id="{{ section.id }}" aria-live="polite" aria-pressed="false" data-controls="Video-{{ section.id }}">
+        <span class="video__pause-stop">
+          {% include 'icon-pause' %}
+          <span class="icon__fallback-text">{{ 'sections.video.pause' | t: video_title: '[video_title]' }}</span>
+        </span>
+        <span class="video__pause-resume">
+          {% include 'icon-play' %}
+          <span class="icon__fallback-text">{{ 'sections.video.resume' | t: video_title: '[video_title]' }}</span>
+        </span>
+      </button>
+      {% endif %}
+    </div>
+  {%- else -%}
+    <div class="placeholder-noblocks">
+      {{ 'homepage.onboarding.no_content' | t }}
+    </div>
+  {%- endif -%}
+  {%- if block.settings.side_image -%}
+  <div class="video_side--image_div">
+  	<div class="img_content {{block.settings.show_bg_color}}" {% if block.settings.show_bg_color %} style="background-color:{{block.settings.image_bg_color}}"{% endif %}>
+        {%- assign img_url = block.settings.image_block | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        {%- unless block.settings.show_bg_color -%}<img class="fixed-width__image lazyload lazypreload"
+             data-src="{{block.settings.image_block | img_url:'600x600'}}"
+             src="{{block.settings.image_block | img_url:'100x100'}}"
+             data-aspectratio="{{ block.settings.image_block.aspect_ratio }}"
+             data-sizes="auto" width="auto" height="auto" />{%- endunless -%}
+      {%- if block.settings.image_detail != blank or block.settings.image_title != blank -%}<div class="short_detail secondary-font">
+      {%- if block.settings.image_title != blank -%}<h5 class="s-title text-uppercase s-not"><a href="{{ block.settings.image_title_link | default:'#' }}" title="{{ block.settings.image_title }}">{{ block.settings.image_title }}</a></h5>{%- endif -%}
+      {{- block.settings.image_detail -}}
+      </div>{%- endif -%}
+      </div>
+  </div>
+  {%- endif -%}
+</div>

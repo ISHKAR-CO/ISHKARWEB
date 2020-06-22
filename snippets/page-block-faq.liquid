@@ -1,0 +1,25 @@
+<div class="t-blocks template-faq template-faq_left">
+  <div class="banner-faq lazyload"  data-bgset="{{ block.settings.image | img_url : '' }}" >
+    <h3 class="faq-title s-title">{{ block.settings.title }}</h3>
+  </div>
+  <div class="product_accordian">
+    {%- for i in (1..10) -%}
+    {%- capture faq_title -%}faq_q_{{i}}{%- endcapture -%}
+    	{%- assign f_question = block.settings[faq_title] -%}
+    {%- capture faq_ans -%}faq_a_{{i}}{%- endcapture -%}
+    	{%- assign f_answer = block.settings[faq_ans] -%}
+    {%- if f_question != blank or f_answer != blank -%}
+    <div class="accordian_content">
+      {%- if f_question != blank -%}
+      <h6 class="accordian_title">{{f_question}}</h6>
+      {%- endif -%}
+      {%- if f_answer != blank -%}
+      <div class="accordian_detail">
+        <div class="warpper"><p>{{f_answer}}</p></div>
+      </div>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>

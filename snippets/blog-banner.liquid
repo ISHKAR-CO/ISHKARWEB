@@ -1,0 +1,20 @@
+<div class="home-banner" data-section-id="{{ section.id }}" data-section-type="home-banner">
+  <div class="image_banner banner-height-medium lazyload" data-img-ratio="{{ section.settings.image.aspect_ratio }}"
+       data-height-full="false"
+       data-bgset="{% include 'bgset', image: section.settings.image %}"
+       data-sizes="auto"
+       data-parent-fit="cover"
+       style="background-position: {{ section.settings.alignment }}; background-image: url('{{ section.settings.image | img_url: '300x300' }});"></div>
+  <div class="banner-caption text-alignment-{{ section.settings.text_postion }}">
+    <div class="page-width">
+      <div class="banner_warpper banner-font">
+        {%- if section.settings.subtitle != blank -%}
+        <h3 class="h2 b-subtitle">{{- section.settings.subtitle -}}</h2>{%- endif -%}
+        {%- if section.settings.title != blank -%}
+        <h2 class=" h1 b-title">{{- section.settings.title | remove:'<p>' | remove:'</p>' | replace:'em>','span>' -}}</h1>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  {%- if section.settings.top_center_text != blank -%}<div class="s-subtitle top_center_text">{{ section.settings.top_center_text }}</div>{%- endif -%}
+</div>

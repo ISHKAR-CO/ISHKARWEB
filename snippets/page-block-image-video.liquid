@@ -1,0 +1,100 @@
+<div class="page-width">
+  <div class="d-flex {{block.settings.direction}} image-video-div secondary-font">
+    <div class="iv-div one-half">
+      <div class="iv-wrapper">
+        {%- if block.settings.select_type == "image" -%}
+          {%- assign image_count = 0 -%}
+          {%- assign image_ = '' -%}
+          {%- for i in (1..5) -%}
+              {%- capture image -%}image_{{i}}{%- endcapture -%}
+              {%- if block.settings[image] != blank -%}
+                  {%- assign image_count = image_count | plus :1 -%}
+                  {%- assign image_ = image -%}
+              {%- endif -%}
+          {%- endfor -%}        
+          {%- if image_count == 1 and block.settings[image_] != blank -%}
+              <img class="lazyload" data-src="{{ block.settings[image_] | img_url:'' }}" src="{{ block.settings[image_] | img_url:'100x' }}" width="auto" height="auto" />
+          {%- else -%}
+            <ul class="iv-image iv-image-slider">
+              {%- for i in (1..5) -%}
+              {%- capture image -%}image_{{i}}{%- endcapture -%}
+              {%- if block.settings[image] != blank -%}
+              <li><img class="lazyload" data-src="{{ block.settings[image]  | img_url:'' }}" src="{{ block.settings[image]  | img_url:'100x' }}" width="auto" height="auto" /></li>
+              {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        {%- else -%}
+        	
+        {%- assign my_value_video = block.settings.video_link -%}
+          {%- if my_value_video != blank -%}
+          <div class="t-blocks template-vedio wc_template-vedio vimeo_video_player video-section"  data-section-id="{{ section.id }}" data-section-type="video-section">
+            <div class="template-vedio-wrapper wc_video_box video--height-medium video-section-wrapper">        
+              {%- assign video_thumbnail = block.settings.video_link_image -%}
+              {%- if video_thumbnail -%}
+              <div class="img_lazy lazyload" data-bgset="{{video_thumbnail | img_url:'' }}" style="background-image: url('{{ video_thumbnail | img_url: '300x300' }}');"></div>
+              {%- endif -%}
+              <div class="play-btn hide" data-vedio-type="{% if my_value_video contains 'vimeo.com' %}vimeo{%else%}youtube{% endif %}">{%- include 'icon-play' -%}</div>
+
+              {% if my_value_video contains 'youtube.com/watch' %}
+              {%- assign video_id = my_value_video | split: 'v=' -%}
+              {%- assign video_id = video_id[1] | split: '&' | first -%}
+              <div id="Video-{{ video_id }}"
+                   class="video video--image_with_play"
+                   data-id="{{ video_id }}"
+                   data-type="image_with_play"
+                   data-custom-player="true"></div>
+              {% endif %}
+              {% if my_value_video contains 'youtu.be/' %}
+              {%- assign video_id = my_value_video | split: '.be/' -%}
+              {%- assign video_id = video_id[1] | split: '&' | first -%}
+              <div id="Video-{{ video_id }}"
+                   class="video video--image_with_play"
+                   data-id="{{ video_id }}"
+                   data-type="image_with_play"
+                   data-custom-player="true"></div>
+              {% endif %}
+              {% if my_value_video contains 'vimeo.com' %}
+              {%- assign video_id = my_value_video | split: '.com/' -%}
+              {%- assign video_id = video_id[1] | split: '/' | first -%}
+
+              <iframe class="video video--image_with_play" src="https://player.vimeo.com/video/{{ video_id }}?controls=0&autoplay=0&loop=0&playlist={{ video_id }}&autopause=0" 
+                      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" webkitallowfullscreen   mozallowfullscreen allowfullscreen></iframe>
+
+              {% endif %}
+              <div class="custom_player_div">
+                <div class="progress_bar">
+                  <div class="total_pro"></div>
+                  <div class="pro-ing"></div>
+                </div>
+                <div class="pp-time_div">
+                  <div class="pp-time">
+                    <div class="paush-play" data-controls="Video-{{ video_id }}">
+                      <img class="playing-video play-btn-video" data-method="play" data-vedio-type="{% if my_value_video contains 'vimeo.com' %}vimeo{%else%}youtube{% endif %}" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhbHF1ZV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgNzUuMSA4MC44IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA3NS4xIDgwLjg7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7ZmlsbDpub25lO3N0cm9rZTojRkZGRkZGO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1taXRlcmxpbWl0OjEwO30KPC9zdHlsZT4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxLDc5LjIgMSwxLjcgNzMsNDAuNCAiLz4KPC9zdmc+Cg==" alt="play">
+                      <img class="paush-video" data-method="pause" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhbHF1ZV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgNzQgNzkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDc0IDc5OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbGw6bm9uZTtzdHJva2U6I0ZGRkZGRjtzdHJva2Utd2lkdGg6MjtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9Cjwvc3R5bGU+CjxnPgoJPGc+CgkJPHBhdGggY2xhc3M9InN0MCIgZD0iTTQ1LjIsMXY3N0g3M1YxSDQ1LjJ6IE0xLDc4aDI3LjhWMUgxVjc4eiIvPgoJPC9nPgo8L2c+Cjwvc3ZnPgo=" alt="pause">
+                    </div>
+                    <div class="remaining-time">00:00</div>
+                  </div>
+                  <div class="total-time">
+                    <div class="tt-time"></div>
+                  </div>
+                </div>
+</div>
+            </div>
+          </div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="iv-text-div one-half">
+      <div class="ivt-wrapper">
+        {%- if block.settings.title != blank -%}<h3 class="s-title s-not">{{- block.settings.title -}}</h3>{%- endif -%}
+        {%- if block.settings.detail != blank -%}<div class="text-wrap">{{- block.settings.detail -}}</div>{%- endif -%}
+        {%- if block.settings.text_title != blank -%}<div class="text-title">
+        {%- if block.settings.text_title_link != blank -%}
+        <a href="{{ block.settings.text_title_link }}" title="{{ block.settings.text_title }}">{{ block.settings.text_title }}</a>
+        {%- else -%}{{- block.settings.text_title -}}{%- endif -%}</div>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>

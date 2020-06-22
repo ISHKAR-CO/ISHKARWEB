@@ -1,0 +1,28 @@
+{%- for block in section.blocks -%}
+{%- if block.type == "collection" -%}
+{%- assign main_coll = collections[block.settings.main_collection] -%}
+  {%- assign image = main_coll.image -%}
+  {%- if block.settings.coll_banner != blank -%}
+  {%- assign image = block.settings.coll_banner -%}
+  {%- endif -%}
+  {%- include 'coll-banner', image : image, link: main_coll.url, title: main_coll.title -%}
+  <ul class="grid grid--uniform grid--view-items{% unless main_coll.url contains '/all' %} d-flex flex-wrap collection--grid{% endunless %} extra-g-load" id="AjaxinateContainer_{{ main_coll.id }}">
+  {%- for i in (1..6) -%}
+	{%- capture coll -%}coll_{{i}}{%- endcapture -%}
+	{%- capture coll_pro_count -%}coll_pro_count_{{i}}{%- endcapture -%}
+	{%- assign coll = block.settings[coll] -%}
+	{%- assign coll = collections[coll] -%}
+    {%- assign coll_pro_count = block.settings[coll_pro_count] | times :1 -%}
+    {%- assign limit = coll.products_count -%}
+    {%- if coll_pro_count != blank -%}
+    	{%- assign limit = coll_pro_count -%}
+    {%- endif -%}
+    {%- if coll -%}
+      {%- for product in coll.products limit:limit -%}
+      <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">{%- include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor, collection: coll -%}</li>
+      {%- endfor -%}
+	{%- endif -%}
+    {%- endfor -%}</ul>
+  {%- if block.settings.show_see_more_btn -%}<div id="AjaxinatePagination_{{main_coll.id}}" class="page_load_div extra_p_load {% if coll_11_ %}hide{% endif %}"><a href="{{ main_coll.url }}" class="btn btn_frame"><img data-src="{{'frame_border.png' | asset_url }}" src="{{'frame_border.png' | asset_img_url:'100x' }}" class="frame_btn_img lazyload"/>See More</a></div>{%- endif -%}
+{%- endif -%}
+{%- endfor -%}

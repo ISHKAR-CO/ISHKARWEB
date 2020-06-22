@@ -1,0 +1,19 @@
+{%- assign link_id = block.settings.video_link.id -%}<div class="page-block-banner-video {% if block.settings.video_link contains 'vimeo' -%}vimeo_iframe{%- endif -%}" data-section-id="{{ block.id }}_{{ link_id }}" data-section-type="video-section">
+  {%- if block.settings.video_link != blank -%}<div class="video-section-wrapper video-section-wrapper--medium video-section-wrapper--min-height video-background-wrapper video-section-wrapper--{{ block.id }}_{{ link_id }} {%- if block.settings.mobile_image != blank %} has_mobile_image{%- endif -%}" data-desktop-height="650" data-mobile-height="270">
+      {%- if block.settings.show_overlay -%}<div class="video__overlay"></div>{%- endif -%}{{--}}
+      {%- if block.settings.mobile_image != blank -%}
+      <div class="lazyload mobile_thumbnail" data-bgset="{{ block.settings.mobile_image | img_url:'' }}"></div>
+      {%- endif -%}
+      {{--}}<button type="button" class="text-link video-control__close-wrapper video-control__close-background" data-controls="Video-{{ block.id }}_{{ link_id }}"><span class="video-control video-control__close">{% include 'icon-close' %}<span class="icon__fallback-text">{{ 'sections.video.close' | t: video_title: '[video_title]' }}</span></span></button>{{--}}
+      {%- if block.settings.video_link contains 'vimeo' -%}
+      {%- assign video_id = block.settings.video_link | split: '.com/' -%}
+      {%- assign video_id = video_id[1] | split: '/' | first -%}
+	  <div id="{{ video_id }}" data-vemio-background=""></div>
+      {%- comment -%}{{--}}<iframe class="video video--background video--background" src="https://player.vimeo.com/video/{{ video_id }}?controls=0&autoplay=0&loop=1&playlist={{ video_id }}&autopause=0&quality=240p,360p" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="autoplay; fullscreen" data-vemio-background="" ></iframe>{{--}}{%- endcomment -%}
+
+	  {%- else -%}      
+      {%- if block.settings.video_link != blank -%}<div id="Video-{{ block.id }}_{{ link_id }}" class="video video--background video--background" data-id="{{ block.settings.video_link.id }}" data-type="background"></div>{%- endif -%}{%- endif -%}
+      {{--}}<div class="video-control__play-wrapper">{%- if block.settings.video_link != blank -%}<div class="video-play-loader">{%- include 'icon-loader' -%}</div>{%- endif -%}</div></div>{{--}}
+  {%- else -%}
+    {{--}}<div class="placeholder-noblocks">{{ 'homepage.onboarding.no_content' | t }}</div>{{--}}
+  {%- endif -%}</div>{{--}}

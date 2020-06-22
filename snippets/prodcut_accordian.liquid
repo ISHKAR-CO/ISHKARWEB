@@ -1,0 +1,211 @@
+<div class="product_accordian">
+  
+  {%- for i in (1..5)  -%}
+  {%- capture accordion_title -%}title_{{i}}{%- endcapture -%}
+  {%- capture accordion_detail -%}detail_{{i}}{%- endcapture -%}  
+  {%- assign accordion_title = product.metafields.sf_accordion[accordion_title] -%}
+  {%- assign accordion_detail = product.metafields.sf_accordion[accordion_detail] -%}  
+  {%- if accordion_title != blank and accordion_detail != blank -%} 
+  <div class="accordian_content">
+    <h6 class="accordian_title">{{- accordion_title -}}</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {{- accordion_detail -}}
+      </div> 
+    </div>
+  </div>
+  {%- endif -%}
+  {%- endfor -%}
+  
+  {%- if product_chains -%}
+  <div class="accordian_content">
+    <h6 class="accordian_title">Chains</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {{ product_chains }}
+      </div> 
+    </div>
+  </div>
+  {%- endif -%}
+  {%- if product_lead_time != blank %}
+  	<div class="accordian_content">
+    <h6 class="accordian_title">Lead Time</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {{- product_lead_time -}}
+      </div> 
+    </div>
+  </div>{%- endif -%}
+  {%- if care_tab != blank %}
+  	<div class="accordian_content">
+    <h6 class="accordian_title">Care</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {{- care_tab -}}
+      </div> 
+    </div>
+  </div>
+  {%- endif -%}
+  {%- if product_demension != blank %}
+  <div class="accordian_content">
+    <h6 class="accordian_title">Dimensions</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {{ product_demension }}
+      </div> 
+    </div>
+  </div>
+  {%- endif -%}
+  
+  {%- if product_material != blank -%}
+  <div class="accordian_content">
+    <h6 class="accordian_title">Materials</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {{- product_material -}}
+      </div> 
+    </div>
+  </div>
+  {%- endif -%}
+  
+  
+  {%- assign show_shipping = product.metafields.sf_accordion.show_shipping -%}
+  {%- assign meta_shipping_detail = product.metafields.sf_accordion.shipping_detail -%}
+  {%- if show_shipping == blank -%}
+  {%- assign show_shipping = 0 -%}
+  {%- endif -%}
+  {%- if show_shipping == 1 and meta_shipping_detail != blank -%}
+  <div class="accordian_content">
+    <h6 class="accordian_title">{{- section.settings.shipping_title | default:'Shipping' -}}</h6>
+    <div class="accordian_detail">
+      <div class="warpper">{{- meta_shipping_detail -}}</div>
+    </div>
+  </div>
+  {%- else -%}
+  {%- if section.settings.show_shipping and show_shipping == 0 -%}
+  <div class="accordian_content">
+    <h6 class="accordian_title">{{- section.settings.shipping_title | default:'Shipping' -}}</h6>
+    <div class="accordian_detail">
+      <div class="warpper">{%- if product_shiping != blank -%}
+        	{{- product_shiping -}}
+        {%- else -%}
+        {{- section.settings.shipping_detail -}}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+    {%- endif -%}
+  {%- endif -%}  
+  {%- assign show_shipping = 0 -%}
+  {%- assign meta_shipping_detail = '' -%}
+  
+  {%- assign show_return = product.metafields.sf_accordion.show_return -%}
+  {%- assign meta_return_detail = product.metafields.sf_accordion.return_detail -%}
+  {%- if show_return == blank -%}
+  {%- assign show_return = 0 -%}
+  {%- endif -%}
+  {%- if show_return == 1 and meta_return_detail != blank -%}
+  <div class="accordian_content">
+    <h6 class="accordian_title">{{- section.settings.return_title | default:'Return' -}}</h6>
+    <div class="accordian_detail">
+      <div class="warpper">{{- meta_return_detail -}}</div>
+    </div>
+  </div>
+  {%- else -%}
+  {%- if section.settings.show_return and show_return == 0 -%}
+  <div class="accordian_content">
+    <h6 class="accordian_title">{{- section.settings.return_title | default:'Return' -}}</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {%- if product_return != blank -%}
+        	{{- product_return -}}
+        {%- else -%}
+        {{- section.settings.return_detail -}}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+    {%- endif -%}
+  {%- endif -%}  
+  {%- assign show_return = '' -%}
+  {%- assign meta_return_detail = '' -%}
+    
+    {%- if section.settings.show_dimension -%}
+  <div class="accordian_content">
+    <h6 class="accordian_title">{{- section.settings.dimension_title | default:'Dimensions' -}}</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {{- section.settings.dimension_detail -}}
+      </div>
+    </div>
+  </div>
+    {%- endif -%}
+    {%- if section.settings.show_production_time -%}
+  <div class="accordian_content">
+    <h6 class="accordian_title">{{- section.settings.production_time_title | default:'Production Time' -}}</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {{- section.settings.production_time_detail -}}
+      </div>
+    </div>
+  </div>
+    {%- endif -%}
+  {%- if product.tags contains 'pre-order' -%}
+  <div class="accordian_content">
+    <h6 class="accordian_title">Preorders explained</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {{ section.settings.pre_order_text }}
+      </div> 
+    </div>
+  </div>
+  {%- endif -%}
+  
+  {%- comment -%}
+  {%- assign wwww = "who,what,where,when" | split:',' -%}
+  
+  {%- for w in wwww -%}
+  	{%- capture checkbox -%}show_{{ w }}{%- endcapture -%}
+  {%- capture title -%}{{ w }}_title{%- endcapture -%}
+  {%- capture detail -%}{{ w }}_detail{%- endcapture -%}
+  
+  {%- if section.settings[checkbox] -%}
+  	<div class="accordian_content">
+    <h6 class="accordian_title">{{- section.settings[title] -}}</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {{- section.settings[detail] -}}
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+  {%- endfor -%}
+  {%- endcomment -%}
+  
+  {%- if section.settings.show_redmore -%}
+  	<div class="accordian_content">
+      {%- assign country_title = product.metafields.sf_accordion.accordion_for_pdf__country_nam -%}
+      {%- assign country_title_link = product.metafields.sf_accordion.accordion_for_pdf__link -%}
+      <h6 class="accordian_title">{%- if country_title != blank -%}{{- country_title -}}{%- else -%}{{- section.settings.redmore_title -}}{%- endif %} |<span class="read_more"> Read More</span></h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        <a href="{%- if country_title_link != blank -%}{{- country_title_link -}}{%- else -%}{{ section.settings.readmore_link }}{%- endif -%}" download>Click to Download PDF</a>
+      </div>
+    </div>
+  </div>{%- assign country_title = '' -%}
+      {%- assign country_title_link = '' -%}
+  {%- endif -%}
+  
+  {%- assign terms =  product.metafields.sf_accordion.terms_conditions -%}
+  {%- if terms != blank -%}
+  <div class="accordian_content">
+      <h6 class="accordian_title">Terms & Conditions</h6>
+    <div class="accordian_detail">
+      <div class="warpper">
+        {{- terms -}}
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+  
+</div>

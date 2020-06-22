@@ -1,0 +1,15 @@
+<div class="t-blocks_parent">      
+  <div class="inner_warpper">
+    {%- for block in section.blocks -%}
+    {%- if block.type == "t-img-bg" -%}
+    <div class="template-blocks t-blocks d-flex justify-content-between" id="{{ block.settings.categry_title  | strip_html | handleize }}" >
+      <div class="content_detail">
+        <div class="content_wrapper"><h3 class="block-title">{{ block.settings.title }}</h3>{{- block.settings.detail -}}</div></div>
+      {%- if block.settings.image != blank -%}
+      <div class="content_img"><div class="inner_div"><img class="img_lazy lazyload" data-src="{{block.settings.image | img_url:'630x'}}" src="{{block.settings.image | img_url:'100x'}}"></div></div>
+      {%- endif -%}      
+    </div>
+    {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div> 

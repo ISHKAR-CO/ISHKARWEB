@@ -1,0 +1,26 @@
+<div class="home-featured-prouct" data-section-id="{{ block.id }}" data-section-type="home-featured-prouct" >
+  <div class="section-header text-center sh-with-bg-gradiant">{%- if block.settings.subtitle != blank -%}
+    <h3 class="s-subtitle">{{ block.settings.subtitle | escape }}</h3>{%- endif -%}
+    {%- if block.settings.title != blank -%}<h2 class="h2-large s-title"><span class="inner_warpper">{{ block.settings.title | escape }}</span></h2>{%- endif -%}
+    {%- assign detail_size = block.settings.detail | size %}
+    {%- if block.settings.detail != blank -%}<div class="section-header-detail {% if detail_size > 160 -%}max-size{%- endif %}">
+    {{ block.settings.detail | newline_to_br }}
+    </div>{%- endif -%}
+  </div>
+  <div class="section-bg-color">
+    <div class="page-width">
+      <ul class="grid hfp-grid hfp-grid-slider">
+        {%- for i in (1..4) -%}
+        {%- capture product -%}product_{{i}}{%- endcapture -%}
+        {%- capture product_img -%}product_img_{{i}}{%- endcapture -%}
+        {%- assign product = all_products[ block.settings[product]] -%}
+        {%- assign product_img = block.settings[product_img] -%}
+        {%- if product -%}
+        <li class="grid__item hfp-item medium-up--one-third">
+          {%- include 'product-card-grid-two' ,product :product, max_height: 345, product_img :product_img -%}
+        </li>{%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+</div>

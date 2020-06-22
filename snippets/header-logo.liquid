@@ -1,0 +1,9 @@
+{%- if request.page_type == 'index' -%}<div class="h2 site-header__logo" style="max-width: {{ logo_max_width }}px">{%- else -%}<div class="h2 site-header__logo" style="max-width: {{ logo_max_width }}px">{%- endif -%}
+    {%- if logo_img -%}{%- assign img_url =  logo_img | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}<a href="{{ routes.root_url }}" class="site-header__logo-image{% if section.settings.align_logo == 'center' %} site-header__logo-image--centered{% endif %}">
+      {%- if logo_img_white != blank -%}      
+      {%- assign img_url_white =  logo_img_white | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}      
+      <img class="lazyload js dark_img" src="{{ logo_img | img_url: '100x100' }}" data-src="{{ img_url }}" data-widths="[180, 360]" data-aspectratio="{{ logo_img.aspect_ratio }}" data-sizes="auto" alt="{{ logo_alt | escape }}" width="auto" height="auto" style="max-width: {{ logo_max_width }}px" /><img class="lazyload js light_img" src="{{ logo_img_white | img_url: '100x100' }}" data-src="{{ img_url_white }}" data-widths="[180, 360]" data-aspectratio="{{ logo_img_white.aspect_ratio }}" data-sizes="auto" alt="{{ logo_alt | escape }}" width="auto" height="auto" style="max-width: {{ logo_max_width }}px" />
+      {%- else -%}{%- capture logo_alt -%}{{ section.settings.logo.alt | default: shop.name }}{%- endcapture -%}<img class="lazyload js" src="{{ logo_img | img_url: '300x300' }}" data-src="{{ img_url }}" data-widths="[180, 360]" data-aspectratio="{{ logo_img.aspect_ratio }}" data-sizes="auto" alt="{{ logo_alt | escape }}" width="auto" height="auto" style="max-width: {{ logo_max_width }}px" />{%- endif -%}
+    </a>{%- else -%}<a class="site-header__logo-link" href="{{ routes.root_url }}">{{ shop.name }}</a>{%- endif -%}
+    {%- unless request.page_type == 'index' -%}
+  </div>{%- else -%}</div>{%- endunless -%}

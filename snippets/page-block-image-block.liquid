@@ -1,0 +1,13 @@
+<div class="image_block_wrapper">
+  {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" title="{{ block.settings.title }}">{%- endif -%}
+  <div class="bg-img lazyload" data-bgset="{{ block.settings.image | img_url:'600x600' }}" style="background-image:url({{ block.settings.image | img_url:'100x100' }})"></div>
+  {%- if block.settings.link != blank -%}</a>{%- endif -%}
+  <div class="text-warrper">
+    {%- if block.settings.subtitle != blank -%}<h4 class="s-subtitle">{{ block.settings.subtitle }}</h4>{%- endif -%}
+    {%- if block.settings.title != blank -%}<h3 class="s-title text-uppercase">
+    {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" title="{{ block.settings.title }}">{%- endif -%}
+    {{ block.settings.title }}
+    {%- if block.settings.link != blank -%}</a>{%- endif -%}
+    </h3>{%- endif -%}
+  </div>
+</div>

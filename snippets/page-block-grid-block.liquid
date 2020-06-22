@@ -1,0 +1,59 @@
+{%- assign count = 0 -%}
+<ul class="country-parent country-parent-two d-flex grid grid--no-gutters flex-wrap">
+  {%- for block in section.blocks -%}
+  {%- if block.type == "grid-block" -%}
+  {%- assign count = count | plus : 1 -%}
+  <li class="inner-vector flex-wrap medium-up--one-third one-half {%- if count > 6 %} hide_block{% endif -%}" {{ block.shopify_attributes }}>
+    <div class="vector_div vector_warpper">
+      <div class="vector_img vector_img_event">
+        <a href="{{ block.settings.link }}">
+          {%- if block.settings.image != blank -%}
+          {%- capture bgset -%}
+          {%- assign image = block.settings.image -%}
+          {%- if image != blank -%}
+          {%- if image.width > 180 -%}{{ image | img_url: '180x' }} 180w {{ 180 | divided_by: image.aspect_ratio | round }}h,{% endif -%}
+          {%- if image.width > 360 -%}{{ image | img_url: '360x' }} 360w {{ 360 | divided_by: image.aspect_ratio | round }}h,{% endif -%}
+          {%- if image.width > 540 -%}{{ image | img_url: '540x' }} 540w {{ 540 | divided_by: image.aspect_ratio | round }}h,{% endif -%}
+          {%- endif -%}
+          {%- endcapture -%}
+          <div class="bg_img_event lazyload" data-bgset="{{bgset}}" data-sizes="auto" data-parent-fit="cover" style="background-image: url({{ block.settings.image | img_url: '410x' }});"></div>
+          {%- endif -%}
+        </a>
+      </div>             
+    </div>
+    <div class="vector_div vector_warpper_detail">
+      {%- if block.settings.title != blank -%}
+      <h5 class="detail_title"><a href="{{ block.settings.link }}">{{ block.settings.title }}</a></h5>
+      {%- endif -%}
+      {%- if block.settings.detail != blank -%}
+      <p class="eventd_detail">
+        {{ block.settings.detail }}
+      </p>            
+      {%- endif -%}
+      {%- if block.settings.link != blank -%}
+      <div class="blog_readmore">
+        <a href="{{ block.settings.link }}">Read More {%- include 'icon-plus' -%}</a>
+      </div>
+      {%- endif -%}
+    </div>
+  </li>
+  {%- endif -%}
+  {%- endfor -%}  
+</ul>
+{%- if count > 6 -%}
+  <a href="#" class="btn btn_frame block-loadmore">    
+    {%- if section.settings.load_more_btn_frame != blank -%}
+    <img src="{{section.settings.load_more_btn_frame | img_url:'master'}}" class="frame_btn_img"/>
+    {%- endif -%}
+    {{section.settings.more_btn_label}}    
+  </a>
+  {%- else -%}
+  <div class="blank-space">
+    <a href="#" class="btn btn_frame block-loadmore hide">
+      {%- if section.settings.load_more_btn_frame != blank -%}
+      <img src="{{section.settings.load_more_btn_frame | img_url:'master'}}" class="frame_btn_img"/>
+      {%- endif -%}
+      {{section.settings.more_btn_label}}    
+    </a>
+  </div>
+  {%- endif -%}

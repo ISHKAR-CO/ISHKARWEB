@@ -1,0 +1,18 @@
+{%- if block.settings.header_bg == 'top_bg' -%}
+	{%- assign bg_color = 'header_top_yellow' -%}
+{%- elsif block.settings.header_bg == 'below_bg' -%}
+	{%- assign bg_color = 'header_btm_yellow' -%}
+{%- else -%}
+	{%- assign bg_color = 'header_nobg' -%}
+{%- endif -%}
+<div class="section-header text-center {{bg_color}}"  {% if block.settings.link_title != blank %}id="{{block.settings.link_title | handleize}}"{%- endif -%} >{{--}}
+    {%- if block.settings.subtitle != blank -%}
+    {{--}}<h3 class="h4 s-subtitle">{{ block.settings.subtitle  }}</h3>{{--}}
+    {%- endif -%}
+    {%- if block.settings.title != blank -%}
+  {{--}}<div class="title_outer"><h2 class="h3 s-title wc_s-title"><span class="inner_warpper">{{ block.settings.title }}</span></h2></div>{{--}}
+    {%- endif -%}
+    {%- assign detail_size = block.settings.detail | size %}
+    {%- if block.settings.detail != blank -%}
+    {{--}}<div class="section-header-detail {% if detail_size > 160 -%}max-size{%- endif %}">{{- block.settings.detail -}}</div>{%- endif -%}{{--}}
+</div>{{--}}

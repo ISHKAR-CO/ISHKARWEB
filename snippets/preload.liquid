@@ -1,0 +1,11 @@
+<style> #preloader { width: 100%; height: 100%; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: {{ settings.preload_bg_color | default:'#fff' }}; z-index: 999999; }
+  #status { position: absolute; top: 50%; left: 50%; text-align: center; display: inline-block; -moz-transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); -o-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); }
+    #status img{ float:left; }
+  .preloaded #preloader{ display:none; }
+  </style>
+  <div id="preloader">
+    <div id="status"><img class="lazyload" data-src="{{ settings.proload_logo | img_url:'' }}" data-src="{{ settings.proload_logo | img_url:'80x' }}" width="auto" height="auto" /></div></div>
+<script defer="defer"> if (typeof(Storage) !== "undefined") { if (sessionStorage.preload_logo == 'true') { document.getElementsByTagName("body")[0].classList.add('preloaded'); } else {
+      sessionStorage.preload_logo = 'true';
+      $(window).on('load', function() { $("#status").delay({{ settings.preload_time | times:1000 }}).fadeOut(); $("#preloader").delay({{ settings.preload_time | times:1000 }}).fadeOut("slow"); }); } }  
+</script>

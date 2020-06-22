@@ -1,0 +1,12 @@
+{%- if first_part != blank -%}
+<ul class="site-nav list--inline"> {{--}} 
+  {%- for link in linklists[nav_link].links limit:first_part -%}  
+  	{%- include 'main-site-nav-inner' -%}  
+  {%- endfor -%}
+</ul> {{--}} 
+{%- else -%}
+<ul class="site-nav list--inline"> {{--}} 
+{%- for link in linklists[nav_link].links  -%}
+  {%- include 'main-site-nav-inner' -%}	
+  {%- endfor -%}</ul> {{--}} 
+{%- endif -%}

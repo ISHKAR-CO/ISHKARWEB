@@ -1,0 +1,31 @@
+<div class="title_color_warpper d-flex flex-wrap justify-content-center">{%- for i in (1..3) -%}
+  {%- capture title -%}title_{{i}}{%- endcapture -%}
+  {%- capture title_color -%}title_color_{{i}}{%- endcapture -%}
+  {%- capture title_detail -%}detail_{{i}}{%- endcapture -%}
+	{%- if block.settings[title] != blank -%}
+    <div class="title_color">
+      <span class="color_span" style="background-color:{{ block.settings[title_color] }};"></span>
+      <span class="color_title">{{ block.settings[title] }}</span>
+      {%- if block.settings[title_detail] != blank -%}<span class="color_title_detail">{{- block.settings[title_detail] -}}</span>{%- endif -%}
+    </div>
+	{%- endif -%}
+{%- endfor -%}</div>
+<style>
+  {%- for i in (1..3) -%}
+  {%- capture title -%}title_{{i}}{%- endcapture -%}
+  {%- capture title_color -%}title_color_{{i}}{%- endcapture -%}
+  {%- if block.settings[title] != blank -%}
+  
+  @keyframes glow_{{ block.settings[title] | handleize }} {
+    from {
+      box-shadow: 0 0 5px -5px {{ block.settings[title_color] }};
+    }
+    to {
+      box-shadow: 0 0 5px 5px {{ block.settings[title_color] }};
+    }
+  }
+  .country-parent .inner-vector .vector_img .span_div .{{ block.settings[title] | handleize }}_span{ background-color : {{ block.settings[title_color] }} }
+  .country-parent .inner-vector .vector_img .span_div .{{ block.settings[title] | handleize }}_span:hover:before{ animation-name: glow_{{ block.settings[title] | handleize }}; }
+  {%- endif -%}
+  {%- endfor -%}
+</style>

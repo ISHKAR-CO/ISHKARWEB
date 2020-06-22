@@ -1,0 +1,22 @@
+<div class="page-width">
+  {%- if block.settings.title != blank -%}<div class="section-header text-center">
+      <h3 class="h3 s-title wc_s-title">
+        <span role="text" class="inner_warpper">{{- block.settings.title -}}</span>
+      </h3>
+      <h4 class="h4 s-subtitle font-normal">{{- block.settings.subtitle -}}</h4>    
+  </div>{%- endif -%}
+  <div class="d-flex about-block-div secondary-font">
+    <div class="image-div one-half">
+      <div class="img_wrapper">
+        <img class="lazyload" data-src="{{ block.settings.image | img_url:'' }}" src="{{ block.settings.image | img_url:'100x' }}" />
+        {%- if block.settings.image_text != blank -%}<p class="fig_caption">{{- block.settings.image_text -}}</p>{%- endif -%}
+      </div>
+    </div>
+    <div class="text-div one-half">
+      {%- if block.settings.text_bold != blank -%}<div class="text_bold">{{- block.settings.text_bold -}}</div>{%- endif -%}
+      {%- if block.settings.text_detail != blank -%}<div class="text-wrap">{{ block.settings.text_detail }}</div>{%- endif -%}
+      {%- if block.settings.text_title != blank -%}<h3 class="s-title s-not">{{block.settings.text_title}}</h3>{%- endif -%}
+      {%- if block.settings.text_title_detail != blank -%}<p>{{block.settings.text_title_detail}}</p>{%- endif -%}
+    </div>      
+  </div>
+</div>

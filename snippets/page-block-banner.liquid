@@ -1,0 +1,83 @@
+{%- if block.settings.drop_down_arrow -%}
+  <div class="banner-scroll-arrow">
+    <img class="lazyload" src="{{ 'BlackArrowRight_300x.png' | asset_img_url: '1x' }}" data-src="{{ 'BlackArrowRight_300x.png' | asset_img_url: '27x32' }}" width="auto" height="auto" />
+  </div>
+{%- endif -%}
+
+
+{%- capture detail -%}
+{%- if block.settings.coll_title != blank or block.settings.coll_detail != blank or category != blank -%}
+<div class="{%- if block.settings.enable_second_design %}wrapper{%- else -%}page-width{%- endif -%}">{{--}}
+    {%- if block.settings.coll_title != blank or block.settings.coll_detail != blank -%}
+    {{--}}<div class="collectin_detail_cls {% if block.settings.coll_title == blank %}no_title{% endif %}">{{--}}
+        {{--}}<div class="warpper">{{--}}
+          {%- if block.settings.coll_title != blank -%}
+          {{--}}<div class="section-header">{{--}}
+            {%- if block.settings.coll_subtitle != blank -%}<h4 class="s-subtitle">{{ block.settings.coll_subtitle }}</h4>{%- endif -%}
+            {%- if block.settings.coll_title != blank -%}<h2 class="h2-large s-title s-title-no-boder"><span class="inner_warpper_">{{ block.settings.coll_title }}</span></h2>{%- endif -%}
+          {{--}}</div>{%- endif -%}          
+          {%- if block.settings.coll_detail != blank -%}
+          {{--}}<div class="detail">{{--}}
+            {{--}}{{ block.settings.coll_detail }}{{--}}
+          {{--}}</div>{%- endif -%}
+        </div></div>{%- endif -%}
+  {{--}}</div>{{--}}
+{%- endif -%}{%- endcapture -%}
+{{--}}
+{%- capture category -%}
+  {%- for i in  (1..5) -%}
+  	{%- capture title -%}partner_{{i}}{%- endcapture -%}
+	{%- capture link -%}link_{{i}}{%- endcapture -%}
+  	{%- if block.settings[title] != blank -%}
+    {{--}}<div class="category_div h4">{{--}}
+      {{--}}<a href="{%- if block.settings[link] != blank -%}{{block.settings[link]}}{%- else -%}#{{ block.settings[title] | strip_html | handleize }}{%- endif -%}">{{--}}
+        {{--}}<span class="number">0{{i}}/</span><br/>{{- block.settings[title] -}}</a>{{--}}
+    {{--}}</div>{{--}}
+  	{%- endif -%}
+  {%- endfor -%}  
+  {%- endcapture -%}
+{{--}}
+{{--}}
+{%- if block.settings.show_bg_video -%}
+{%- include 'page-block-banner-video' -%}
+{%- else -%}
+{{--}}
+{%- capture banner -%}
+<div class="image_banner banner-height-medium lazyload" {% if block.settings.enable_second_design != true -%}data-img-ratio="{{ block.settings.image.aspect_ratio }}"{% endif %} data-height-full="false" data-bgset="{% include 'bgset', image: block.settings.image %}" data-sizes="auto" data-parent-fit="cover" style="background-position: {{ block.settings.alignment }}; background-image: url('{{ block.settings.image | img_url: '300x300' }});"></div>{{--}}
+{%- if block.settings.subtitle != blank or block.settings.title != blank -%}<div class="banner-caption text-alignment-{{ block.settings.text_postion }}">
+    {{--}}<div class="page-width">{{--}}
+      {{--}}<div class="banner_warpper banner-font">{{--}}
+        {%- if block.settings.subtitle != blank -%}
+        {{--}}<h3 class="h2 b-subtitle">{{- block.settings.subtitle -}}</h3>{%- endif -%}
+        {%- if block.settings.title != blank -%}
+        {{--}}<h2 class=" h1 b-title">{{- block.settings.title | remove:'<p>' | remove:'</p>' | replace:'em>','span>' -}}</h2>{{--}}
+        {%- endif -%}
+      </div></div></div>{%- endif -%}
+{%- endcapture -%}
+<div class="home-banner{%- if block.settings.enable_second_design %} home-banner_alter{% endif -%}" data-section-id="{{ block.id }}" data-section-type="home-banner">{{--}}
+  {%- if block.settings.enable_second_design -%}
+  {{- banner -}}
+  {{--}}<div class="banner_content">{{- detail -}}</div>{{--}}
+  {%- else -%}
+  {{- banner -}}
+  {%- if block.settings.top_center_text != blank -%}<div class="s-subtitle top_center_text">{{ block.settings.top_center_text }}</div>{%- endif -%}
+  {%- endif -%}</div>{{--}}
+{%- endif -%}
+{{--}}
+{%- unless block.settings.enable_second_design -%}
+ {%- if detail != blank or category != blank -%}
+<div class="verticle_till {{ block.settings.content_alignment }} {% if block.settings.content_bg_color %} show_bg_color{% endif %}{% if block.settings.content_border_bottom %} show_border-bottom {%- endif -%}{%- if  block.settings.coll_title == blank and block.settings.coll_detail == blank %} verticle_till_no{%- endif -%}">
+  {{- detail -}}{%- if category != blank -%}
+  {{--}}<div class="banner-caption-category small--hide">{{--}}
+    {{--}}<div class="page-width">{{--}}
+{{- category -}}</div></div>{%- endif -%}
+{{--}}</div>{{--}}
+{%- endif -%}
+{%- else -%}{%- if category != blank -%}
+<div class="verticle_till_no verticle_till">{{--}}
+  {{--}}<div class="banner-caption-category small--hide">{{--}}
+    {{--}}<div class="page-width">{{--}}
+      {{ category }}</div>{{--}}
+  {{--}}</div>{{--}}
+{{--}}</div>{%- endif -%}
+{%- endunless -%}

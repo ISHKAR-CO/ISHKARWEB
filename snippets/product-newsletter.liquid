@@ -1,0 +1,75 @@
+{%- if section.settings.Show_section -%}
+<div class="collection_newsletter hero--custom-height">{{--}}
+  {%- if section.settings.hero_layout == 'fixed_width' -%}<div class="page-width">{%- endif -%}
+    {{--}}<div class="hero hero--{{ section.settings.hero_size }} hero-collection-newsletter box ratio-container js lazyload" {% unless section.settings.bg_img.alt == blank %} role="img" aria-label="{{ section.settings.bg_img.alt | escape }}" data-alt="{{ section.settings.bg_img.alt | escape }}" {% endunless %} data-layout="{{ section.settings.hero_layout }}" data-bg="{{ section.settings.bg_img | img_url: '300x300' }}" data-bgset="{% include 'bgset', image: section.settings.bg_img %}" data-sizes="auto" data-parent-fit="cover" style="background-position: {{ section.settings.alignment }}; background-image: url('{{ section.settings.bg_img | img_url: '300x300' }});" {% if section.settings.hero_size == "auto" %}data-aspect-ratio="{{section.settings.bg_img.aspect_ratio}}" {%- endif -%}>{{--}}
+      {{--}}<div class="hero__inner">{{--}}
+        {{--}}<div class="page-width text-center">{%- if section.settings.title != blank -%}
+          {{--}}<h2 class="h3 s-title mega-title">{{ section.settings.title }}</h2>{%- endif -%}
+          {%- if section.settings.detail != blank -%}<div class="news_detail">{{ section.settings.detail }}</div>{%- endif -%}
+          {{--}}<div class="form_container"> {{--}} 
+   {{--}} 
+   {{--}} 
+  {%- if canonical_url contains '/fr'  -%}
+           {{--}} <!-- Begin Mailchimp Signup Form --> {{--}} 
+<div id="mc_embed_signup"> {{--}} 
+<form action="https://ishkar.us12.list-manage.com/subscribe/post?u=8894bb3283174a9dc86c206d3&amp;id=c43a5b8fb4" method="post" id="mc-embedded-subscribe-form_newsletter" name="mc-embedded-subscribe-form" class="validate custom_mailchimp_form form-single-field" target="_blank" novalidate> {{--}} 
+ {{--}}     <div id="mc_embed_signup_scroll"> {{--}} 
+<div class="mc-field-group input-group">	 {{--}} 
+ {{--}} 	<input type="email" value="" name="EMAIL" placeholder="Enter your email here..." class="input-group__field newsletter__input required email" id="mce-EMAIL"> {{--}} 
+  {{--}} <span class="input-group__btn"><input type="submit" value="{%- if section.settings.btn_title != blank -%}{{section.settings.btn_title}}{%- else -%}{{ 'general.newsletter_form.submit' | t }}{%- endif -%}" name="subscribe" id="mc-embedded-subscribe" class="btn newsletter__submit"></span> {{--}}
+</div> {{--}} 
+	 {{--}} <div id="mce-responses" class="clear"> {{--}} 
+		 {{--}} <div class="response" id="mce-error-response" style="display:none"></div> {{--}} 
+		 {{--}} <div class="response" id="mce-success-response" style="display:none"></div> {{--}} 
+	 {{--}} </div>  {{--}}    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups--> {{--}} 
+     {{--}} <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_8894bb3283174a9dc86c206d3_c43a5b8fb4" tabindex="-1" value=""></div> {{--}}      
+     {{--}} </div> {{--}} 
+ {{--}} </form> {{--}} 
+</div> {{--}} 
+<!--End mc_embed_signup--> {{--}} 
+          {%- else -%}          
+           {{--}} <!-- Begin Mailchimp Signup Form --> {{--}} 
+<div id="mc_embed_signup"> {{--}} 
+<form action="https://ishkar.us12.list-manage.com/subscribe/post?u=8894bb3283174a9dc86c206d3&amp;id=690c4239fb" method="post" id="mc-embedded-subscribe-form_newsletter" name="mc-embedded-subscribe-form" class="validate custom_mailchimp_form form-single-field" target="_blank" novalidate> {{--}} 
+     {{--}} <div id="mc_embed_signup_scroll"> {{--}} 
+{%- comment -%}	<h2>Subscribe</h2><div class="indicates-required"><span class="asterisk">*</span> indicates required</div>{%- endcomment -%}
+<div class="mc-field-group input-group">	{{--}}
+	{{--}}<input type="email" value="" name="EMAIL" placeholder="Enter your email here..." class="input-group__field newsletter__input required email" id="mce-EMAIL">{{--}}
+   {{--}} <span class="input-group__btn"><input type="submit" value="{%- if section.settings.btn_title != blank -%}{{section.settings.btn_title}}{%- else -%}{{ 'general.newsletter_form.submit' | t }}{%- endif -%}" name="subscribe" id="mc-embedded-subscribe" class="btn newsletter__submit"></span> {{--}} 
+</div>{{--}}
+	{{--}}<div id="mce-responses" class="clear">{{--}}
+		{{--}}<div class="response" id="mce-error-response" style="display:none"></div>{{--}}
+		{{--}}<div class="response" id="mce-success-response" style="display:none"></div>{{--}}
+	{{--}}</div>{{--}}    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->{{--}}
+    {{--}}<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_8894bb3283174a9dc86c206d3_690c4239fb" tabindex="-1" value=""></div>{{--}}    
+    {{--}}</div>{{--}}
+{{--}}</form>{{--}}
+{{--}}</div>{{--}}  
+<!--End mc_embed_signup--> {{--}} 
+          {%- endif -%}
+  {%- comment -%}
+          {%- if section.settings.custom_form_enable -%}
+          {%- else -%}{{ section.settings.custom_form }}{{--}}
+          {%- assign formId = 'coll_news_' | append: section.id -%}
+          {% form 'customer', id: formId, novalidate: 'novalidate', class: 'contact-form form-single-field' %}
+          {%- if form.posted_successfully? -%}
+          {{--}}<p class="form-message form-message--success" tabindex="-1" data-form-status>{{ 'general.newsletter_form.confirmation' | t }}</p>{{--}}
+          {%- endif -%}
+          {{--}}<input type="hidden" name="contact[tags]" value="newsletter">{{--}}
+          {{--}}<div class="input-group {% if form.errors %} input-group--error{% endif %}">{{--}}
+            {{--}}<input type="email" name="contact[email]" id="{{ formId }}-email" class="input-group__field{% if form.errors %} input--error{% endif %}" value="{{ form.email }}" placeholder="Enter your email here..." aria-label="{{ 'general.newsletter_form.email_placeholder' | t }}" aria-required="true" autocorrect="off" autocapitalize="off" {% if form.errors %} aria-invalid="true" aria-describedby="{{ formId }}-email-error" data-form-status {% endif %}>{{--}}
+            {{--}}<span class="input-group__btn"><button type="submit" class="btn" name="commit" id="{{section.id}}_Subscribe"><span>{%- if section.settings.btn_title != blank -%}{{section.settings.btn_title}}{%- else -%}{{ 'general.newsletter_form.submit' | t }}{%- endif -%}</span></button></span>{{--}}
+          {{--}}</div>{{--}}
+          {%- if form.errors contains 'email' -%}
+          {{--}}<span id="{{ formId }}-email-error" class="input-error-message">{{--}}
+            {{--}}<span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>{{--}}
+            {% include 'icon-error' %}
+            {{--}}<span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>{{--}}
+          {{--}}</span>{{--}}
+          {%- endif -%}
+          {% endform %}
+          {%- endif -%}{%- endcomment -%}
+            {{--}}</div></div></div></div>{{--}}
+  {%- if section.settings.hero_layout == 'fixed_width' -%}</div>{%- endif -%}
+</div>{{--}}
+{%- endif -%}

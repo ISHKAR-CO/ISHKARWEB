@@ -1,0 +1,37 @@
+{%- case block.settings.img_size -%}
+	{%- when 'medium' -%}
+	{%- assign img_grid = "half_div_cls" -%}
+	{%- assign text_grid = img_grid -%}
+	{%- when 'large' -%}
+    {%- assign img_grid = "large_left_cls" -%}
+    {%- assign text_grid = "large_right_cls" -%}
+{%- endcase -%}
+<div class="page-width">
+  <div class="d-flex text-img-two">
+    <div class="{{img_grid}} img_grid bg_img_clss">
+      <div class="img_content">
+        {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}        
+        <img class="fixed-width__image lazyload lazypreload"
+             data-src="{{block.settings.image | img_url:'600x600'}}"
+             src="{{block.settings.image | img_url:'100x100'}}"
+             data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+             data-sizes="auto" width="auto" height="auto" />
+        {%- if block.settings.shot_detail != blank or block.settings.image_title != blank -%}<div class="short_detail secondary-font">
+        {%- if block.settings.image_title != blank -%}<h5 class="s-title text-uppercase">{{ block.settings.image_title }}</h5>{%- endif -%}
+        {{- block.settings.shot_detail -}}
+        </div>{%- endif -%}
+        {%- comment -%}{%- if block.settings.shot_detail != blank -%}<div class="short_detail h3 s-title">{{ block.settings.shot_detail }}</div>{%- endif -%}{%- endcomment -%}
+        
+      </div>
+    </div>
+    <div class="{{text_grid}} text_grid">      
+      <div class="text_warpper_upper">          
+          {%- if block.settings.title != blank -%}<h3 class="s-title text-uppercase">{{ block.settings.title }}</h3>{%- endif -%}
+        </div>
+      {%- assign p_size =  block.settings.detail | size -%}
+      <div class="text_grid_warpper {% if p_size < 800 %}large-text{% endif %}">
+          {%- if block.settings.detail != blank -%}{{ block.settings.detail }}{%- endif -%}        
+      </div>
+    </div>
+  </div>
+</div>

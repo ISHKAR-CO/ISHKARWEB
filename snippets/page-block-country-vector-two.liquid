@@ -1,0 +1,38 @@
+<div class="inner-vector flex-wrap medium-up--one-third one-half" {{ block.shopify_attributes }}>{{--}}
+  {{--}}<a href="{{ block.settings.trip_link | default:'#'}}" title="{{ block.settings.detail_title }}" >{{--}}
+    {{--}}<div class="vector_div vector_warpper"><div class="vector_img">{{--}}
+      {{--}}<img class="lazyload" src="{{ block.settings.vector_img | img_url:'x100'}}" data-src="{{ block.settings.vector_img | img_url:'x500'}}" alt="{{ block.settings.title | default:"Vector" }} Image" width="auto" height="auto" />{{--}}
+      {%- if block.settings.roll_over_item == 'image' -%}
+      {%- if block.settings.roll_over_img != blank -%}
+      {{--}}<div class="roll_over_img lazyload" data-bgset="{{ block.settings.roll_over_img | img_url:'500x' }}"></div>{{--}}
+      {%- endif -%}
+      {%- else -%}
+      {%- if block.settings.video != blank -%}
+      {{--}}<div class="roll_over_img lazyload"><video class="vector_video" controls><source src="{{block.settings.video}}" type="video/mp4"></video></div>{{--}}
+      {%- endif -%}
+      {%- endif -%}</div>{{--}}
+    {%- if block.settings.title != blank -%}
+    {%- if block.settings.vector_text_position contains 'center' -%}<div class="text-center">{%- endif -%}    
+    {{--}}<div class="vector_title verticle-{{ block.settings.vector_text_align }} text-position-{{ block.settings.vector_text_position }}">{{ block.settings.title }}</div>{%- endif -%}
+    {%- if block.settings.vector_text_position contains 'center' -%}</div>{%- endif -%}    
+  {{--}}</div></a>{{--}}
+  {{--}}<div class="vector_div vector_warpper_detail">{{--}}
+    {%- if block.settings.detail_title != blank -%}<h5 class="detail_title">{{--}}
+    {{--}}<a href="{{ block.settings.trip_link | default:'#'}}" title="{{ block.settings.detail_title }}" >{{--}}
+    {{ block.settings.detail_title }}</a></h5>{%- endif -%}
+    {{--}}<ul class="detail_platda d-flex justify-content-between align-items-center">{{--}}
+      {%- if block.settings.detail_place != blank or block.settings.detail_artist != blank  -%}
+      {{--}}<li class="pl_at">{{--}}
+        {%- if block.settings.detail_place != blank -%}
+        {{--}}<div class="d_place">{{ block.settings.detail_place }} {% if block.settings.detail_artist != blank %}|{% endif %}</div>{%- endif -%}
+        {%- if block.settings.detail_artist != blank -%}<div class="d_artist">{{ block.settings.detail_artist }}</div>{%- endif -%}
+      {{--}}</li>{{--}}
+      {%- endif -%}
+      {%- if block.settings.detail_date != blank  -%}
+      {{--}}<li class="d_da">{{ block.settings.detail_date }}</li>{{--}}
+      {%- endif -%}
+    {{--}}</ul>{{--}}
+    {%- if block.settings.detail_detail != blank -%}
+    {{--}}<p class="detail_detail">{{- block.settings.detail_detail -}}</p>{{--}}
+    {%- endif -%}
+  {{--}}</div></div>{{--}}

@@ -1,0 +1,160 @@
+{% assign my_value = product.metafields.sf_story.image_1 %}
+{% assign my_value_video = product.metafields.sf_video_link.video_link %}
+{%- if my_value != blank or my_value_video != blank -%}
+<div class="product_left_part">
+  <div class="template_section">    
+    <div class="section-header text-center">    
+      <h2 class="h2-large s-title wc_s-title cls_title_hidden wc_s-title_left">
+      <span class="inner_warpper">{%- assign section_title = product.metafields.sf_story.section_title -%}
+        {%- if section_title -%}
+        {{ section_title }}{%- else -%}Detail
+        {%- endif -%}</span></h2>
+    </div>
+    
+    <div class="t-blocks_parent">      
+      <div class="inner_warpper">
+        {%- for i in (1..7) -%}        
+        {%- capture image -%}image_{{i}}{%- endcapture -%}        
+        {%- capture image_title -%}image_title_{{i}}{%- endcapture -%}
+        {%- capture image_detail -%}image_detail_{{i}}{%- endcapture -%}
+        {%- assign image = product.metafields.sf_story[image] -%}
+        {%- assign image_title = product.metafields.sf_story[image_title] -%}
+        {%- assign image_detail = product.metafields.sf_story[image_detail] -%}
+        {%- if image_title != blank or  image_detail != blank or image != blank -%}
+        <div class="template-blocks t-blocks d-flex justify-content-between" {{ block.shopify_attributes }}>
+          <div class="content_detail">
+            {%- if template contains 'product.travel' -%}
+            <div class="content_wrapper">{%- endif -%}
+              <h3 class="block-title">{{ image_title }}</h3>
+              {{- image_detail -}}
+              {%- if template contains 'product.travel' -%}</div>{%- endif -%}
+          </div>
+          <div class="content_img">            
+            {%- if image contains '[split_video]' -%}            
+              {%- assign image = image | split :'[split_video]' -%}
+              {%- assign image_video = image | last -%}
+              {%- assign image = image | first -%}
+              {%- if image_video contains '[split_location]' -%}            
+                {%- assign image_video = image_video | split :'[split_location]' -%}
+                {%- assign image_location = image_video | last -%}
+                {%- assign image_video = image_video | first -%}            
+              {%- endif -%}
+            {%- elsif  image contains '[split_location]' -%}            
+              {%- assign image = image | split :'[split_location]' -%}
+              {%- assign image_location = image | last -%}
+              {%- assign image = image | first -%}
+            {%- else -%}            
+              {%- assign image = image -%}
+            {%- endif -%}
+            {%- if image_video == blank -%}
+            <div class="inner_div">              
+            {%- endif -%}
+              {%- if image != blank -%}
+              {{ image | replace:'src=','data-src=' | replace:'<img','<img class="img_lazy lazyload"' | remove:'<figure>'| remove:'</figure>' }}
+              {%- endif -%}
+              {%- if image_video != blank -%}<video class="vector_video" controls><source src="{{image_video}}" type="video/mp4"></video>{%- endif -%}
+              {%- if image_location != blank -%}<div class="additional_text font-bold secondary-font">{{- image_location -}}</div>{%- endif -%}
+            {%- if image_video == blank -%}
+            </div>
+            {%- endif -%}
+
+          </div>
+        </div>
+        {%- assign image_video = '' -%}
+        {%- assign image_location = '' -%}
+        {%- assign image_video = '' -%}    
+        {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    
+     {%- if my_value_video != blank -%}
+    <div class="t-blocks template-vedio wc_template-vedio vimeo_video_player">
+      <div class="template-vedio-wrapper wc_video_box video--height-medium">        
+        {%- assign video_thumbnail = product.metafields.sf_video_link.video_thumbnail -%}
+        {%- if video_thumbnail -%}
+        {{ video_thumbnail | remove:'<figure>'| remove:'</figure>' | replace:'<img','<div class="img_lazy lazyload"' | replace:'>','></div>' | replace:'src','data-bgset' }}
+        {%- endif -%}
+        <div class="play-btn hide" data-vedio-type="{% if my_value_video contains 'vimeo.com' %}vimeo{%else%}youtube{% endif %}">{%- include 'icon-play' -%}</div>
+        
+        {% if my_value_video contains 'youtube.com/watch' %}
+        {%- assign video_id = my_value_video | split: 'v=' -%}
+        {%- assign video_id = video_id[1] | split: '&' | first -%}
+      <iframe class="video video--image_with_play" src="https://www.youtube.com/embed/{{video_id}}?autoplay=0&loop=1&playlist={{video_id}}" 
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      {% endif %}
+      
+      <!---------------------------------------------------- second ------------------------------------------------------->
+      {% if my_value_video contains 'youtu.be/' %}
+      {%- assign video_id = my_value_video | split: '.be/' -%}
+      {%- assign video_id = video_id[1] | split: '&' | first -%}
+      <iframe class="video video--image_with_play" src="https://www.youtube.com/embed/{{video_id}}?autoplay=0&loop=1&playlist={{video_id}}" 
+              frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      {% endif %}
+
+      <!---------------------------------------------------------- third --------------------------------------------------------------->
+      {% if my_value_video contains 'vimeo.com' %}
+      {%- assign video_id = my_value_video | split: '.com/' -%}
+      {%- assign video_id = video_id[1] | split: '/' | first -%}
+
+      <iframe class="video video--image_with_play" src="https://player.vimeo.com/video/{{ video_id }}?controls=0&autoplay=0&loop=0&playlist={{ video_id }}&autopause=0" 
+              frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" webkitallowfullscreen   mozallowfullscreen allowfullscreen></iframe>
+
+      {% endif %}
+        <div class="custom_player_div">
+          <div class="progress_bar">
+            <div class="total_pro"></div>
+            <div class="pro-ing"></div>
+          </div>
+          <div class="pp-time_div">
+            <div class="pp-time">
+              <div class="paush-play" data-controls="Video-product-inner-section">
+                <img class="playing-video play-btn-video" data-method="play" data-vedio-type="{% if my_value_video contains 'vimeo.com' %}vimeo{%else%}youtube{% endif %}" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhbHF1ZV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgNzUuMSA4MC44IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA3NS4xIDgwLjg7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7ZmlsbDpub25lO3N0cm9rZTojRkZGRkZGO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1taXRlcmxpbWl0OjEwO30KPC9zdHlsZT4KPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIxLDc5LjIgMSwxLjcgNzMsNDAuNCAiLz4KPC9zdmc+Cg==" alt="play">
+                <img class="paush-video" data-method="pause" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhbHF1ZV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgNzQgNzkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDc0IDc5OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbGw6bm9uZTtzdHJva2U6I0ZGRkZGRjtzdHJva2Utd2lkdGg6MjtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9Cjwvc3R5bGU+CjxnPgoJPGc+CgkJPHBhdGggY2xhc3M9InN0MCIgZD0iTTQ1LjIsMXY3N0g3M1YxSDQ1LjJ6IE0xLDc4aDI3LjhWMUgxVjc4eiIvPgoJPC9nPgo8L2c+Cjwvc3ZnPgo=" alt="pause">
+              </div>
+              <div class="remaining-time">00:00</div>
+            </div>
+            <div class="total-time">
+              <div class="tt-time"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+  </div>
+</div> 
+{%- endif -%}
+{%- assign my_value_title = product.metafields.sf_the_hinglights.image_1 -%}
+{%- if my_value_title -%}
+<div class="product_left_part">
+  <div class="template_section enble_bg">
+    <div class="section-header text-center">    
+      <h2 class="h2-large s-title wc_s-title cls_title_hidden wc_s-title_left"><span class="inner_warpper">Highlights</span></h2>
+    </div>
+    <div class="image-tiles-div d-flex flex-wrap">
+      {%- for i in (1..6) -%}
+      {%- capture image -%}image_{{i}}{%- endcapture -%}
+      {%- capture title -%}title_{{i}}{%- endcapture -%}
+      {%- capture detail -%}detail_{{i}}{%- endcapture -%}
+      {%- assign image = product.metafields.sf_the_hinglights[image] -%}
+      {%- assign title = product.metafields.sf_the_hinglights[title] -%}
+      {%- assign detail = product.metafields.sf_the_hinglights[detail] -%}
+      <div class="image-tiles one-half">        
+        {{ image | remove:'<figure>'| remove:'</figure>' | replace:'<img','<div class="image-wrapper lazyload""' | replace:'>','></div>' | replace:'src','data-bgset' }}
+        <div class="text-wrapper">
+          <h3 class="s-title">{{ title }}</h3>
+          <p>{{ detail }}</p>
+        </div>
+      </div>
+      {%- assign image = '' -%}
+      {%- assign title = '' -%}
+      {%- assign detail =  '' -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{%- endif -%}
+{%- assign my_value = '' -%}
+{%- assign my_value_video = '' -%}
+{%- assign my_value_title = '' -%}

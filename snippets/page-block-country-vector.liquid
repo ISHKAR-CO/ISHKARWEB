@@ -1,0 +1,27 @@
+<div class="inner-vector medium-up--one-third one-half" {{ block.shopify_attributes }}>
+  <div class="vector_warpper">
+    <div class="vector_img">
+      <img class="lazyload" src="{{ block.settings.vector_img | img_url:'x100'}}" data-src="{{ block.settings.vector_img | img_url:'x500'}}" alt="{{ block.settings.title | default:"Vector" }} Image" width="auto" height="auto" />
+    </div>
+    {%- if block.settings.title != blank -%}
+    {%- if block.settings.vector_text_position contains 'center' -%}<div class="text-center">{%- endif -%}    
+    <div class="vector_title verticle-{{ block.settings.vector_text_align }} text-position-{{ block.settings.vector_text_position }}">{{ block.settings.title }}</div>{%- endif -%}  
+    {%- if block.settings.vector_text_position contains 'center' -%}</div>{%- endif -%}
+    <div class="roll_over_div {% if block.settings.roll_over_img != blank %}lazyload{% endif %}" data-bgset="{{ block.settings.roll_over_img | img_url:'' }}">
+      <div class="inner_roll_over">
+        {%- if block.settings.detail != blank -%}<div class="roll_over_title">{{ block.settings.detail }}</div>{%- endif -%}
+        	{%- if block.settings.artist_detail != blank -%}
+        		{%- capture artist_name -%}
+        		{{- block.settings.artist_detail | newline_to_br -}}{%- endcapture -%}        
+                {%- assign artist_name = artist_name | split:'<br />' -%}
+                <ul class="artist {%if artist_name.size > 4 %}artist_grid{% endif %}">
+                  {%- for artist in artist_name -%}
+                  {%- if artist != blank-%}<li>{{- artist | strip -}}</li>{%- endif -%}
+                  {%- endfor -%}
+                </ul>
+        	{%- endif -%}
+        {%- if block.settings.country_pdf_link != blank -%}<a href="{{ block.settings.country_pdf_link }}" title="Click to {{ block.settings.country_pdf_link | split:'/' | last | capitailze }} download" download>{{- block.settings.country_link_text -}}</a>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>

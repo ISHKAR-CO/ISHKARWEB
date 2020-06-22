@@ -1,0 +1,123 @@
+{%- assign blog = blogs[block.settings.blog] -%}
+{%- assign limt = block.settings.pagination_limit -%}
+{% paginate blog.articles by limt %}
+<div class="event_list_wrap {% if template contains 'blog.journal' %}journal_list{% endif %}">
+  <div class="section-header text-center mb0 header_btm_yellow">
+    {%- if block.settings.sub_title != blank -%}
+    <h3 class="h4 s-subtitle">{{block.settings.sub_title}}</h3>
+    {%- endif -%}
+    {%- if block.settings.title != blank -%}
+    <div class="title_outer">
+      <h2 class="h3 s-title wc_s-title">
+        <span class="inner_warpper">{{block.settings.title}}</span>
+      </h2>      
+    </div>
+    {%- endif -%}
+    {%- assign detail_size = block.settings.detail | size %}
+    {%- if block.settings.detail != blank -%}
+    <div class="section-header-detail event_Detail_content {% if detail_size > 160 -%}max-size{%- endif -%}">{{ block.settings.detail }}</div>
+    {%- endif -%}
+  </div>
+  <div class="event_list_midle">
+    <div class="page-width">
+      <div class="country-parent country-parent-two d-flex grid grid--no-gutters flex-wrap" id="AjaxinateContainerevent">
+      {%- assign blog = blogs[block.settings.blog] -%}
+      {%- for article in blog.articles -%}
+        <div class="inner-vector flex-wrap medium-up--one-third one-half" {{ block.shopify_attributes }}>
+          <div class="vector_div vector_warpper">
+            <div class="vector_img vector_img_event">
+              <a href="{{ article.url }}">
+              {%- comment -%}
+              <img class="lazyload" src="{{ article.image | img_url:'x100'}}" data-src="{{ article.image | img_url:'x500'}}" alt="{{ block.settings.title | default:"Vector" }} Image" width="auto" height="auto" />              
+              {%- endcomment -%}  
+                {%- if article.image != blank -%}
+                <div class="bg_img_event lazyload" data-bgset="{% include 'bgset', image: article.image %}"
+                     data-sizes="auto"
+                     data-parent-fit="cover"
+                     style="background-image: url({{ article.image | img_url: '600x' }});">
+                </div>  
+                {%- endif -%}
+              </a>
+            </div>             
+          </div>
+          <div class="vector_div vector_warpper_detail">
+            {%- if article.title != blank -%}
+            <h5 class="detail_title"><a href="{{ article.url }}">{{ article.title }}</a></h5>
+            {%- endif -%}
+            <ul class="detail_platda d-flex justify-content-between align-items-center">
+              <li class="pl_at">                
+                {%- if block.settings.enable_type != blank -%}
+                {%- if template contains 'blog.event' -%}
+                <div class="d_place">Events 
+                  {% if article.tags.size > 0 %} |{% endif %}
+                </div>                
+                {%- endif -%}
+                <div class="d_artist">
+                  {%- for tag in article.tags -%}
+                  {{tag}}
+                  {%- endfor -%}
+                </div>
+                {%- endif -%}
+              </li>
+              {%- if block.settings.enable_date != blank  -%}
+              <li class="d_da">{{ article.published_at  | date: "%d.%m.%y"  }}</li>
+              {%- endif -%}
+            </ul>
+            
+            {%- if article.excerpt.size > 0 -%}
+            <p class="eventd_detail">
+              {{ article.excerpt }}
+            </p>
+            {%- else -%}
+            <p class="eventd_detail">
+              {{ article.content | strip_html | truncate: 150 }}
+            </p>
+            {%- endif -%}
+            {%- if block.settings.enable_more_btn -%}
+            <div class="blog_readmore">
+              <a href="{{ article.url }}">Read More {%- include 'icon-plus' -%}</a>
+            </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+      </div>
+    </div>
+    
+    {%- if block.settings.show_page_load -%}    
+    <div id="AjaxinatePaginationevent" class="page_load_div">
+      {% if paginate.next %}
+      <a href="{{ paginate.next.url }}" class="btn btn_frame">
+        {%- if block.settings.load_more_btn_frame != blank -%}
+        <img src="{{block.settings.load_more_btn_frame | img_url:'master'}}" class="frame_btn_img"/>
+        {%- endif -%}
+        {{block.settings.more_btn_label}}
+      </a>
+      {% endif %}
+    </div>    
+    {%- else -%}  
+    {%- if paginate.pages > 1 -%}
+    {%- include 'pagination', paginate: paginate -%}    
+    {%- endif -%}
+    {%- endif -%}
+    
+  </div>
+      
+</div>
+{% endpaginate %}
+
+{%- if block.settings.show_page_load -%}
+<script defer="defer">
+  document.addEventListener("DOMContentLoaded", function() {
+      var endlessScroll = new Ajaxinate({
+        container: '#AjaxinateContainerevent',
+        pagination: '#AjaxinatePaginationevent',
+        method: 'click',
+        offset: 1000
+      });
+    });
+  $(document).ready(function(){  
+  })
+</script>
+<script defer="defer" src="{{ 'ajaxinate.js' | asset_url }}"></script>
+{%- endif -%}

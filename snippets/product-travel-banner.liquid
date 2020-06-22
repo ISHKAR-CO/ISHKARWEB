@@ -1,0 +1,28 @@
+{%- assign pro_img = product.featured_image  -%}
+{%- if section.settings.image != blank -%}
+{%- assign pro_img = section.settings.image  -%}
+{%- endif -%}
+
+{%- if section.settings.image != blank -%}
+<div class="home-banner index-section--flush" data-section-id="{{ section.id }}" data-section-type="home-banner" >
+  <div class="image_banner banner-height-medium lazyload"
+       data-bgset="{% include 'bgset', image: pro_img %}"
+       data-sizes="auto"
+       data-parent-fit="cover"
+       {% if pro_img != "blank" %}data-aspect-ratio="{{ pro_img.aspect_ratio }}" {%- endif -%}
+       style="background-position: {{ section.settings.alignment }}; 
+              background-image: url('{{ pro_img | img_url: '300x300' }});
+              padding-bottom: calc(100% / {{ pro_img.aspect_ratio }});"></div>
+</div>
+{%- endif -%}
+
+{%- assign pro_title = product.title -%}
+{%- if product.title contains ':' -%}
+  {%- assign pro_subtitle = product.title | split: ':' | last -%}
+  {%- assign pro_title = product.title | split: ':' | first -%}
+{%- endif -%}
+
+<div class="section-header section-header-product text-center {% if section.settings.image == blank %}no-image-title{% endif %}">
+  {%- if pro_subtitle != blank -%}<h3 class="s-subtitle"><span class="inner_warpper">{{ pro_subtitle }}</span></h3>{%- endif -%}
+  <h2 class="h2-large s-title"><span class="inner_warpper">{{ pro_title }}</span></h2>
+</div>

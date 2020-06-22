@@ -1,0 +1,54 @@
+<div class="inner-vector medium-up--one-third one-half" {{ block.shopify_attributes }}>
+  <div class="vector_warpper">
+    <div class="vector_img vector_{{ block.settings.title | remove:'.' | downcase }} ">
+      <img class="lazyload" src="{{ block.settings.vector_img | img_url:'x100'}}" data-src="{{ block.settings.vector_img | img_url:'x557'}}" alt="{{ block.settings.title | default:"Vector" }} Image" width="auto" height="auto" />
+      <div class="span_div">
+        {%- comment -%}
+        {%- for i in (1..3) -%}
+		{%- capture dot -%}dot_{{i}}{%- endcapture -%}
+        {%- if block.settings[dot] -%}
+        {%- for j in (1..block.settings[dot]) -%}
+        	<span class=" {%- if i == 1 -%}objects_span object_span_{{j}}
+                         {%- elsif i == 2 -%}stories_span stories_span_{{j}}
+                         {%- elsif i == 3 -%}travel_span travel_span_{{j}}
+                         {%- else -%}
+                         {%- endif -%} "></span>
+        {%- endfor -%}
+        {%- endif -%}
+        {%- endfor -%}
+        {%- endcomment -%}
+        
+        {%- for i in (1..6) -%}
+        	{%- capture object_dot -%}object_dot_{{i}}{%- endcapture -%}
+        	{%- capture object_top -%}object_dot_{{i}}_1{%- endcapture -%}
+        	{%- capture object_left -%}object_dot_{{i}}_2{%- endcapture -%}
+        	{%- if block.settings[object_dot] -%}
+        		<span class=" objects_span objets_span object_span_{{i}}" style="top:{{ block.settings[object_top] }}%; left:{{ block.settings[object_left] }}%"></span>	
+        	{%- endif -%}
+        {%- endfor -%}
+        {%- for i in (1..3) -%}
+        	{%- capture object_dot -%}story_dot_{{i}}{%- endcapture -%}
+        	{%- capture object_top -%}story_dot_{{i}}_1{%- endcapture -%}
+        	{%- capture object_left -%}story_dot_{{i}}_2{%- endcapture -%}
+        	{%- if block.settings[object_dot] -%}
+        		<span class=" stories_span histoires_span stories_span_{{i}}" style="top:{{ block.settings[object_top] }}%; left:{{ block.settings[object_left] }}%"></span>	
+        	{%- endif -%}
+        {%- endfor -%}
+        {%- for i in (1..3) -%}
+        	{%- capture object_dot -%}travel_dot_{{i}}{%- endcapture -%}
+        	{%- capture object_top -%}travel_dot_{{i}}_1{%- endcapture -%}
+        	{%- capture object_left -%}travel_dot_{{i}}_2{%- endcapture -%}
+        	{%- if block.settings[object_dot] -%}
+        		<span class=" travel_span voyages_span travel_span_{{i}}" style="top:{{ block.settings[object_top] }}%; left:{{ block.settings[object_left] }}%"></span>	
+        	{%- endif -%}
+        {%- endfor -%}
+        
+        
+      </div>
+    </div>
+    {%- if block.settings.title != blank -%}
+    {%- if block.settings.vector_text_position contains 'center' -%}<div class="text-center">{%- endif -%}    
+    <div class="vector_title verticle-{{ block.settings.vector_text_align }} text-position-{{ block.settings.vector_text_position }}">{{ block.settings.title }}</div>{%- endif -%}  
+    {%- if block.settings.vector_text_position contains 'center' -%}</div>{%- endif -%}    
+  </div>
+</div>

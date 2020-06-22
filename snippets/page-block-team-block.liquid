@@ -1,0 +1,16 @@
+<div class="t-blocks_parent">      
+  <div class="inner_warpper">
+    {%- for block in section.blocks -%}
+    {%- if block.type == "team-block" -%}
+    <div class="template-blocks t-blocks d-flex justify-content-between" id="{{ block.settings.categry_title  | strip_html | handleize | default : block.id }}" {{ block.shopify_attributes }} >
+      {%- if block.settings.image != blank -%}
+      <div class="content_img"><div class="inner_div"><img class="img_lazy lazyload" data-src="{{block.settings.image | img_url:'630x'}}" src="{{block.settings.image | img_url:'100x'}}"></div></div>
+      {%- endif -%}
+      <div class="content_detail">
+        <div class="content_wrapper"><h3 class="block-title">{{ block.settings.title }}</h3> <h4 class="block-subtitle s-subtitle s-not">{{ block.settings.subtitle }}</h4>{{- block.settings.detail -}}</div></div>
+    </div>
+    {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+    

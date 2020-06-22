@@ -1,0 +1,66 @@
+{%- assign count = 0 -%}
+<div class="page-width category-width block-loadmore-parent">
+  <ul class="people-grid grid grid--uniform block-loadmore-grid">
+    {%- for block in section.blocks -%}
+    {%- if block.type == block_type -%}
+    {%- for i in (1..3) -%}
+    {%- capture image -%}image_{{i}}{%- endcapture -%}
+    {%- capture image -%}image_{{i}}{%- endcapture -%}
+    {%- capture title -%}title_{{i}}{%- endcapture -%}
+    {%- capture location -%}location_{{i}}{%- endcapture -%}
+    {%- capture category -%}category_{{i}}{%- endcapture -%}
+    {%- capture link -%}link_{{i}}{%- endcapture -%} 	
+    {%- if block.settings[image] != blank -%}
+    {%- assign count = count | plus : 1 -%}
+    <li class="people-item grid__item medium-up--one-third one-half {% if count > 9 %} hide_block {% endif %}" {{ block.shopify_attributes }}>
+      <div class="people-wrap">        
+        <div class="img_wrap">
+          <a href="{{block.settings[link] | default:'#' }}" title="{{ block.settings[title] | default:'#' }}" >
+          <img class="lazyload" src="{{ block.settings[image] | img_url:'x100'}}" data-src="{{ block.settings[image] | img_url:'400x400'}}" alt="{{ block.settings[title] }} Image" width="auto" height="auto" />
+          </a>
+        </div>        
+        <div class="text_wrap">
+          {%- if block.settings[title] != blank -%}
+          <div class="title-wrap">
+            <h6 class="s-title s-not text-uppercase">{{ block.settings[title] }}</h6>
+            {%- if block.settings[location] != blank -%} 
+            <div class="location">{{ block.settings[location] }}</div>
+            {%- endif -%}
+          </div>                  
+          {%- endif -%}
+          {%- if block.settings[category] != blank or block.settings[link] != blank -%}
+          <div class="cate-link-wrap">
+            {%- if block.settings[category] != blank -%}
+            <div class="s-subtitle s-not">{{ block.settings[category] }}</div>
+            {%- endif -%}
+            {%- if block.settings[link] != blank -%}
+            <div class="link"><a href="{{block.settings[link]}}"  title="{{ block.settings[title] | default:'#' }}">READ MORE +</a></div>
+            {%- endif -%}
+          </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </li>
+    {%- endif -%}
+    {%- endfor -%}
+    {%- endif -%}
+    {%- endfor -%}
+  </ul>
+  {%- if count > 9 -%}
+  <a href="#" class="btn btn_frame block-loadmore">    
+    {%- if section.settings.load_more_btn_frame != blank -%}
+    <img src="{{section.settings.load_more_btn_frame | img_url:'master'}}" class="frame_btn_img"/>
+    {%- endif -%}
+    {{section.settings.more_btn_label}}    
+  </a>
+  {%- else -%}
+  <div class="blank-space">
+    <a href="#" class="btn btn_frame block-loadmore hide">
+      {%- if section.settings.load_more_btn_frame != blank -%}
+      <img src="{{section.settings.load_more_btn_frame | img_url:'master'}}" class="frame_btn_img"/>
+      {%- endif -%}
+      {{section.settings.more_btn_label}}    
+    </a>
+  </div>
+  {%- endif -%}
+</div>

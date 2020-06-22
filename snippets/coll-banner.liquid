@@ -1,0 +1,6 @@
+<div class="collecction_banner">
+  <div class="collection_img lazyload" data-bg="{{ image | img_url: '300x300' }}" data-bgset="{% include 'bgset', image: image %}" data-sizes="auto"                   
+       style="background-image: url('{{ image | img_url: '300x300' }}');" ></div>
+  <div class="coll_title h3 s-title">0{{ forloop.index }}/<br/>{{ title }}</div>
+  <a href="{{ link }}" class="full-width-link"></a>
+</div>

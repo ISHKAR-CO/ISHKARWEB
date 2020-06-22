@@ -1,0 +1,10 @@
+<li class="testi_li" {{ block.shopify_attributes }}>{{--}}
+  {%- if template contains 'page.travel' -%}
+  {{--}}<div class="test_wrapper">{%- endif -%}
+  {%- if block.settings.comment != blank -%}<div class="user_comment">{{- block.settings.comment -}}</div>{%- endif -%}
+  {%- if block.settings.title != blank -%}<div class="user_name{{--}} 
+    {%- if template contains 'page.travel' %} h6 text-uppercase
+    {{--}}{%- else %} h3{%- endif -%}">{{- block.settings.title -}},<span class="mark"> {{ block.settings.title_mark }}</span></div>{%- endif -%}
+  {%- unless template contains 'page.travel' -%}<div class="see-more-btn">See More</div>{%- endunless -%}
+  {%- if template contains 'page.travel' -%}</div>{%- endif -%}
+</li>{{--}}

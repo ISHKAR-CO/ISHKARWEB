@@ -1,0 +1,240 @@
+{%- assign country-vector = 0 -%}
+{%- assign country-vector-dot = 0 -%}
+{%- assign country-vector-two = 0 -%}
+{%- assign testimonial = 0 -%}
+{%- assign image-block = 0 -%}
+{%- assign artisans-part = 0 -%}
+{%- assign desiners-part = 0 -%}
+{%- assign organization-part = 0 -%}
+{%- assign artist-part = 0 -%}
+{%- assign travel-part = 0 -%}
+{%- assign grid-block = 0 -%}
+{%- assign text-img-block = 0 -%}
+{%- assign t-img-bg = 0 -%}
+{%- assign team-block = 0 -%}
+<div class="page-blocks-div {% if template contains 'page.travel' %}cls_travel_page{% endif %}{% if template contains 'page.impact' %}cls_impact_page{% endif %}">{{--}}
+{%- for block in section.blocks -%}
+{%- case block.type -%}
+  {%- when 'newsletter' -%}
+  {%- if block.settings.Show_section -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+    {%- include 'page-block-newsletter' -%}</div>
+  {%- endif -%}
+  {%- when 'hero' -%}
+  <div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+    {%- include 'page-block-hero' -%}</div>{{--}}
+  {{--}}
+  {%- when 'text-grid' -%}
+  {{--}}<div class="page-block-{{block.type}} block-div home-grid-section" {{ block.shopify_attributes }}>{{--}}
+    {{--}}<div class="page-width ">{{--}}
+      {{--}}<ul class="grid hgs-grid hgs-grid-slider" data-scroll-id="text-grid-{{ block.id }}">{{--}}
+        {%- include 'page-block-text-grid' -%}</ul></div></div>{{--}}
+  
+  {%- when 'video' -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+    {%- include 'page-block-video' -%}</div>{{--}}
+  
+  {%- when 'text-img' -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+    {%- include 'page-block-text-img' -%}</div>{{--}}
+  
+  {%- when 'text-img-two' -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+    {%- include 'page-block-text-img-two' -%}</div>{{--}}
+  
+  {%- when 'text-img-block' -%}
+  {%- if text-img-block < 1 -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+    {%- include 'page-block-text-img-block' -%}</div>{{--}}
+  {%- assign text-img-block = text-img-block | plus:1 -%}
+  {%- endif -%}
+  
+  {%- when 't-img-bg' -%}
+  {%- if t-img-bg < 1 -%}
+  {{--}}<div class="page-block-{{block.type}} block-div {%- if section.settings.t-img-bg-show %} with-bg-color{% endif -%}{%- if section.settings.t-img-bg--border-show %} border-top{% endif -%}">{{--}}
+    {%- include 'page-block-t-img-bg' -%}</div>
+  {%- assign t-img-bg = t-img-bg | plus:1 -%}
+  {%- endif -%}
+  
+  {%- when 'team-block' -%}
+  {%- if team-block < 1 -%}
+  {{--}}<div class="page-block-{{block.type}} block-div">{{--}}
+    {%- include 'page-block-team-block' -%}</div>{{--}}
+  {%- assign team-block = team-block | plus:1 -%}
+  {%- endif -%}
+  
+  {%- when 'team-banner' -%}  
+  {{--}}<div class="page-block-{{block.type}} block-div">{{--}}
+    {%- include 'page-block-team-banner' -%}</div>{{--}}
+  
+  {%- when 'image-block' -%}
+  {%- if image-block < 1 -%}
+  <div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+    <div class="page-width"><ul class="grid image-block-ul grid--uniform">{{--}}
+      {%- for block in section.blocks -%}
+      {%- if block.type == 'image-block' -%}
+        {{--}}<li class="grid__item medium-up--one-third one-half image-block-li" {{ block.shopify_attributes }}>{%- include 'page-block-image-block' -%}</li>{{--}}
+      {%- endif -%}
+        {%- endfor -%}</ul></div>{{--}}
+  {{--}}</div>{{--}}
+  {%- assign image-block = image-block | plus:1 -%}
+  {%- endif -%}
+  
+  {%- when 'title-sub-heading' -%}
+  {{--}}<div class="page-block-{{block.type}} block-div {% if block.settings.top_space %}top_space_zero{% endif %}{% if block.settings.header_bg == 'full_bg' %} header_full_yellow{% endif %}" {{ block.shopify_attributes }}>{{--}}
+    {%- include 'page-block-title-sub-heading' -%}</div>{{--}}
+  
+  {%- when 'country-vector' -%}
+  {%- if country-vector < 1 -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+    {{--}}<div class="page-width">{{--}}
+      {{--}}<div class="country-parent d-flex grid grid--no-gutters flex-wrap">{{--}}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'country-vector' -%}
+          	{%- include 'page-block-country-vector' -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {{--}}</div></div></div>{{--}}
+  {%- assign country-vector = country-vector | plus :1 -%}
+  {%- endif -%}
+  
+  {%- when 'country-vector-dot' -%}
+  {%- if country-vector-dot < 1 -%}
+  {{--}}<div class="page-block-{{block.type}} block-div div-yellow-full" {{ block.shopify_attributes }}><div class="page-width">{{--}}
+      {{--}}<div class="country-parent country-vector-dot d-flex grid grid--no-gutters flex-wrap">{{--}}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'country-vector-dot' -%}
+          	{%- include 'page-block-country-vector-dot' -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {{--}}</div></div></div>{{--}}
+  {%- assign country-vector-dot = country-vector-dot | plus :1 -%}
+  {%- endif -%}
+  
+  {%- when 'vector-dot' -%}  
+  {{--}}<div class="page-block-{{block.type}} block-div text-center" {{ block.shopify_attributes }}>{{--}}
+    {{--}}<div class="page-width">{%- include 'page-block-vector-dot' -%}</div></div>{{--}}
+  
+  {%- when 'country-vector-two' -%}
+  {%- if country-vector-two < 1 -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+    {{--}}<div class="page-width"><div class="country-parent country-parent-two d-flex grid grid--no-gutters flex-wrap">{{--}}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'country-vector-two' -%}
+          	{%- include 'page-block-country-vector-two' -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {{--}}</div></div></div>{{--}}
+  {%- assign country-vector-two = country-vector-two | plus :1 -%}
+  {%- endif -%}
+  
+  {%- when 'banner' -%}
+  <div class="page-block-{{block.type}} block-div {%- if block.settings.enable_second_design != true %} verticle_banner_div{% endif -%}" {{ block.shopify_attributes }}>{{--}}
+    {%- include 'page-block-banner' -%}</div>{{--}}
+
+  {%- when 'bloglist' -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+	{%- include 'page-block-blog' -%}</div>
+  
+  {%- when 'faqs' -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+	{%- include 'page-block-faq' -%}</div>{{--}}
+  
+  {%- when 'testimonial' -%}
+  {%- if testimonial < 1 -%}
+  {{--}}<div class="page-block-{{block.type}}{%- if template contains 'page.travel' -%}-two{% endif %} block-div" {{ block.shopify_attributes }}>{{--}}
+    {{--}}<div class="page-width">{{--}}
+      {{--}}<ul class="testimonial{%- if template contains 'page.travel' -%}-two d-flex flex-wrap{% endif %}">{{--}}
+        {%- assign test_count = 0 -%}
+        {%- for block in section.blocks -%}
+        {%- if block.type == 'testimonial' -%}
+        {%- include 'page-block-testimonial' -%}
+        {%- assign test_count = test_count | plus : 1 -%}
+        {%- endif -%}        
+        {%- endfor -%}
+      {{--}}</ul>{{--}}
+      {%- if template contains 'page.travel' and test_count > 3 -%}<div {{ test_count }} class="see-more-btn-two h3 text-uppercase">See More</div>{%- endif -%}
+    {{--}}</div>{{--}}
+  {{--}}</div>{{--}}
+  {%- assign testimonial = testimonial | plus :1 -%}
+  {%- endif -%}
+  
+  {%- when 'map' -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+    {%- if block.settings.map_html != blank -%}
+    {%- if block.settings.map_div -%}<div class="page-width">{%- endif -%}
+    {{--}}<div class="map-div">{{--}}
+      {%- if block.settings.map_link != blank -%}<a href="{{- block.settings.map_link -}}">{%- endif -%}
+    	{{ block.settings.map_html }}
+      {%- if block.settings.map_link != blank -%}</a>{%- endif -%}
+    {{--}}</div>{{--}}    
+    {%- if block.settings.map_div -%}</div>{%- endif -%}
+    {%- endif -%}
+  {{--}}</div>{{--}}
+  
+  {%- when 'artisans-part' -%}
+  {%- if artisans-part < 1 -%}
+  {%- assign block_type = block.type -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{%- include 'page-block-people' -%}</div>{{--}}
+  {%- assign artisans-part = artisans-part | plus :1 -%}
+  {%- endif -%}
+  
+  {%- when 'desiners-part' -%}
+  {%- if desiners-part < 1 -%}
+  {%- assign block_type = block.type -%}
+  {{--}}<div class="page-block-{{block.type}} block-div with-bg-color_" {{ block.shopify_attributes }}>{%- include 'page-block-people' -%}</div>{{--}}
+  {%- assign desiners-part = desiners-part | plus :1 -%}
+  {%- endif -%}
+  
+  {%- when 'organization-part' -%}
+  {%- if organization-part < 1 -%}
+  {%- assign block_type = block.type -%}
+  {{--}}<div class="page-block-{{block.type}} block-div with-bg-color_" {{ block.shopify_attributes }}>{%- include 'page-block-people' -%}</div>{{--}}
+  {%- assign organization-part = organization-part | plus :1 -%}
+  {%- endif -%}
+  
+  {%- when 'artist-part' -%}
+  {%- if artist-part < 1 -%}
+  {%- assign block_type = block.type -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{%- include 'page-block-people' -%}</div>{{--}}
+  {%- assign artist-part = artist-part | plus :1 -%}
+  {%- endif -%}
+  
+  {%- when 'travel-part' -%}
+  {%- if travel-part < 1 -%}
+  {%- assign block_type = block.type -%}
+  {{--}}<div class="page-block-{{block.type}} block-div with-bg-color_" {{ block.shopify_attributes }}>{%- include 'page-block-people' -%}</div>{{--}}
+  {%- assign travel-part = travel-part | plus :1 -%}
+  {%- endif -%}
+  
+  {%- when 'feature-product' -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{%- include 'page-block-feature-product' -%}</div>{{--}}
+  
+  {%- when 'about-block' -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{%- include 'page-block-about-block' -%}</div>{{--}}
+  
+  {%- when 'image-video' -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{%- include 'page-block-image-video' -%}</div>{{--}}
+  
+  {%- when 'grid-block' -%}
+  {%- if grid-block < 1 -%}
+  {{--}}<div class="page-block-{{block.type}} block-div" {{ block.shopify_attributes }}>{{--}}
+    {{--}}<div class="event_list_midle block-loadmore-parent"><div class="page-width">{{--}}
+        {%- include 'page-block-grid-block' -%}        
+      {{--}}</div></div></div> {%- assign grid-block = grid-block | plus :1 -%} 
+  {%- endif -%}
+   {%- else -%}
+{%- endcase -%}{%- endfor -%}</div>
+{%- unless template contains 'index' -%}
+<script defer="defer">$(window).scroll(function() { if( $('[data-scroll-id]').length > 0 ){ $('[data-scroll-id]').each(function(){ callForScroll($(this), $(window).scrollTop()); }) } });
+  function callForScroll(_this , scrollTop){ var oTop = _this.offset().top - window.innerHeight;
+    if ( scrollTop > oTop && _this.hasClass('animatedCount') != true) { _this.find('.counter-value').each(function() { var $this = $(this), countTo = $this.data('count'); $({ countNum: 0, countText:$this.data('text') }).animate({ countNum: countTo },{ duration: 2000, easing: 'swing',
+          step: function() { if( this.countNum > 1 ){ $this.text(Math.floor(this.countNum)); } }, complete: function() { $this.text(this.countText);
+            //alert('finished');
+          } }); }); _this.addClass('animatedCount'); } }  
+  $(function () { /*$("div").slice(0, 4).show();*/ $(".block-loadmore-parent .block-loadmore").on('click', function (e) { e.preventDefault(); var offset_top = ( $(this).offset().top - ( $('.site-header-main').outerHeight() ) ), slice_value = $(window).outerWidth() < 992 ? 2 : 3; $(this).closest('.block-loadmore-parent').find("li:hidden").slice(0, slice_value).slideDown(); if ($(this).closest('.block-loadmore-parent').find("li:hidden").length == 0) { $(this).fadeOut('slow'); $(this).closest('.block-loadmore-parent').append('<div class="blank-space div-loaded"></div>'); } $('html,body').animate({ scrollTop: offset_top }, 1500); }); });  
+  $(document).ready(function(){ addLoadMoreBtn(); var prevArrow = '<button class="custom-arrow slick-prev slick-arrow" aria-label="Previous" type="button" aria-disabled="false"><img class="lazyload" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAjCAYAAAAXMhMjAAACgElEQVRYR82XTYhNcRjGf4/PlCwsLMSGhY8FaywsUIqUKBsRjUgSkmmkWBCpaZTULHxtZaIoZHyskYUisSCLSSkWNsLw6NW5us6ce86ZO/fcO2/d1X3P+//1/s/zvO8R4zBs7wG6NF7YbM8F5gOPa0wdh7M9E/gITEk3qmNwtpcAd4HZjW6v7XC2LwPrgFkFr5TbAmc7utMN7AMmFEANA0eAc5XC2Z4KnAd2lRDeJWBQ0rW2CMJ2P7A7B+wL8FLSyqycqjvnBmDfgP2SLuZ1tCVwto9JOpk+yHYWXHjZkKTvRVfdNJztpcCpRHl9kg7lwPWGbUh6WARU//+o4Wz3AHuBOXWFHklalQHXI+n0aIBGDZdYwVogFJUVNyRtahaiKRO2vRDYBkS38mKBpLeVw9l/jXki8LPEYb+Afklhri2P/94526+TATyvxEmLgPdlVFeiVmaKbK8ADgCbSxQ5AzyXNFAid8wpAXccOFGiUreksyXyWpby71ptXwcWJ7+8A2JO3pT0uWUUDQqN8DnbsfS9AEKpeXEhhrqkN1VBNjRh25NKKnZY0uQqAAsnRLLbh8H25QBclbSj1YCFcLUDbc8ANgJXgPRznYWr74rtsJ4QRggoolfS4XTnkjn8StKtZrpaunNZxW1vjb0sMeMtGXC1lelDsqLfkfS7LOiY4IoOabDPrQaeSfpa9Hwn4ILpB/BOUozAhlE13CAQncqLJ8AGSZ/SSVXDRf2dQO63QgI1BNyT1FWDrBQupfDtSRdDREVxFBhoG1wK9D6wpoiwI3B1xv4UCFFMzwLtKFwA2Z4GLAcetFUQRdeWuupYHpYBt4EYlSNm5GjqVZZrez1w8A+U2c2mpVNV6wAAAABJRU5ErkJggg==" alt="Previous Arrow" width="auto" height="auto" /></button>', nextArrow = '<button class="custom-arrow slick-next slick-arrow rotated--180deg" aria-label="Next" type="button" aria-disabled="false"><img class="lazyload" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAjCAYAAAAXMhMjAAACgElEQVRYR82XTYhNcRjGf4/PlCwsLMSGhY8FaywsUIqUKBsRjUgSkmmkWBCpaZTULHxtZaIoZHyskYUisSCLSSkWNsLw6NW5us6ce86ZO/fcO2/d1X3P+//1/s/zvO8R4zBs7wG6NF7YbM8F5gOPa0wdh7M9E/gITEk3qmNwtpcAd4HZjW6v7XC2LwPrgFkFr5TbAmc7utMN7AMmFEANA0eAc5XC2Z4KnAd2lRDeJWBQ0rW2CMJ2P7A7B+wL8FLSyqycqjvnBmDfgP2SLuZ1tCVwto9JOpk+yHYWXHjZkKTvRVfdNJztpcCpRHl9kg7lwPWGbUh6WARU//+o4Wz3AHuBOXWFHklalQHXI+n0aIBGDZdYwVogFJUVNyRtahaiKRO2vRDYBkS38mKBpLeVw9l/jXki8LPEYb+Afklhri2P/94526+TATyvxEmLgPdlVFeiVmaKbK8ADgCbSxQ5AzyXNFAid8wpAXccOFGiUreksyXyWpby71ptXwcWJ7+8A2JO3pT0uWUUDQqN8DnbsfS9AEKpeXEhhrqkN1VBNjRh25NKKnZY0uQqAAsnRLLbh8H25QBclbSj1YCFcLUDbc8ANgJXgPRznYWr74rtsJ4QRggoolfS4XTnkjn8StKtZrpaunNZxW1vjb0sMeMtGXC1lelDsqLfkfS7LOiY4IoOabDPrQaeSfpa9Hwn4ILpB/BOUozAhlE13CAQncqLJ8AGSZ/SSVXDRf2dQO63QgI1BNyT1FWDrBQupfDtSRdDREVxFBhoG1wK9D6wpoiwI3B1xv4UCFFMzwLtKFwA2Z4GLAcetFUQRdeWuupYHpYBt4EYlSNm5GjqVZZrez1w8A+U2c2mpVNV6wAAAABJRU5ErkJggg==" alt="Next Arrow" width="auto" height="auto" /></button>'; $('.iv-image-slider').slick({ dots: false, infinite: false, speed: 650, slidesToShow: 1, slidesToScroll: 1, prevArrow : prevArrow, nextArrow : nextArrow, adaptiveHeight:true }); });
+  function cuntryVectoreEqulize(){ var _array = []; $('.country-parent-two .vector_warpper_detail .detail_detail').css('min-height',''); if($(window).width() < 512) return; $('.country-parent-two .vector_warpper_detail .detail_detail').each(function(){ _array.push($(this).outerHeight()); }); $('.country-parent-two .vector_warpper_detail .detail_detail').css('min-height',Math.max.apply(null, _array)+'px'); }
+  $(window).on('load resize',function(){ addLoadMoreBtn(); cuntryVectoreEqulize() });
+  function addLoadMoreBtn(){ if( $('.blank-space').length > 0){ $('.blank-space:not(".div-loaded")').each(function(){ if( !$(this).hasClass('div-loaded') ){ if( $(window).outerWidth() < 992 && $(window).outerWidth() > 511 ){ if( $(this).closest('.block-loadmore-parent').find('.people-grid .people-item').length > 4 || $(this).closest('.block-loadmore-parent').find('.inner-vector').length > 4 ){ $(this).find('.hide').removeClass('hide'); $(this).removeClass('blank-space'); } } if( $(window).outerWidth() < 512 ){ if( $(this).closest('.block-loadmore-parent').find('.people-grid .people-item').length > 2 || $(this).closest('.block-loadmore-parent').find('.inner-vector').length > 2 ){ $(this).find('.hide').removeClass('hide'); $(this).removeClass('blank-space'); } } if( $(window).outerWidth() > 991 ){ $(this).find('.block-loadmore').addClass('hide'); } } }) } }</script>
+{%- endunless -%}
