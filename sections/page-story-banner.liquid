@@ -1,0 +1,206 @@
+<div class="home-banner" data-section-id="{{ section.id }}" data-section-type="home-banner"> {{--}} 
+  <div class="image_banner banner-height-medium lazyload" data-img-ratio="{{ section.settings.image.aspect_ratio }}" {{ -}} 
+        {{- }}  data-height-full="false" {{--}} 
+        {{- }} data-bgset="{% include 'bgset', image: section.settings.image %}" {{--}}  
+        {{- }} data-sizes="auto" {{--}} 
+        {{- }} data-parent-fit="cover" {{--}} 
+        {{- }} style="background-position: {{ section.settings.alignment }}; background-image: url('{{ section.settings.image | img_url: '300x300' }});"></div> {{--}} 
+   {{--}} <div class="banner-caption text-alignment-{{ section.settings.text_postion }}"> {{--}} 
+     {{--}} <div class="page-width"> {{--}} 
+       {{--}} <div class="banner_warpper banner-font"> {{--}} 
+        {%- if section.settings.subtitle != blank -%}
+         {{--}} <h3 class="h2 b-subtitle">{{- section.settings.subtitle -}}</h2>{%- endif -%}
+        {%- if section.settings.title != blank -%}
+         {{--}} <h2 class=" h1 b-title">{{- section.settings.title | remove:'<p>' | remove:'</p>' | replace:'em>','span>' -}}</h1> {{--}} 
+        {%- endif -%}
+       {{--}} </div> {{--}} 
+     {{--}} </div> {{--}} 
+   {{--}} </div> {{--}} 
+  {%- if section.settings.top_center_text != blank -%}<div class="s-subtitle top_center_text">{{ section.settings.top_center_text }}</div>{%- endif -%}
+  {%- if section.blocks.size < -1 -%}
+   {{--}} <div class="banner-caption-category banner-caption-collection small--hide"> {{--}} 
+    {%- for block in section.blocks -%}
+    {%- if block.type == "category" -%}
+     {{--}} <div class="category_div h4" {{ block.shopify_attributes }} > {{--}} 
+       {{--}} <a href="#{{ block.settings.link | handleize }}"> {{--}} 
+        {{- block.settings.title -}}</a>
+     {{--}} </div> {{--}} 
+    {%- endif -%}
+    {%- endfor -%}    
+   {{--}} </div> {{--}} 
+  {%- endif -%}
+</div> {{--}} 
+ {{--}} 
+<div class="verticle_till"> {{--}} 
+  {%- if section.settings.coll_subtitle != blank or section.settings.coll_title != blank or section.settings.coll_detail != blank -%}
+   {{--}} <div class="page-width"> {{--}} 
+     {{--}} <div class="collectin_detail_cls text-left"> {{--}} 
+       {{--}} <div class="section-header"> {{--}} 
+        {%- if section.settings.coll_subtitle != blank -%}
+         {{--}} <h4 class="s-subtitle">{{ section.settings.coll_subtitle }}</h4> {{--}} 
+        {%- endif -%}
+        {%- if section.settings.coll_title != blank -%}
+         {{--}} <h3 class="s-title s-title-no-boder">{{ section.settings.coll_title }}</h3> {{--}} 
+        {%- endif -%}
+       {{--}} </div> {{--}} 
+       {{--}} <div class="warpper"> {{--}} 
+        {%- if section.settings.coll_detail != blank -%}
+         {{--}} <div class="detail"> {{--}} 
+          {{- section.settings.coll_detail -}}
+          {%- comment -%}
+
+          {%- assign coll_detail = section.settings.coll_detail | replace:'</p>','</p>_' | split:'_' -%}
+          {%- for ptag in coll_detail -%}       
+          {%- if forloop.first -%}
+          {%- assign _ptag = ptag | remove : '<p>' | remove : '</p>' -%}        
+          {%- assign first_char = _ptag | slice: 0 -%}        
+          {%- assign ptag_size = _ptag | size -%}
+          {%- assign remain = _ptag | slice : 1 , ptag_size -%}        
+          <p><span class="single-char">{{ first_char }}</span>{{ remain }}</p>
+          {%- else -%}
+          {{ ptag }}
+          {%- endif -%}
+          {%- endfor -%}
+
+          {%- endcomment -%}
+         {{--}} </div>{%- endif -%}
+       {{--}} </div>  {{--}}  
+     {{--}} </div> {{--}} 
+   {{--}} </div> {{--}} 
+  {%- endif -%}
+ {{--}} 
+  {%- assign current_coll = collection.handle -%}
+ {{--}} 
+  {%- if section.blocks.size > 0 -%}
+<div class="banner-caption-category banner-caption-collection small--hide"> {{--}} 
+     {{--}} <div class="page-width"> {{--}} 
+      {%- for block in section.blocks -%}
+      {%- if block.type == "category" -%}
+       {{--}} <div class="category_div h4" {{ block.shopify_attributes }} > {{--}} 
+        {%- assign collection = collections[block.settings.collection] -%}
+         {{--}} <a href="{{ block.settings.link }}"> {{--}} 
+           {{--}} <span class="number">{{- block.settings.title_number -}}</span><br/>
+          {{- block.settings.title -}}</a> {{--}} 
+       {{--}} </div> {{--}} 
+      {%- endif -%}
+      {%- endfor -%}
+     {{--}} </div> {{--}} 
+   {{--}} </div> {{--}} 
+  {%- endif -%}
+</div> {{--}} 
+{% schema %}
+  {
+    "name": "Stroy Banner",
+	"class":"index-section--flush index-section",
+    "settings": [
+		{
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image"
+		},
+		{
+			"type":"select",
+			"id":"alignment",
+			"label":"Select Image alignmnet",
+			"default":"center",
+			"options":[
+				{
+				  "value":"top center",
+				  "label":"Top"
+				},
+				{
+				  "value":"center",
+				  "label":"Middle"
+				},
+				{
+				  "value":"bottom center",
+				  "label":"Bottom"
+				}
+			]
+		},
+		{
+			"type":"text",
+			"id":"subtitle",
+			"label":"Enter Subtitle",
+			"default":"Venture"
+		},
+		{
+			"type":"richtext",
+			"id":"title",
+			"label":"Enter title",
+			"default":"<p>Beyond <em>The</em> Headlines</p>"
+		},
+		{
+			"type":"select",
+			"id":"text_postion",
+			"label":"Select Text Postion",
+			"default":"left-bottom",
+			"options":[
+				{
+				  "value":"left-bottom",
+				  "label":"Left Bottom"
+				},
+				{
+				  "value":"left-center",
+				  "label":"Left Center"
+				},
+				{
+				  "value":"center",
+				  "label":"center"
+				},
+				{
+				  "value":"center-bottom",
+				  "label":"Center Bottom"
+				}
+			]
+		},
+		{
+			"type":"header",
+			"content":"Detail Part"
+		},
+		{
+			"type":"text",
+			"id":"coll_title",
+			"label":"Enter Title",
+			"default":"Title"
+		},
+		{
+			"type":"text",
+			"id":"coll_subtitle",
+			"label":"Enter Subtitle",
+			"default":"Subtitle"
+		},
+		{
+			"type":"richtext",
+			"id":"coll_detail",
+			"label":"Enter Detail"
+		}
+	],
+	"blocks":[
+	  {
+		"type":"category",
+		"name":"Category Block",
+		"settings":[
+		  {
+			"type":"url",
+			"id":"link",
+			"label":"Provide link for blocks",
+			"info":"Provide same link as blocks section have"
+		  },
+		  {
+			"type":"text",
+			"id":"title_number",
+			"label":"Enter Number"
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter Title"
+		  }
+		]
+	  }
+	]
+  }
+{% endschema %} {{--}}
+{% stylesheet %}{% endstylesheet %} {{--}}
+{% javascript %}{% endjavascript %} {{--}}

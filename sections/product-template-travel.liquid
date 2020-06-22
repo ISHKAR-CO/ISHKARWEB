@@ -1,0 +1,181 @@
+{%- include 'product-template' -%}
+{% schema %}
+  {
+    "name": "Product pages",
+    "settings": [
+	{
+      "type": "checkbox",
+      "id": "show_quantity_selector",
+      "label":"Show quantity selector",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_labels",
+      "label":"Show variant labels",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label":"Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_payment_button",
+      "label":"Show dynamic checkout button",
+      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label":"Show social sharing buttons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Media",
+      "info": "Learn more about [media types](https://help.shopify.com/manual/products/product-media)"
+    },
+    {
+      "type": "select",
+      "id": "media_size",
+      "label":"Size",
+      "options": [
+        {
+          "value": "small",
+          "label":"Small"
+        },
+        {
+          "value": "medium",
+          "label":"Medium"
+        },
+        {
+          "value": "large",
+          "label":"Large"
+        },
+        {
+          "value": "full",
+          "label":"Full-width"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_image_zoom",
+      "label":"Enable image zoom",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_looping",
+      "label":"Enable video looping",
+      "default": false
+    },
+	{
+		"type":"header",
+		"content":"Prodcut Accordian"
+	},
+	{
+		"type":"checkbox",
+		"id":"show_who",
+		"label":"Show Who tab",
+		"default":true
+	},
+	{
+		"type":"text",
+		"id":"who_title",
+		"label":"Enter title"		
+	},
+	{
+		"type":"richtext",
+		"id":"who_detail",
+		"label":"Enter Detail"		
+	},
+	{
+		"type":"checkbox",
+		"id":"show_what",
+		"label":"Show What tab",
+		"default":true
+	},
+	{
+		"type":"text",
+		"id":"what_title",
+		"label":"Enter title"		
+	},
+	{
+		"type":"richtext",
+		"id":"what_detail",
+		"label":"Enter Detail"		
+	},
+	{
+		"type":"checkbox",
+		"id":"show_where",
+		"label":"Show Where tab",
+		"default":true
+	},
+	{
+		"type":"text",
+		"id":"where_title",
+		"label":"Enter title"		
+	},
+	{
+		"type":"richtext",
+		"id":"where_detail",
+		"label":"Enter Detail"		
+	},
+	{
+		"type":"checkbox",
+		"id":"show_when",
+		"label":"Show When tab",
+		"default":true
+	},
+	{
+		"type":"text",
+		"id":"when_title",
+		"label":"Enter title"		
+	},
+	{
+		"type":"richtext",
+		"id":"when_detail",
+		"label":"Enter Detail"		
+	},
+	{
+		"type":"checkbox",
+		"id":"show_redmore",
+		"label":"Show Readmore",
+		"default":true
+	},
+	{
+		"type":"text",
+		"id":"redmore_title",
+		"label":"Return title"		
+	},
+	{
+		"type":"url",
+		"id":"readmore_link",
+		"label":"Provide PDF Link"		
+	},
+	{
+		"type":"header",
+		"content":"Pre Order"		
+	},
+	{
+		"type":"richtext",
+		"id":"pre_order_text",
+		"label":"Enter Pre order text",
+		"info":"For this text show in accordian you have to add 'pre-order' tag in that particular product",
+		"default":"<p>If an item is out of stock you are able to preorder the item, so that you're first in line when its back. Once you have preordered an item we guarantee the order to be shipped to you within four months. If the item is delivered outside this window we will provide you with your money back. Often the order will arrive well within this four month period. Contact preorders@ishkar.com for more accurate information on when orders for this product are likely to be ready.</p>"
+	}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

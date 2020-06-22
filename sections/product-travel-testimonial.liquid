@@ -1,0 +1,121 @@
+{% assign my_value = product.metafields.sf_testimonial.image_1 %}
+    {% if my_value %}<div class="section-header text-center">    
+  <h2 class="h2-large s-title wc_s-title cls_title_hidden wc_s-title_left"><span class="inner_warpper">{{ section.settings.title }}</span></h2>
+</div>
+{%- comment -%}
+<div class="page-block-testimonial block-div">    
+      <ul class="testimonial">
+        {%- assign test_count = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'testimonial' -%}
+    {%- include 'page-block-testimonial' -%}{%- endif -%}
+        {%- endfor -%}</ul></div>{%- endcomment -%}
+<div class="t-blocks_parent testimonial-block">
+  <div class="inner_warpper">
+    {%- comment -%}
+    {%- for block in section.blocks -%}
+          {%- if block.type == 'testimonial-two' -%}
+    <div class="template-blocks t-blocks d-flex justify-content-between" {{ block.shopify_attributes }}>      
+      <div class="content_img"><div class="inner_div">
+        <img class="img_lazy lazyload" src="{{ block.settings.image | img_url:'x100' }}" data-src="{{ block.settings.image | img_url:'x800' }}" alt="OUR DESTINATION. Image" width="auto" height="auto" />
+        </div></div>
+      <div class="content_detail"><div class="content_wrapper">{%- if block.settings.comment != blank -%}
+        <p>{{ block.settings.comment }}</p>
+        {%- endif -%}{%- if block.settings.title != blank -%}
+        <h3 class="block-title">{{ block.settings.title }}</h3>{%- endif -%}
+        </div></div>
+    </div>
+    {%- endif -%}
+    {%- endfor -%}
+    {%- endcomment -%}
+    
+    
+    {%- for i in (1..5) -%}
+     {%- capture image -%}image_{{i}}{%- endcapture -%}        
+        {%- capture image_title -%}author_name_{{i}}{%- endcapture -%}
+        {%- capture image_detail -%}quote_{{i}}{%- endcapture -%}
+        {%- assign image = product.metafields.sf_testimonial[image] -%}
+        {%- assign image_title = product.metafields.sf_testimonial[image_title] -%}
+        {%- assign image_detail = product.metafields.sf_testimonial[image_detail] -%}
+    {%- if image != blank or image_title != blank -%}
+    <div class="template-blocks t-blocks d-flex justify-content-between">      
+      <div class="content_img"><div class="inner_div">
+        {{ image| replace:'src=','data-src=' | replace:'<img','<img class="img_lazy lazyload"' | remove:'<figure>'| remove:'</figure>' }}        
+        </div></div>
+      <div class="content_detail"><div class="content_wrapper">{%- if image_detail != blank -%}
+        <p>{{ image_detail }}</p>
+        {%- endif -%}{%- if image_title != blank -%}
+        <h3 class="block-title">{{ image_title }}</h3>{%- endif -%}
+        </div></div>
+    </div>{%- endif -%}
+        {%- assign image = '' -%}
+        {%- assign image_title = '' -%}
+        {%- assign image_detail = '' -%}
+    {%- endfor -%}
+  </div>
+</div>
+{%- endif -%}
+{%- assign my_value = '' -%}
+{% schema %}
+  {
+    "name": "Testimonial",
+	"class":"product_left_part",
+    "settings": [    
+		{
+		  "type":"text",
+		  "id":"title",
+		  "label":"Enter title",
+		  "default":"Testimonial"
+		}
+	],
+	"blocks":[
+      {
+          "type":"testimonial",
+          "name":"Testimonial",
+          "settings":[
+            {
+              "type":"textarea",
+              "id":"comment",
+              "label":"User Comment",
+              "default":"Can't tell friends enough about our journey with ISHKAR in Afghanistan. I particularly enjoyed the small group vibe, the variety of activities and the warmth and hospitality of the leaders.  If you are thinking about it, don't. Just go."
+            },
+            {
+              "type":"textarea",
+              "id":"title",
+              "label":"User Name",
+              "default":"- Annette Widtz, ISHKAR traveler 2019"
+            }
+          ]
+      },
+      {
+          "type":"testimonial-two",
+          "name":"Testimonial 2",
+          "settings":[
+            {
+              "type":"image_picker",
+              "id":"image",
+              "label":"Upload Image 600x400,1200x800"
+            },
+            {
+              "type":"textarea",
+              "id":"comment",
+              "label":"User Comment",
+              "default":"Can't tell friends enough about our journey with ISHKAR in Afghanistan. I particularly enjoyed the small group vibe, the variety of activities and the warmth and hospitality of the leaders.  If you are thinking about it, don't. Just go."
+            },
+            {
+              "type":"textarea",
+              "id":"title",
+              "label":"User Name",
+              "default":"- Annette Widtz, ISHKAR traveler 2019"
+            }
+          ]
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

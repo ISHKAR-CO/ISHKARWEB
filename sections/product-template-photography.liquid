@@ -1,0 +1,149 @@
+{%- include 'product-template' -%}
+
+{% schema %}
+{
+  "name": "Product Photography",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_quantity_selector",
+      "label":"Show quantity selector",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_labels",
+      "label":"Show variant labels",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label":"Show vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_payment_button",
+      "label":"Show dynamic checkout button",
+      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label":"Show social sharing buttons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content":"Media",
+      "info": "Learn more about [media types](https://help.shopify.com/manual/products/product-media)"
+    },
+    {
+      "type": "select",
+      "id": "media_size",
+      "label":"Size",
+      "options": [
+        {
+          "value": "small",
+          "label":"Small"
+        },
+        {
+          "value": "medium",
+          "label":"Medium"
+        },
+        {
+          "value": "large",
+          "label":"Large"
+        },
+        {
+          "value": "full",
+          "label":"Full-width"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_image_zoom",
+      "label":"Enable image zoom",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_looping",
+      "label":"Enable video looping",
+      "default": false
+    },
+	{
+		"type":"header",
+		"content":"Prodcut Accordian"
+	},
+	{
+		"type":"checkbox",
+		"id":"show_shipping",
+		"label":"Show Frame",
+		"default":true
+	},
+	{
+		"type":"text",
+		"id":"shipping_title",
+		"label":"Frame title"		
+	},
+	{
+		"type":"richtext",
+		"id":"shipping_detail",
+		"label":"Frame Detail"		
+	},
+	{
+		"type":"checkbox",
+		"id":"show_return",
+		"label":"Show Print Quality",
+		"default":true
+	},
+	{
+		"type":"text",
+		"id":"return_title",
+		"label":"Print Quality title"
+	},
+	{
+		"type":"richtext",
+		"id":"return_detail",
+		"label":"Print Quality Detail"		
+	},
+	{
+		"type":"checkbox",
+		"id":"show_dimension",
+		"label":"Show Dimensions",
+		"default":true
+	},
+	{
+		"type":"text",
+		"id":"dimension_title",
+		"label":"Dimensions title"
+	},
+	{
+		"type":"richtext",
+		"id":"dimension_detail",
+		"label":"Dimensions Detail"		
+	},
+	{
+		"type":"checkbox",
+		"id":"show_production_time",
+		"label":"Show Production time",
+		"default":true
+	},
+	{
+		"type":"text",
+		"id":"production_time_title",
+		"label":"Production time title"
+	},
+	{
+		"type":"richtext",
+		"id":"production_time_detail",
+		"label":"Production time Detail"		
+	}
+  ]
+}
+{% endschema %}

@@ -1,0 +1,97 @@
+<div data-section-id="{{ section.id }}" data-section-type="home-grid-section" class="home-grid-section">
+  <div class="page-width">
+    <ul class="grid hgs-grid hgs-grid-slider">
+      {%- for block in section.blocks -%}
+      	{%- if block.type == "text" -%}
+      <li class="grid__item medium-up--one-third hgs-grid-items">
+        <div class="wrapper">
+          {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" title="{{ block.settings.link  | split:'/' | last | replace:'-',' ' | capitalize }}">{%- endif -%}
+          {%- if block.settings.subtitle != blank -%}
+          <h4 class="s-subtitle">{{ block.settings.subtitle }}</h4>
+          {%- endif -%}{%- if block.settings.title != blank -%}
+          <h3 class="s-title">{{ block.settings.title }}</h3>{%- endif -%}{%- if block.settings.detail != blank -%}
+          <div class="text">
+            {{ block.settings.detail }}
+          </div>{%- endif -%}
+          {%- if block.settings.link != blank -%}</a>{%- endif -%}
+        </div>
+      </li>
+      {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Home Grid",
+	"class":"index-section",
+    "settings": [],
+	"blocks":[
+	 {
+		"type":"text",
+		"name":"Text Grid",
+		"settings":[
+		 {
+			"type":"text",
+			"id":"subtitle",
+			"label":"Enter Subtitle"
+		 },
+		 {
+			"type":"text",
+			"id":"title",
+			"label":"Enter title"
+		 },
+		 {
+			"type":"textarea",
+			"id":"detail",
+			"label":"Enter detail"
+		 },
+		 {
+			"type":"url",
+			"id":"link",
+			"label":"Provide Link"
+		 }
+	   ]
+	 }
+	],
+	"presets":[
+	  {
+      "name": "Home Grid",
+      "category": "Text",
+	  "blocks":[
+		 { 
+          "type": "text",
+		   "settings":{
+				"subtitle":"Explore our",
+				"title":"TRAVEL",
+				"detail":"Lorem Upsum: Visit some of the least visited corners of the world quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid exshskd hskjhkfhks jisdisj dsjhs hdsjhs."
+			}
+        },
+		 { 
+          "type": "text",
+		   "settings":{
+				"subtitle":"Shop our",
+				"title":"OBJECTS",
+				"detail":"Lorem Upsum: Visit some of the least visited corners of the world quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid exshskd hskjhkfhks jisdisj dsjhs hdsjhs."
+			}
+        },
+		 { 
+          "type": "text",
+		   "settings":{
+				"subtitle":"Discover our",
+				"title":"STORIES",
+				"detail":"Lorem Upsum: Visit some of the least visited corners of the world quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid exshskd hskjhkfhks jisdisj dsjhs hdsjhs."
+			}
+        }
+	  ]
+    }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

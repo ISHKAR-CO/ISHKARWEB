@@ -1,0 +1,1165 @@
+{%- include 'page-block-section' -%}
+{% schema %}
+  {
+    "name": "Travel",
+	"class":"index-section--flush",
+    "settings": [],
+	"blocks":[
+	  {
+		"type":"banner",
+		"name":"Banner",
+		"settings":[
+          {
+              "type":"image_picker",
+              "id":"image",
+              "label":"Upload Image"
+          },
+          {
+              "type":"select",
+              "id":"alignment",
+              "label":"Select Image alignmnet",
+              "default":"center",
+              "options":[
+                  {
+                    "value":"top center",
+                    "label":"Top"
+                  },
+                  {
+                    "value":"center",
+                    "label":"Middle"
+                  },
+                  {
+                    "value":"bottom center",
+                    "label":"Bottom"
+                  }
+              ]
+          },
+		  {
+			"type":"checkbox",
+			"id":"drop_down_arrow",
+			"label":"Show Scroll Arrow",
+			"default":false
+		  },
+          {
+              "type":"header",
+              "content":"Detail Part"
+          },
+          {
+              "type":"select",
+              "id":"content_alignment",
+              "label":"Select Content alignment",
+              "default":"left",
+			  "options":[
+				{
+				  "label":"Align left",
+				  "value":"left"
+				},
+				{
+				  "label":"Align right",
+				  "value":"right"
+				}
+			  ]
+          },
+          {
+              "type":"checkbox",
+              "id":"content_bg_color",
+              "label":"Show background color",
+              "default": true
+          },
+          {
+              "type":"checkbox",
+              "id":"content_border_bottom",
+              "label":"Show bottom border",
+              "default": true
+          },
+          {
+              "type":"text",
+              "id":"coll_title",
+              "label":"Enter Title",
+              "default":"Title"
+          },
+          {
+              "type":"text",
+              "id":"coll_subtitle",
+              "label":"Enter Subtitle",
+              "default":"Subtitle"
+          },
+          {
+              "type":"richtext",
+              "id":"coll_detail",
+              "label":"Enter Detail"
+          },
+		  {
+			"type":"header",
+			"content":"Video"
+		  },
+		  {
+			"type":"checkbox",
+			"id":"show_bg_video",
+			"label":"Show Video in Background"
+		  },
+		  {
+			"type":"video_url",
+			"id":"video_link",
+			"label":"Video link",
+            "accept": [ "youtube","vimeo"],
+            "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"mobile_image",
+			"label":"Upload Image for Mobile"
+		  }
+		]
+	  },
+		{
+		 "type":"hero",
+		 "name":"Hero Banner",
+		 "settings":[
+			{
+      "type": "image_picker",
+      "id": "image",
+      "label":"Image"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label":"Image alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "top",
+          "label":"Top"
+        },
+        {
+          "value": "center",
+          "label":"Middle"
+        },
+        {
+          "value": "bottom",
+          "label":"Bottom"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_layout",
+      "label": "Layout",
+      "default": "full_width",
+      "options": [
+        {
+          "label": "Full width",
+          "value": "full_width"
+        },
+        {
+          "label":"Fixed width",
+          "value": "fixed_width"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_size",
+      "label": "Section height",
+      "default": "medium",
+      "options": [
+        {
+          "label": "Adapt to image",
+          "value": "adapt"
+        },
+        {
+          "label":"Extra Small",            
+          "value": "x-small"
+        },
+        {
+          "label":"Small",
+          "value": "small"
+        },
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        },
+        {
+          "label":"Extra Large",
+          "value": "x-large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text size",
+      "default": "medium",
+      "options": [
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label":"Heading",
+      "default":"Image with text overlay"
+    },
+	{
+      "type":"text",
+      "id":"subheading",
+      "label":"Subheading",
+	  "default":"Image with text overlay"
+	},
+    {
+      "type": "richtext",
+      "id": "text",
+      "label":"Text",
+      "default":"<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label":"Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label":"Button link"
+    }
+		 ]
+		},
+	{
+		"type":"text-grid",
+		"name":"Text Grid",		
+		"settings":[
+		 {
+			"type":"header",
+			"content":"Grid 1"
+	
+		 },
+		 {
+			"type":"text",
+			"id":"subtitle_1",
+			"label":"Enter Subtitle"
+		 },
+		 {
+			"type":"text",
+			"id":"title_1",
+			"label":"Enter title"
+		 },
+		 {
+			"type":"textarea",
+			"id":"detail_1",
+			"label":"Enter detail"
+		 },
+		 {
+			"type":"url",
+			"id":"link_1",
+			"label":"Provide Link"
+		 },
+		 {
+			"type":"header",
+			"content":"Grid 2"
+	
+		 },
+		 {
+			"type":"text",
+			"id":"subtitle_2",
+			"label":"Enter Subtitle"
+		 },
+		 {
+			"type":"text",
+			"id":"title_2",
+			"label":"Enter title"
+		 },
+		 {
+			"type":"textarea",
+			"id":"detail_2",
+			"label":"Enter detail"
+		 },
+		 {
+			"type":"url",
+			"id":"link_2",
+			"label":"Provide Link"
+		 },
+		 {
+			"type":"header",
+			"content":"Grid 3"
+	
+		 },
+		 {
+			"type":"text",
+			"id":"subtitle_3",
+			"label":"Enter Subtitle"
+		 },
+		 {
+			"type":"text",
+			"id":"title_3",
+			"label":"Enter title"
+		 },
+		 {
+			"type":"textarea",
+			"id":"detail_3",
+			"label":"Enter detail"
+		 },
+		 {
+			"type":"url",
+			"id":"link_3",
+			"label":"Provide Link"
+		 }
+		]
+	},
+	{
+		"type":"video",
+		"name":"Video",		
+		"settings":[
+			{
+      "type": "image_picker",
+      "id": "image",
+      "label":"Cover image",
+      "info": "Always shown on mobile devices"
+    },
+ 	{
+      "type": "checkbox",
+      "id": "full_width",
+      "label":"Show in full width",
+	  "default":false
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label":"Image alignment",
+      "default": "center center",
+      "options": [
+        {
+          "label":"Top left",
+          "value": "left top"
+        },
+        {
+          "label":"Top center",
+          "value": "center top"
+        },
+        {
+          "label":"Top right",
+          "value": "right top"
+        },
+        {
+          "label":"Middle left",
+          "value": "left center"
+        },
+        {
+          "label":"Middle center",
+          "value": "center center"
+        },
+        {
+          "label":"Middle right",
+          "value": "right center"
+        },
+        {
+          "label":"Bottom left",
+          "value": "left bottom"
+        },
+        {
+          "label":"Bottom center",
+          "value": "center bottom"
+        },
+        {
+          "label":"Bottom right",
+          "value": "right bottom"
+        }
+      ]
+    },
+    {
+      "type": "video_url",
+      "id": "video_link",
+      "label":"Video link",
+      "accept": [
+        "youtube"
+      ],
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label":"Show overlay",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label":"Style",
+      "default": "image_with_play",
+      "options": [
+        {
+          "label":"Image with play button",
+          "value": "image_with_play"
+        },
+        {
+          "label":"Background video",
+          "value": "background"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label":"Video height",
+      "default": "medium",
+      "options": [
+        {
+          "label":"Small",
+          "value": "small"
+        },
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "video_title",
+      "label":"Heading"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label":"Text size",
+      "default": "medium",
+      "options": [
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        }
+      ]
+    }
+	 	]
+	},
+	{
+		"type":"text-img",
+		"name":"Image with Text",
+		"settings":[
+			{
+				"type":"image_picker",
+				"id":"image",
+				"label":"Upload Image"
+			},
+			{
+				"type":"select",
+				"id":"img_size",
+				"label":"Select Image Grid",
+				"default":"medium",
+				"options":[
+					{
+						"value":"medium",
+						"label":"Medium"
+					},
+					{
+						"value":"large",
+						"label":"Large"
+					}
+				]
+			},
+			{
+				"type":"text",
+				"id":"title",
+				"label":"Enter title"
+			},
+			{
+				"type":"text",
+				"id":"subtitle",
+				"label":"Enter subtitle"
+			},
+			{
+				"type":"header",
+				"content":"Text Part"
+			},
+			{
+				"type":"header",
+				"content":"Text Part 1"
+			},
+			{
+				"type":"text",
+				"id":"title_1",
+				"label":"Enter title"
+			},
+			{
+				"type":"textarea",
+				"id":"detail_1",
+				"label":"Enter detail"
+			},
+			{
+				"type":"url",
+				"id":"readmore_link_1",
+				"label":"Provide Readmore link"
+			},
+			{
+				"type":"header",
+				"content":"Text Part 2"
+			},
+			{
+				"type":"text",
+				"id":"title_2",
+				"label":"Enter title"
+			},
+			{
+				"type":"textarea",
+				"id":"detail_2",
+				"label":"Enter detail"
+			},
+			{
+				"type":"url",
+				"id":"readmore_link_2",
+				"label":"Provide Readmore link"
+			},
+			{
+				"type":"header",
+				"content":"Text Part 3"
+			},
+			{
+				"type":"text",
+				"id":"title_3",
+				"label":"Enter title"
+			},
+			{
+				"type":"textarea",
+				"id":"detail_3",
+				"label":"Enter detail"
+			},
+			{
+				"type":"url",
+				"id":"readmore_link_3",
+				"label":"Provide Readmore link"
+			},
+			{
+				"type":"header",
+				"content":"Text Part 4"
+			},
+			{
+				"type":"text",
+				"id":"title_4",
+				"label":"Enter title"
+			},
+			{
+				"type":"textarea",
+				"id":"detail_4",
+				"label":"Enter detail"
+			},
+			{
+				"type":"url",
+				"id":"readmore_link_4",
+				"label":"Provide Readmore link"
+			},
+			{
+				"type":"header",
+				"content":"Text Part 5"
+			},
+			{
+				"type":"text",
+				"id":"title_5",
+				"label":"Enter title"
+			},
+			{
+				"type":"textarea",
+				"id":"detail_5",
+				"label":"Enter detail"
+			},
+			{
+				"type":"url",
+				"id":"readmore_link_5",
+				"label":"Provide Readmore link"
+			}
+		]
+	},
+	{
+		"type":"title-sub-heading",
+		"name":"Title and Sub Heading",
+		"settings":[
+			{
+				"type":"text",
+				"id":"title",
+				"label":"Enter title",
+				"default":"Block title"
+			},
+			{
+				"type":"text",
+				"id":"subtitle",
+				"label":"Enter subtitle",
+				"default":"Block Subtitle"
+			},
+			{
+				"type":"textarea",
+				"id":"detail",
+				"label":"Enter detail",
+				"default":"Donec ut ultrices sapien. Sed convallis mattis mauris, nec luctus lectus feugiat at."
+			},
+			{
+				"type":"checkbox",		
+				"id":"top_space",
+				"label":"Remove Top Space"
+			},
+			{
+				"type":"select",
+				"id":"header_bg",
+				"label":"Background",
+				"options":[
+					{
+						"value":"top_bg",
+						"label":"Background Above Title"
+					},
+					{
+						"value":"below_bg",
+						"label":"Background Below Title"
+					},
+					{
+						"value":"none_bg",
+						"label":"Background None"
+					}
+				]
+			}
+		]
+	},
+	{
+		"type":"country-vector",
+		"name":"Country Vector",
+		"settings":[
+			{
+              "type":"header",
+              "content":"Vector Part"
+			},
+			{
+              "type":"image_picker",
+              "id":"vector_img",
+			  "label":"Upload Image"
+			},
+			{
+              "type":"text",
+              "id":"title",
+			  "label":"Enter Country Name"
+			},
+			{
+              "type":"checkbox",
+              "id":"vector_text_align",
+			  "label":"Enable text verticle",
+			  "default":false
+			},
+			{
+              "type":"select",
+              "id":"vector_text_position",
+			  "label":"Select text position",
+			  "options":[
+				{
+				  "label":"Top Left",
+				  "value":"top-left"
+				},
+				{
+				  "label":"Bottom Left",
+				  "value":"bottom-left"
+				},
+				{
+				  "label":"Top Center",
+				  "value":"top-center"
+				},
+				{
+				  "label":"Bottom Center",
+				  "value":"bottom-center"
+				},
+				{
+				  "label":"Right Bottom",
+				  "value":"right-bottom"
+				}
+			  ]
+			},
+			{
+              "type":"header",
+              "content":"Rollover Part"
+			},
+			{
+              "type":"image_picker",
+              "id":"roll_over_img",
+			  "label":"Upload Image"
+			},
+			{
+              "type":"textarea",
+              "id":"detail",
+			  "label":"Enter text"
+			},
+			{
+              "type":"textarea",
+              "id":"artist_detail",
+			  "label":"Enter Artist Name",
+			  "info":"Give enter after you enter name"
+			},
+			{
+              "type":"text",
+              "id":"country_link_text",
+			  "label":"Enter Label for Pdf download"
+			},
+			{
+              "type":"url",
+              "id":"country_pdf_link",
+			  "label":"Provide Pdf link here"
+			}
+		]
+	},
+	{
+		"type":"country-vector-two",
+		"name":"Country Vector 2",
+		"settings":[
+			{
+              "type":"header",
+              "content":"Vector Part"
+			},
+			{
+              "type":"image_picker",
+              "id":"vector_img",
+			  "label":"Upload Image"
+			},
+			{
+              "type":"text",
+              "id":"title",
+			  "label":"Enter Country Name"
+			},
+			{
+              "type":"checkbox",
+              "id":"vector_text_align",
+			  "label":"Enable text verticle",
+			  "default":false
+			},
+			{
+              "type":"select",
+              "id":"vector_text_position",
+			  "label":"Select text position",
+			  "options":[
+				{
+				  "label":"Top Left",
+				  "value":"top-left"
+				},
+				{
+				  "label":"Top Right",
+				  "value":"top-right"
+				},
+				{
+				  "label":"Bottom Left",
+				  "value":"bottom-left"
+				},
+				{
+				  "label":"Top Center",
+				  "value":"top-center"
+				},
+				{
+				  "label":"Bottom Center",
+				  "value":"bottom-center"
+				},
+				{
+				  "label":"Right Bottom",
+				  "value":"right-bottom"
+				}
+			  ]
+			},
+			{
+              "type":"header",
+              "content":"Rollover Part"
+			},
+			{
+				"type":"radio",
+				"id":"roll_over_item",
+				"label":"Select Image Or Video for Rollover",
+				"options":[
+					{
+						"label":"Image",
+						"value":"image"
+					},
+					{
+						"label":"Video",
+						"value":"video"
+					}
+				]
+			},
+			{
+              "type":"image_picker",
+              "id":"roll_over_img",
+			  "label":"Upload Image"
+			},
+			{
+				"type":"url",
+				"id":"video",
+				"label":"Add Video Link Here",
+				"info":"Add .mp4 link only"
+			},
+			{
+              "type":"header",
+              "content":"Detail Part"
+			},
+			{
+              "type":"text",
+              "id":"detail_title",
+			  "label":"Enter Title",
+			  "default":"Music"
+			},
+			{
+              "type":"url",
+              "id":"trip_link",
+			  "label":"Provide link here"
+			},
+			{
+              "type":"text",
+              "id":"detail_place",
+			  "label":"Enter Place Name",
+			  "default":"Mali"
+			},
+			{
+              "type":"text",
+              "id":"detail_artist",
+			  "label":"Enter artist name",
+			  "default":"Djenné"
+			},
+			{
+              "type":"text",
+              "id":"detail_date",
+			  "label":"Enter date",
+			  "default":"March 2020"
+			},
+			{
+              "type":"textarea",
+              "id":"detail_detail",
+			  "label":"Enter Detail",
+			  "default":"LOREM upsom turient semper mattis condimentum sagittis senectus lobortis tristique, velit tempor phasellu ictumst nibh, sapien tempor condimentum."
+			}
+		]
+	},
+	{
+		"type":"testimonial",
+		"name":"Testimonial",		
+		"settings":[
+		  {
+			"type":"textarea",
+			"id":"comment",
+			"label":"User Comment",
+			"default":"Can't tell friends enough about our journey with ISHKAR in Afghanistan. I particularly enjoyed the small group vibe, the variety of activities and the warmth and hospitality of the leaders.  If you are thinking about it, don't. Just go."
+		  },
+		  {
+			"type":"textarea",
+			"id":"title",
+			"label":"User Name",
+			"default":"- Annette Widtz, ISHKAR traveler 2019"
+		  },
+		  {
+			"type":"textarea",
+			"id":"title_mark",
+			"label":"User Mark",
+			"default":"ISHKAR traveler 2019"
+		  }
+		]
+	},
+		{
+		 "type":"newsletter",
+		 "name":"Newsletter",
+		 "settings":[
+			{
+		  "type":"checkbox",
+		  "label":"Show this Section",
+		  "id":"Show_section",
+		  "default":true
+		},
+		{
+		  "type":"image_picker",
+		  "label":"Upload Background Image",
+		  "id":"bg_img"
+		},
+    {
+      "type": "select",
+      "id": "alignment",
+      "label":"Image alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "top",
+          "label":"Top"
+        },
+        {
+          "value": "center",
+          "label":"Middle"
+        },
+        {
+          "value": "bottom",
+          "label":"Bottom"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_layout",
+      "label": "Layout",
+      "default": "full_width",
+      "options": [
+        {
+          "label":"Full width",
+          "value": "full_width"
+        },
+        {
+          "label":"Fixed width",
+          "value": "fixed_width"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_size",
+      "label":"Section height",
+      "default": "large",
+      "options": [
+        {
+          "label":"Extra Small",
+          "value": "x-small"
+        },
+        {
+          "label":"Small",
+          "value": "small"
+        },
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        },
+        {
+          "label":"Extra Large",
+          "value": "x-large"
+        },
+        {
+          "label":"Auto",
+          "value": "auto"
+        }
+      ]
+    },
+		{
+		  "type":"text",
+		  "label":"Enter Title",
+		  "id":"title"
+		},
+		{
+		  "type":"textarea",
+		  "label":"Enter detail",
+		  "id":"detail",
+		  "default":"Be the first to know about our latest collections, pop ups & collaborations"
+		},
+		{
+		  "type":"text",
+		  "label":"Enter Button label",
+		  "id":"btn_title",
+		  "default":"SIGN UP"
+		}
+		 ]
+		},
+		{
+			"type":"faqs",
+			"name":"FAQS",
+			"settings":[
+				{
+                  "type":"text",
+                  "id":"title",
+                  "label":"Enter title",
+                  "default":"Faq"
+                },
+                {
+                  "type":"image_picker",
+                  "id":"image",
+                  "label":"Upload Image"
+                },
+				{
+                  "type":"textarea",
+                  "id":"faq_q_1",
+                  "label":"Enter Question 1"                  
+                },
+                {
+                  "type":"textarea",
+                  "id":"faq_a_1",
+                  "label":"Enter Answer  1"                 
+                },
+				{
+                  "type":"textarea",
+                  "id":"faq_q_2",
+                  "label":"Enter Question 2"                  
+                },
+                {
+                  "type":"textarea",
+                  "id":"faq_a_2",
+                  "label":"Enter Answer 2"                
+                },
+				{
+                  "type":"textarea",
+                  "id":"faq_q_3",
+                  "label":"Enter Question 3"                  
+                },
+                {
+                  "type":"textarea",
+                  "id":"faq_a_3",
+                  "label":"Enter Answer 3"                 
+                },
+				{
+                  "type":"textarea",
+                  "id":"faq_q_4",
+                  "label":"Enter Question 4"                  
+                },
+                {
+                  "type":"textarea",
+                  "id":"faq_a_4",
+                  "label":"Enter Answer 4"                 
+                },
+				{
+                  "type":"textarea",
+                  "id":"faq_q_5",
+                  "label":"Enter Question 5"                  
+                },
+                {
+                  "type":"textarea",
+                  "id":"faq_a_5",
+                  "label":"Enter Answer 5"              
+                },
+				{
+                  "type":"textarea",
+                  "id":"faq_q_6",
+                  "label":"Enter Question 6"                  
+                },
+                {
+                  "type":"textarea",
+                  "id":"faq_a_6",
+                  "label":"Enter Answer 6"                
+                },
+				{
+                  "type":"textarea",
+                  "id":"faq_q_7",
+                  "label":"Enter Question 7"                  
+                },
+                {
+                  "type":"textarea",
+                  "id":"faq_a_7",
+                  "label":"Enter Answer 7"                 
+                },
+				{
+                  "type":"textarea",
+                  "id":"faq_q_8",
+                  "label":"Enter Question 8"                  
+                },
+                {
+                  "type":"textarea",
+                  "id":"faq_a_8",
+                  "label":"Enter Answer 8"                 
+                },
+				{
+                  "type":"textarea",
+                  "id":"faq_q_9",
+                  "label":"Enter Question 9"                  
+                },
+                {
+                  "type":"textarea",
+                  "id":"faq_a_9",
+                  "label":"Enter Answer 9"               
+                },
+				{
+                  "type":"textarea",
+                  "id":"faq_q_10",
+                  "label":"Enter Question 10"                  
+                },
+                {
+                  "type":"textarea",
+                  "id":"faq_a_10",
+                  "label":"Enter Answer 10"                 
+                }
+			]
+		},
+		{
+			"type":"feature-product",
+			"name":"Feature Product",
+			"settings":[
+              {
+                "type":"text",
+                "id":"title",
+                "label":"Section title",
+                "default":"Section title"		
+              },
+              {
+                "type":"text",
+                "id":"subtitle",
+                "label":"Section subtitle",
+                "default":"Section subtitle"		
+              },
+              {
+                "type":"textarea",
+                "id":"detail",
+                "label":"Section detail",
+                "default":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu nulla quis augue maximus imperdiet. Quisque sit amet velit sed lacus dignissim eleifend."
+              },
+              {
+                "type":"header",
+                "content":"Select Product"
+              },
+              {
+                "type":"product",
+                "id":"product_1",
+                "label":"Select Prodcut 1"
+              },
+              {
+                "type":"image_picker",
+                "id":"product_img_1",
+                "label":"Upload Feature Image 1"
+              },
+              {
+                "type":"product",
+                "id":"product_2",
+                "label":"Select Prodcut 2"
+              },
+              {
+                "type":"image_picker",
+                "id":"product_img_2",
+                "label":"Upload Feature Image 2"
+              },
+              {
+                "type":"product",
+                "id":"product_3",
+                "label":"Select Prodcut 3"
+              },
+              {
+                "type":"image_picker",
+                "id":"product_img_3",
+                "label":"Upload Feature Image 3"
+              },
+              {
+                "type":"product",
+                "id":"product_4",
+                "label":"Select Prodcut 4"
+              },
+              {
+                "type":"image_picker",
+                "id":"product_img_4",
+                "label":"Upload Feature Image 4"
+              }
+			]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

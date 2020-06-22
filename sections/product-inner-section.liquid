@@ -1,0 +1,113 @@
+{%- include 'product-template-section' -%}
+{% schema %}
+  {
+    "name": "Object Section",
+  "class":"product_left_part",
+    "settings": [
+	  {
+		"type":"text",
+		"id":"title",
+		"label":"Enter section title",
+		"default":"Title"
+	  },
+	  {
+		"type":"image_picker",
+		"id":"banner_image",
+		"label":"Upload banner image"
+	  }
+	],
+	"blocks":[
+	  {
+		"name":"Blocks",
+		"type":"blocks",
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image"
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter title"
+		  },
+		  {
+			"type":"textarea",
+			"id":"detail",
+			"label":"Enter detail"
+		  },
+		  {
+				"type":"header",
+				"content":"Additional Detail"
+		  },
+		  {
+				"type":"url",
+				"id":"video",
+				"label":"Add Video Link Here",
+				"info":"Add .mp4 link only"
+		  },
+		  {
+				"type":"text",
+				"id":"location",
+				"label":"Enter location"				
+		  },
+		  {
+				"type":"text",
+				"id":"artist_name",
+				"label":"Enter Artist name"				
+		  }
+		]
+	  },
+	  {
+		"name":"Banner",
+		"type":"banner",
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload banner"
+		  }
+		]
+	  },
+	  {
+		"name":"Video",
+		"type":"video",
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload banner"
+		  },
+		  {
+			"type":"video_url",
+          	"id":"oj_video_url",
+          	"label": "YouTube or Vimeo link",
+          	"accept": ["youtube", "vimeo"]
+		  },
+		  {
+			"type":"select",
+			"id":"img_height",
+			"label":"Select Height",
+			"options":[
+			  {
+				"label":"Medium",
+				"value":"medium"
+			  },
+			  {
+				"label":"Large",
+				"value":"large"
+			  }
+			],
+			"default":"medium"
+		  }
+		]
+	  }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

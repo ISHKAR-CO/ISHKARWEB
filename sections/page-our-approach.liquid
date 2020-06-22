@@ -1,0 +1,548 @@
+{%- include 'page-block-section' -%}
+{% schema %}
+  {
+    "name": "Our Approach",
+	"class":"index-section--flush our-approach-template",
+    "settings": [
+		{
+		  "type":"header",
+		  "content":"Text Image with Bg Block settings"
+		},
+		{
+		  "type":"checkbox",
+		  "id":"t-img-bg-show",
+		  "label":"Show background color",
+		  "default": true
+		},
+		{
+		  "type":"checkbox",
+		  "id":"t-img-bg--border-show",
+		  "label":"Show border top",
+		  "default": true
+		}
+	],
+	"blocks":[
+		{
+		"type":"banner",
+		"name":"Banner",
+		"settings":[
+		{
+			"type":"checkbox",
+			"id":"enable_second_design",
+			"label":"Show Alternate Design",
+			"default": false			
+		},
+          {
+              "type":"image_picker",
+              "id":"image",
+              "label":"Upload Image"
+          },
+          {
+              "type":"select",
+              "id":"alignment",
+              "label":"Select Image alignmnet",
+              "default":"center",
+              "options":[
+                  {
+                    "value":"top center",
+                    "label":"Top"
+                  },
+                  {
+                    "value":"center",
+                    "label":"Middle"
+                  },
+                  {
+                    "value":"bottom center",
+                    "label":"Bottom"
+                  }
+              ]
+          },
+		{
+			"type":"header",
+			"content":"Detail Part"
+		},
+          {
+              "type":"select",
+              "id":"content_alignment",
+              "label":"Select Content alignment",
+              "default":"left",
+			  "options":[
+				{
+				  "label":"Align left",
+				  "value":"left"
+				},
+				{
+				  "label":"Align right",
+				  "value":"right"
+				}
+			  ]
+          },
+          {
+              "type":"checkbox",
+              "id":"content_bg_color",
+              "label":"Show background color",
+              "default": true
+          },
+          {
+              "type":"checkbox",
+              "id":"content_border_bottom",
+              "label":"Show bottom border",
+              "default": true
+          },
+		{
+			"type":"text",
+			"id":"coll_title",
+			"label":"Enter Title",
+			"default":"Title"
+		},
+		{
+			"type":"text",
+			"id":"coll_subtitle",
+			"label":"Enter Subtitle",
+			"default":"Subtitle"
+		},
+		{
+			"type":"richtext",
+			"id":"coll_detail",
+			"label":"Enter Detail"
+		},
+		  {
+			"type":"header",
+			"content":"Categories"
+		  },
+		  {
+			"type":"text",
+			"id":"partner_1",
+			"label":"Enter Category 1"
+		  },
+		  {
+			"type":"url",
+			"id":"link_1",
+			"label":"Provide Category 1 link"
+		  },
+		  {
+			"type":"text",
+			"id":"partner_2",
+			"label":"Enter Category 2"
+		  },
+		  {
+			"type":"url",
+			"id":"link_2",
+			"label":"Provide Category 2 link"
+		  },
+		  {
+			"type":"text",
+			"id":"partner_3",
+			"label":"Enter Category 3"
+		  },
+		  {
+			"type":"url",
+			"id":"link_3",
+			"label":"Provide Category 3 link"
+		  },
+		  {
+			"type":"text",
+			"id":"partner_4",
+			"label":"Enter Category 4"
+		  },
+		  {
+			"type":"url",
+			"id":"link_4",
+			"label":"Provide Category 4 link"
+		  },
+		  {
+			"type":"text",
+			"id":"partner_5",
+			"label":"Enter Category 5"
+		  },
+		  {
+			"type":"url",
+			"id":"link_5",
+			"label":"Provide Category 5 link"
+		  }
+		]
+	  },
+	  {
+		"type":"text-img-block",
+		"name":"Text Image Block",
+		"settings":[
+		  {
+			"type":"text",
+			"id":"categry_title",
+			"label":"Enter Categry title",
+			"info":"This text use to jump user to this section when click on banner navigation, So enter exactly same title as banner nav have without number"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image 640x"
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter Title"
+		  },
+		  {
+			"type":"richtext",
+			"id":"detail",
+			"label":"Enter Detail"
+		  }
+		]
+	  },
+	  {
+		"type":"t-img-bg",
+		"name":"Text Image with Bg",
+		"settings":[
+		  {
+			"type":"text",
+			"id":"categry_title",
+			"label":"Enter Categry title",
+			"info":"This text use to jump user to this section when click on banner navigation, So enter exactly same title as banner nav have without number"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image 640x"
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter Title"
+		  },
+		  {
+			"type":"richtext",
+			"id":"detail",
+			"label":"Enter Detail"
+		  }
+		]
+	  },
+	{
+		"type":"title-sub-heading",
+		"name":"Title and Sub Heading",
+		"settings":[
+			{
+				"type":"text",
+				"id":"title",
+				"label":"Enter title",
+				"default":"Block title"
+			},
+			{
+				"type":"text",
+				"id":"subtitle",
+				"label":"Enter subtitle",
+				"default":"Block Subtitle"
+			},
+			{
+				"type":"textarea",
+				"id":"detail",
+				"label":"Enter detail",
+				"default":"Donec ut ultrices sapien. Sed convallis mattis mauris, nec luctus lectus feugiat at."
+			},
+			{
+				"type":"checkbox",		
+				"id":"top_space",
+				"label":"Remove Top Space"
+			},
+			{
+				"type":"select",
+				"id":"header_bg",
+				"label":"Background",
+				"options":[
+					{
+						"value":"top_bg",
+						"label":"Background Above Title"
+					},
+					{
+						"value":"below_bg",
+						"label":"Background Below Title"
+					},
+					{
+						"value":"none_bg",
+						"label":"Background None"
+					}
+				]
+			}
+		]
+	},
+	  {
+		"type":"country-vector-two",
+		"name":"Country Vector 2",
+		"settings":[
+			{
+              "type":"header",
+              "content":"Vector Part"
+			},
+			{
+              "type":"image_picker",
+              "id":"vector_img",
+			  "label":"Upload Image"
+			},
+			{
+              "type":"text",
+              "id":"title",
+			  "label":"Enter Country Name"
+			},
+			{
+              "type":"checkbox",
+              "id":"vector_text_align",
+			  "label":"Enable text verticle",
+			  "default":false
+			},
+			{
+              "type":"select",
+              "id":"vector_text_position",
+			  "label":"Select text position",
+			  "options":[
+				{
+				  "label":"Top Left",
+				  "value":"top-left"
+				},
+				{
+				  "label":"Top Right",
+				  "value":"top-right"
+				},
+				{
+				  "label":"Bottom Left",
+				  "value":"bottom-left"
+				},
+				{
+				  "label":"Top Center",
+				  "value":"top-center"
+				},
+				{
+				  "label":"Bottom Center",
+				  "value":"bottom-center"
+				},
+				{
+				  "label":"Right Bottom",
+				  "value":"right-bottom"
+				}
+			  ]
+			},
+			{
+              "type":"header",
+              "content":"Rollover Part"
+			},
+			{
+				"type":"radio",
+				"id":"roll_over_item",
+				"label":"Select Image Or Video for Rollover",
+				"options":[
+					{
+						"label":"Image",
+						"value":"image"
+					},
+					{
+						"label":"Video",
+						"value":"video"
+					}
+				]
+			},
+			{
+              "type":"image_picker",
+              "id":"roll_over_img",
+			  "label":"Upload Image"
+			},
+			{
+				"type":"url",
+				"id":"video",
+				"label":"Add Video Link Here",
+				"info":"Add .mp4 link only"
+			},
+			{
+              "type":"header",
+              "content":"Detail Part"
+			},
+			{
+              "type":"text",
+              "id":"detail_title",
+			  "label":"Enter Title",
+			  "default":"Music"
+			},
+			{
+              "type":"url",
+              "id":"trip_link",
+			  "label":"Provide link here"
+			},
+			{
+              "type":"text",
+              "id":"detail_place",
+			  "label":"Enter Place Name",
+			  "default":"Mali"
+			},
+			{
+              "type":"text",
+              "id":"detail_artist",
+			  "label":"Enter artist name",
+			  "default":"Djenné"
+			},
+			{
+              "type":"text",
+              "id":"detail_date",
+			  "label":"Enter date",
+			  "default":"March 2020"
+			},
+			{
+              "type":"textarea",
+              "id":"detail_detail",
+			  "label":"Enter Detail",
+			  "default":"LOREM upsom turient semper mattis condimentum sagittis senectus lobortis tristique, velit tempor phasellu ictumst nibh, sapien tempor condimentum."
+			}
+		]
+	},
+	  {
+		"type":"team-block",
+		"name":"Team Block",
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image 640x"
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter Title",
+			"default":"Title"
+		  },
+		  {
+			"type":"text",
+			"id":"subtitle",
+			"label":"Enter subtitle",
+			"default":"Subtitle"
+		  },
+		  {
+			"type":"richtext",
+			"id":"detail",
+			"label":"Enter Detail"
+		  }
+		]
+	  },
+	  {
+		"type":"team-banner",
+		"name":"Team Banner Block",
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image x620"
+		  },
+		  {
+			"type":"text",
+			"id":"stitle",
+			"label":"Enter Title",
+			"default":"Title"
+		  }
+		]
+	  },
+		{
+		 "type":"newsletter",
+		 "name":"Newsletter",
+		 "settings":[
+			{
+		  "type":"checkbox",
+		  "label":"Show this Section",
+		  "id":"Show_section",
+		  "default":true
+		},
+		{
+		  "type":"image_picker",
+		  "label":"Upload Background Image",
+		  "id":"bg_img"
+		},
+    {
+      "type": "select",
+      "id": "alignment",
+      "label":"Image alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "top",
+          "label":"Top"
+        },
+        {
+          "value": "center",
+          "label":"Middle"
+        },
+        {
+          "value": "bottom",
+          "label":"Bottom"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_layout",
+      "label": "Layout",
+      "default": "full_width",
+      "options": [
+        {
+          "label":"Full width",
+          "value": "full_width"
+        },
+        {
+          "label":"Fixed width",
+          "value": "fixed_width"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_size",
+      "label":"Section height",
+      "default": "large",
+      "options": [
+        {
+          "label":"Extra Small",
+          "value": "x-small"
+        },
+        {
+          "label":"Small",
+          "value": "small"
+        },
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        },
+        {
+          "label":"Extra Large",
+          "value": "x-large"
+        },
+        {
+          "label":"Auto",
+          "value": "auto"
+        }
+      ]
+    },
+		{
+		  "type":"text",
+		  "label":"Enter Title",
+		  "id":"title"
+		},
+		{
+		  "type":"textarea",
+		  "label":"Enter detail",
+		  "id":"detail",
+		  "default":"Be the first to know about our latest collections, pop ups & collaborations"
+		},
+		{
+		  "type":"text",
+		  "label":"Enter Button label",
+		  "id":"btn_title",
+		  "default":"SIGN UP"
+		}
+		 ]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

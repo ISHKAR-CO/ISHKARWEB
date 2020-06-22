@@ -1,0 +1,195 @@
+<div class="section-header text-center {%- if section.settings.enable_bg %} sh-with-bg-gradiant{%- endif -%}">{%- if section.settings.subtitle != blank -%}
+    <h3 class="s-subtitle">{{ section.settings.subtitle | escape }}</h3>{%- endif -%}
+    {%- if section.settings.title != blank -%}<h2 class="h2-large s-title"><span class="inner_warpper">{{ section.settings.title | escape }}</span></h2>{%- endif -%}
+    {%- assign detail_size = section.settings.detail | size %}
+    {%- if section.settings.detail != blank -%}<div class="section-header-detail {%- if detail_size > 160 %} max-size{% endif -%}">
+    {{ section.settings.detail | newline_to_br }}
+    </div>{%- endif -%}
+  </div>
+<div class="home-contry-vectore {% if section.settings.enable_bg -%}enable_bg{%- endif -%}">{%- include 'page-block-section' -%}</div>
+<script defer="defer">function cuntryVectoreEqulize(){ var _array = []; $('.country-parent-two .vector_warpper_detail .detail_detail').css('min-height',''); if($(window).width() < 768) return; $('.country-parent-two .vector_warpper_detail .detail_detail').each(function(){ _array.push($(this).outerHeight()); }); $('.country-parent-two .vector_warpper_detail .detail_detail').css('min-height',Math.max.apply(null, _array)+'px'); } $(window).on('load resize',function(){ cuntryVectoreEqulize() });</script>
+{% schema %}
+  {
+    "name": "Country Vector",
+	"max_blocks":4,
+    "settings": [
+		{
+		  "type":"text",
+		  "id":"title",
+		  "label":"Section title",
+		  "default":"Section title"		
+		},
+		{
+		  "type":"text",
+		  "id":"subtitle",
+		  "label":"Section subtitle",
+		  "default":"Section subtitle"		
+		},
+		{
+		  "type":"textarea",
+		  "id":"detail",
+		  "label":"Section detail",
+		  "default":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu nulla quis augue maximus imperdiet. Quisque sit amet velit sed lacus dignissim eleifend."
+		},
+		{
+		  "type":"checkbox",
+		  "id":"enable_bg",
+		  "label":"Show background color",
+		  "default":false		  
+		}],
+	"blocks":[
+	{
+		"type":"country-vector-two",
+		"name":"Country Vector 2",
+		"settings":[
+			{
+              "type":"header",
+              "content":"Vector Part"
+			},
+			{
+              "type":"image_picker",
+              "id":"vector_img",
+			  "label":"Upload Image"
+			},
+			{
+              "type":"text",
+              "id":"title",
+			  "label":"Enter Country Name"
+			},
+			{
+              "type":"checkbox",
+              "id":"vector_text_align",
+			  "label":"Enable text verticle",
+			  "default":false
+			},
+			{
+              "type":"select",
+              "id":"vector_text_position",
+			  "label":"Select text position",
+			  "options":[
+				{
+				  "label":"Top Left",
+				  "value":"top-left"
+				},
+				{
+				  "label":"Top Right",
+				  "value":"top-right"
+				},
+				{
+				  "label":"Bottom Left",
+				  "value":"bottom-left"
+				},
+				{
+				  "label":"Top Center",
+				  "value":"top-center"
+				},
+				{
+				  "label":"Bottom Center",
+				  "value":"bottom-center"
+				},
+				{
+				  "label":"Right Bottom",
+				  "value":"right-bottom"
+				}
+			  ]
+			},
+			{
+              "type":"header",
+              "content":"Rollover Part"
+			},
+			{
+				"type":"radio",
+				"id":"roll_over_item",
+				"label":"Select Image Or Video for Rollover",
+				"options":[
+					{
+						"label":"Image",
+						"value":"image"
+					},
+					{
+						"label":"Video",
+						"value":"video"
+					}
+				]
+			},
+			{
+              "type":"image_picker",
+              "id":"roll_over_img",
+			  "label":"Upload Image"
+			},
+			{
+				"type":"url",
+				"id":"video",
+				"label":"Add Video Link Here",
+				"info":"Add .mp4 link only"
+			},
+			{
+              "type":"header",
+              "content":"Detail Part"
+			},
+			{
+              "type":"text",
+              "id":"detail_title",
+			  "label":"Enter Title",
+			  "default":"Music"
+			},
+			{
+              "type":"url",
+              "id":"trip_link",
+			  "label":"Provide link here"
+			},
+			{
+              "type":"text",
+              "id":"detail_place",
+			  "label":"Enter Place Name",
+			  "default":"Mali"
+			},
+			{
+              "type":"text",
+              "id":"detail_artist",
+			  "label":"Enter artist name",
+			  "default":"Djenné"
+			},
+			{
+              "type":"text",
+              "id":"detail_date",
+			  "label":"Enter date",
+			  "default":"March 2020"
+			},
+			{
+              "type":"textarea",
+              "id":"detail_detail",
+			  "label":"Enter Detail",
+			  "default":"LOREM upsom turient semper mattis condimentum sagittis senectus lobortis tristique, velit tempor phasellu ictumst nibh, sapien tempor condimentum."
+			}
+		]
+	}
+	],
+	"presets":[
+		{
+			"name":"Country Vector 2",
+			"category":"Text",
+			"blocks":[
+			  {
+				"type":"country-vector-two"
+			  },
+			  {
+				"type":"country-vector-two"
+			  },
+			  {
+				"type":"country-vector-two"
+			  },
+			  {
+				"type":"country-vector-two"
+			  }
+			]
+		}
+	]	
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

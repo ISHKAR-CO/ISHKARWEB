@@ -1,0 +1,531 @@
+{% if section.settings.message %} <style> {% if section.settings.logo != blank %} .site-header__logo-image { max-width: {{ section.settings.logo_max_width | escape }}px; } {% endif %} {% if section.settings.align_logo == 'left' %} .site-header__logo-image { margin: 0; } {% endif %} </style> {% endif %}
+{%- include 'search-drawer' -%}
+
+<div data-section-id="{{ section.id }}" data-section-type="header-section" class="wc_header_Section" data-header-section> {{--}} 
+  {%- if section.settings.message -%}
+    {%- if section.settings.home_page_only == false or request.page_type == 'index' -%}
+       {{--}} <style>.announcement-bar {background-color: {{ section.settings.color_bg }};}.announcement-bar--link:hover { {%- assign brightness = section.settings.color_bg | color_brightness -%}
+          {%- if brightness <= 192 -%}
+            {%- assign lightenAmount = 255 | minus: brightness | divided_by: 255 | times: 16 -%}
+            background-color: {{ section.settings.color_bg | color_lighten: lightenAmount }};
+          {%- else -%}
+            {%- assign darkenAmount = 255 | divided_by: brightness | times: 8 -%}
+            background-color: {{ section.settings.color_bg | color_darken: darkenAmount }};
+          {%- endif -%}}.announcement-bar__message {color: {{ section.settings.color_text }};} {{--}} 
+       {{--}} </style> {{--}} 
+      {%- if section.settings.message_link == blank -%}
+         {{--}} <div class="announcement-bar">{%- else -%}<a href="{{ section.settings.message_link }}" class="announcement-bar announcement-bar--link">{%- endif -%}
+         {{--}} <p class="announcement-bar__message">{{ section.settings.message_text | escape }}</p> {{--}} 
+      {%- if section.settings.message_link == blank -%}</div>{%- else -%}</a>{%- endif -%}
+    {%- endif -%}
+  {%- endif -%}  
+  {%- capture trigger_btn -%}
+  {%- unless linklists[section.settings.main_linklist] == blank -%}
+   {{--}} <div class="btn-trigger d-lg-none"><button type="button" class="wc_menu_icon btn--link site-header__icon site-header__menu js-mobile-nav-toggle mobile-nav--open" aria-controls="MobileNav"  aria-expanded="false" aria-label="{{ 'layout.navigation.menu' | t }}"><span class="top"></span><span class="middle"></span><span class="bottom"></span></button></div> {{--}} 
+  {%- endunless -%}
+  {%- endcapture -%}
+ {%- assign satict_header = true -%}
+  {%- if template contains 'index' or template contains 'page.travel' or template contains 'page.story' or template contains 'blog.event'  or template contains 'blog.journal' or template contains 'product.travel' or template contains 'page.impact' -%}
+  {%- assign satict_header = false -%}
+  {%- endif -%}
+  {%- if template contains 'list-collections' or template contains 'product.travel' -%}
+  {%- assign satict_header = true -%}
+  {%- endif -%}
+   {{--}} 
+  <header {{ template }} class="site-header {% if template contains 'index' %}home_header{% endif %} {% if satict_header  %}header_static{% endif %} header_{{ section.settings.mm-bg-color }}" role="banner"  {% if template contains 'index' and settings.home_header_bg != blank %}style="background-image:url({{settings.home_header_bg | img_url:'master'}});"{% endif %}> {{--}} 
+     {{--}} <div class="page-width"><div class="site-header-upper d-flex justify-content-between flex-row header-font font-semi-bold align-items-center">{%- if trigger_btn != blank -%}<div class="other-content-left other-content d-flex flex-row d-lg-none">{{- trigger_btn -}}</div>{%- endif -%}<div class="upper-logo one-whole">{%- render 'header-logo' , logo_img : section.settings.logo, logo_max_width : section.settings.logo_max_width , logo_img_white : section.settings.logo_white -%}</div><div class="other-content d-flex flex-row align-items-center justify-content-end">
+          {%- capture lang_switcher -%}
+          {%- if section.settings.header_lag_switcher -%}
+           {{--}} <div class="lang_swicther d-flex"><span class="lang active" data-lang="en">EN</span> <span href="#" data-lang="fr" class="lang">FR</span></div>{%- endif -%}{%- endcapture -%}          
+          {%- if lang_switcher != blank -%}{{- lang_switcher -}}{%- endif -%}          
+          {%- if settings.show_multiple_currencies -%}
+           {{--}} <div class="currentcy_swicther">{%- render 'currency_selector' -%}</div> {{--}} 
+          {%- endif -%}
+          
+          {%- if  linklists[section.settings.upper_header_menu].links != blank -%}
+           {{--}} <div class="upper_menulink d-flex light-color">{%- for link in linklists[section.settings.upper_header_menu].links -%}<a href="{{ link.url }}" title="{{ link.title }}" >{{ link.title | upcase }}</a>{%- endfor -%}</div> {{--}} 
+          {%- endif -%}
+          {%- capture cart_html -%}
+           {{--}} <a href="{{ routes.cart_url }}" class="site-header__icon site-header__cart d-flex"><img class="dark_img lazyload" data-src="{{ 'Black_Bag_300x.png' | asset_img_url:'50x' }}" width="auto" height="auto" /><img class="white_img lazyload" data-src="{{ 'White_Bag_300x.png' | asset_img_url:'50x' }}" width="auto" height="auto" /><span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span><div class="mobile-cart-bubble show_in_mobile" data-cart-count-bubble>{{ cart.item_count }}</div><div id="CartCount" class="cart-total-price light-color hide_in_mobile" data-cart-count-bubble>{%- if request.page_type == 'index' -%}{{- cart.total_price | money -}}{%- else -%}{{- cart.total_price | money -}}{%- endif -%}</div></a>{%- endcapture -%}
+          {{- cart_html -}}</div><div class="s-subtitle v-beyond v-beyond_white">- Venture Beyond the Headlines -</div></div> {{--}} 
+       {{--}} <div class="site-header-main">         {{--}} 
+        {%- if linklists[section.settings.main_linklist].links.size > 3 -%}
+        {%- assign first_part =  linklists[section.settings.main_linklist].links.size | divided_by: 2 | round -%}
+        {%- if first_part < 3 -%}
+        {%- assign first_part =  first_part | plus:1 -%}
+        {%- endif -%}
+        {%- assign second =  linklists[section.settings.main_linklist].links.size | minus: first_part -%}
+        {%- endif -%}
+        
+        {%- capture mobile_nav_close -%}<button type="button" class="btn-nav-close d-lg-none">{%- include 'icon-close' -%}</button>{%- endcapture -%}
+        
+        {%- capture wc_close -%}
+        <button class="btn-nav-close wc_close d-lg-none">{% include 'icon-close' %}</button>
+        {%- endcapture -%}
+        {%- capture mobile_bottom_media -%}
+        <div class="d-lg-none mobile_bottom_media"><ul class="wc_mobile_social list--inline">{%- assign socials = "Facebook Twitter Pinterest Tumblr Snapchat YouTube Vimeo Instagram" | split: ' ' -%}
+            {%- for social in socials -%} {%- assign social_link = social | prepend: 'social_' | append: '_link' | downcase -%}{%- assign icon_link = social | prepend: 'icon-' | downcase -%}{%- if settings[social_link] != blank -%}<li class="social-icons__item"><a class="social-icons__link" href="{{ settings[social_link] | escape }}" aria-describedby="a11y-external-message">{%- include icon_link -%}<span class="icon__fallback-text">{{ social }}</span></a></li>{%- endif -%}{%- endfor -%}
+            {%- if request.page_type == 'blog' or request.page_type == 'article' -%}<li><a class="social-icons__link" href="{{ shop.url }}{{ blog.url }}.atom">{% include 'icon-rss' %}<span class="icon__fallback-text">RSS</span></a></li>{%- endif -%}</ul>
+            {%- if section.settings.logo != blank -%}<div class="wc_m_logo"><a href="{{ routes.root_url }}"><img class="lazyload" data-src="{{section.settings.logo | img_url:'master'}}" /></a></div>{%- endif -%}</div>
+        {%- endcapture -%}      
+        {%- if linklists[section.settings.main_linklist].links.size > 3  -%}
+        <div class="two-part-nav justify-content-between flex-row d-none" >  
+          {{- wc_close -}}
+          {%-include 'main-site-nav', nav_link : section.settings.main_linklist , first_part: first_part -%}
+           {{--}} <div class="two-part-nav-logo hide_in_mobile" style="max-width:{{ section.settings.logo_max_width }}px;" > {{--}} 
+          {%- render 'header-logo' , logo_img : section.settings.logo, logo_max_width : section.settings.logo_max_width , logo_img_white : section.settings.logo_white -%}
+          </div> {{--}} 
+          {%-include 'main-site-nav-2', nav_link : section.settings.main_linklist , first_part: first_part -%}
+          {%- if lang_switcher != blank -%}<div class="mobile-lang_switcher d-lg-none d-none">{{ lang_switcher }}</div>{%- endif -%}
+          {{ mobile_bottom_media }}</div> {{--}} 
+        {%- else -%}
+         {{--}} <div class="two-part-nav flex-row d-none"> {{--}} 
+          {{- wc_close -}}          
+      	{%-include 'main-site-nav', nav_link : section.settings.main_linklist -%}{%- if lang_switcher != blank -%}<div class="mobile-lang_switcher d-lg-none">{{ lang_switcher }}</div>{%- endif -%}{{- mobile_bottom_media -}}</div>{%- endif -%}        
+         {{--}} <div class="mobile-nav-header"> {{--}} 
+           {{--}} <div class="mobile-other-content mobile-other-content--left d-flex align-items-center">{{- trigger_btn -}}</div> {{--}} 
+           {{--}} <div class="mobile-logo">{%- include 'header-logo', logo_img : section.settings.logo, logo_max_width : section.settings.logo_max_width -%}</div> {{--}} 
+           {{--}} <div class="mobile-other-content d-flex align-items-center">{{- cart_html -}}
+            {%- comment -%}
+            <div class="btn-trigger">
+              {%- unless linklists[section.settings.main_linklist] == blank -%}
+              <button type="button" class="btn--link site-header__icon site-header__menu js-mobile-nav-toggle mobile-nav--open" aria-controls="MobileNav"  aria-expanded="false" aria-label="{{ 'layout.navigation.menu' | t }}">
+                {%- include 'icon-hamburger' -%}
+                {%- include 'icon-close' -%}
+              </button>{%- endunless -%}
+            </div>{%- endcomment -%}</div></div></div></div></header></div> {{--}} 
+<script type="application/ld+json" defer="defer">{"@context": "http://schema.org","@type": "Organization","name": {{ shop.name | json }},{%- if section.settings.logo -%}{%- assign image_size = section.settings.logo.width | append:'x' -%}"logo": {{ section.settings.logo | img_url: image_size | prepend: "https:" | json }},{%- endif -%}"sameAs": [{{ settings.social_twitter_link | json }},{{ settings.social_facebook_link | json }},{{ settings.social_pinterest_link | json }},{{ settings.social_instagram_link | json }},{{ settings.social_tumblr_link | json }},{{ settings.social_snapchat_link | json }},{{ settings.social_youtube_link | json }},{{ settings.social_vimeo_link | json }}],"url": {{ shop.url | append: page.url | json }} }</script> {{--}} 
+{%- if request.page_type == 'index' -%}
+  {%- assign potential_action_target = shop.url | append: routes.search_url | append: "?q={search_term_string}" -%}
+   {{--}} <script type="application/ld+json" defer="defer">{ "@context": "http://schema.org", "@type": "WebSite", "name": {{ shop.name | json }}, "potentialAction": { "@type": "SearchAction", "target": {{ potential_action_target | json }}, "query-input": "required name=search_term_string" }, "url": {{ shop.url | append: page.url | json }} } </script> {{--}} 
+{%- endif -%}
+ {{--}} 
+{% schema %}
+{
+  "name": {
+    "da": "Overskrift",
+    "de": "Titel",
+    "en": "Header",
+    "es": "Encabezado",
+    "fi": "Ylätunniste",
+    "fr": "En-tête",
+    "hi": "हैडर",
+    "it": "Header",
+    "ja": "ヘッダー",
+    "ko": "머리글",
+    "nb": "Header",
+    "nl": "Koptekst",
+    "pt-BR": "Cabeçalho",
+    "pt-PT": "Cabeçalho",
+    "sv": "Rubrik",
+    "th": "ส่วนหัว",
+    "zh-CN": "标头",
+    "zh-TW": "標頭"
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": {
+        "da": "Logobillede",
+        "de": "Logo-Foto",
+        "en": "Logo image",
+        "es": "Logotipo",
+        "fi": "Logokuva",
+        "fr": "Image du logo",
+        "hi": "लोगो इमेज",
+        "it": "Immagine del logo",
+        "ja": "ロゴ画像",
+        "ko": "로고 이미지",
+        "nb": "Logobilde",
+        "nl": "Afbeelding van logo",
+        "pt-BR": "Imagem do logotipo",
+        "pt-PT": "Imagem do logótipo",
+        "sv": "Logobild",
+        "th": "รูปภาพโลโก้",
+        "zh-CN": "logo 图片",
+        "zh-TW": "標誌圖片"
+      }
+    },{
+      "type": "image_picker",
+      "id": "logo_white",
+      "label":"White Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "label": {
+        "da": "Tilpasset logobredde",
+        "de": "Logobreite",
+        "en": "Custom logo width",
+        "es": "Ancho del logotipo personalizado",
+        "fi": "Mukautetun logon leveys",
+        "fr": "Largeur personnalisée du logo",
+        "hi": "कस्टम लोगो की चौड़ाई",
+        "it": "Larghezza logo personalizzato",
+        "ja": "ロゴの幅をカスタムする",
+        "ko": "사용자 지정 로고 폭",
+        "nb": "Tilpasset logobredde",
+        "nl": "Aangepaste logo-breedte",
+        "pt-BR": "Largura do logotipo personalizado",
+        "pt-PT": "Largura de logótipo personalizada",
+        "sv": "Anpassad logotypsbredd",
+        "th": "ความกว้างของโลโก้แบบกำหนดเอง",
+        "zh-CN": "自定义 logo 宽度",
+        "zh-TW": "自訂商標寬度"
+      },
+      "min": 50,
+      "max": 250,
+      "step": 5,
+      "unit": {
+        "da": "px",
+        "de": "px",
+        "en": "px",
+        "es": "px",
+        "fi": "px",
+        "fr": "px",
+        "hi": "px",
+        "it": "px",
+        "ja": "px",
+        "ko": "px",
+        "nb": "px",
+        "nl": "px",
+        "pt-BR": "px",
+        "pt-PT": "px",
+        "sv": "px",
+        "th": "px",
+        "zh-CN": "px",
+        "zh-TW": "像素"
+      },
+      "default": 100
+    },
+	{
+	  "type":"header",
+	  "content":"Header Upper Part"
+	},
+	{
+	  "type":"checkbox",
+	  "label":"Show language Swithcher",
+	  "id":"header_lag_switcher",
+	  "default": true
+	},
+	{
+	  "type":"link_list",
+	  "label":"Select Menu for Upper header",
+	  "id":"upper_header_menu"
+	},
+    {
+      "type": "link_list",
+      "id": "main_linklist",
+      "label": {
+        "da": "Menu",
+        "de": "Menü",
+        "en": "Menu",
+        "es": "Menú",
+        "fi": "Valikko",
+        "fr": "Menu",
+        "hi": "मेनू",
+        "it": "Menu",
+        "ja": "メニュー",
+        "ko": "메뉴",
+        "nb": "Meny",
+        "nl": "Menu",
+        "pt-BR": "Menu",
+        "pt-PT": "Menu",
+        "sv": "Meny",
+        "th": "เมนู",
+        "zh-CN": "菜单",
+        "zh-TW": "選單"
+      },
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+	  "label":"Select megamenu background color",
+	  "id":"mm-bg-color",
+	  "default":"light_color",
+	  "options":[
+		{
+		  "label":"Light Color",
+		  "value":"light_color"
+		},
+		{
+		  "label":"Dark Color",
+		  "value":"dark_color"
+		}
+	  ]
+	},
+    {
+      "type": "header",
+      "content": {
+        "da": "Meddelelseslinje",
+        "de": "Ankündigungsbereich",
+        "en": "Announcement bar",
+        "es": "Barra de anuncios",
+        "fi": "Ilmoituspalkki",
+        "fr": "Barre d'annonces",
+        "hi": "घोषणा बार",
+        "it": "Barra degli annunci",
+        "ja": "告知バー",
+        "ko": "공지 표시줄",
+        "nb": "Kunngjøringslinje",
+        "nl": "Aankondigingsbalk",
+        "pt-BR": "Barra de anúncios",
+        "pt-PT": "Barra de comunicado",
+        "sv": "Meddelandefält",
+        "th": "แถบประกาศ",
+        "zh-CN": "公告栏",
+        "zh-TW": "公告列"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "message",
+      "label": {
+        "da": "Vis meddelelse",
+        "de": "Ankündigung anzeigen",
+        "en": "Show announcement",
+        "es": "Mostrar anuncio",
+        "fi": "Näytä ilmoitus",
+        "fr": "Afficher l'annonce",
+        "hi": "घोषणा डिखाएं",
+        "it": "Mostra annuncio",
+        "ja": "告知を表示する",
+        "ko": "공지 표시",
+        "nb": "Vis kunngjøring",
+        "nl": "Aankondiging weergeven",
+        "pt-BR": "Exibir anúncio",
+        "pt-PT": "Mostrar comunicado",
+        "sv": "Visa tillkännagivande",
+        "th": "แสดงประกาศ",
+        "zh-CN": "显示公告",
+        "zh-TW": "顯示公告"
+      },
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "home_page_only",
+      "label": {
+        "da": "Kun startside",
+        "de": "Nur Startseite",
+        "en": "Home page only",
+        "es": "Solo página de inicio",
+        "fi": "Vain kotisivu",
+        "fr": "Page d'accueil uniquement",
+        "hi": "केवल होमपेज",
+        "it": "Solo home page",
+        "ja": "ホームページのみ",
+        "ko": "홈페이지만",
+        "nb": "Kun på startsiden",
+        "nl": "Alleen startpagina",
+        "pt-BR": "Apenas na página inicial",
+        "pt-PT": "Apenas a página inicial",
+        "sv": "Endast hemsida",
+        "th": "หน้าแรกเท่านั้น",
+        "zh-CN": "仅主页",
+        "zh-TW": "僅限首頁"
+      },
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "message_text",
+      "label": {
+        "da": "Tekst",
+        "de": "Text",
+        "en": "Text",
+        "es": "Texto",
+        "fi": "Teksti",
+        "fr": "Texte",
+        "hi": "टेक्स्ट",
+        "it": "Testo",
+        "ja": "テキスト",
+        "ko": "텍스트",
+        "nb": "Tekst",
+        "nl": "Tekst",
+        "pt-BR": "Texto",
+        "pt-PT": "Texto",
+        "sv": "Text",
+        "th": "ข้อความ",
+        "zh-CN": "文本",
+        "zh-TW": "文字"
+      },
+      "default": {
+        "da": "Meddel noget her",
+        "de": "Hier etwas ankündigen",
+        "en": "Announce something here",
+        "es": "Anuncia algo aquí",
+        "fi": "Ilmoita jotakin tässä",
+        "fr": "Annoncez quelque chose ici",
+        "hi": "यहां कुछ घोषित करें",
+        "it": "Annuncia qualcosa qui",
+        "ja": "ここで告知してください",
+        "ko": "여기에 공지하십시오",
+        "nb": "Kunngjør noe her",
+        "nl": "Kondig hier iets aan",
+        "pt-BR": "Anuncie algo aqui",
+        "pt-PT": "Anunciar algo aqui",
+        "sv": "Meddela något här",
+        "th": "ประกาศข้อความที่นี่",
+        "zh-CN": "在此处进行公告",
+        "zh-TW": "在此公告資訊"
+      }
+    },
+    {
+      "type": "url",
+      "id": "message_link",
+      "label": {
+        "da": "Link",
+        "de": "Link",
+        "en": "Link",
+        "es": "Enlace",
+        "fi": "Linkki",
+        "fr": "Lien",
+        "hi": "लिंक",
+        "it": "Link",
+        "ja": "リンク",
+        "ko": "링크",
+        "nb": "Kobling",
+        "nl": "Link",
+        "pt-BR": "Link",
+        "pt-PT": "Ligação",
+        "sv": "Länk",
+        "th": "ลิงก์",
+        "zh-CN": "链接",
+        "zh-TW": "連結"
+      },
+      "info": {
+        "da": "Valgfri",
+        "de": "Optional",
+        "en": "Optional",
+        "es": "Opcional",
+        "fi": "Valinnainen",
+        "fr": "Facultatif",
+        "hi": "वैकल्पिक",
+        "it": "Facoltativo",
+        "ja": "オプション",
+        "ko": "선택 사항",
+        "nb": "Valgfritt",
+        "nl": "Optioneel",
+        "pt-BR": "Opcional",
+        "pt-PT": "Opcional",
+        "sv": "Valfritt",
+        "th": "ไม่จำเป็น",
+        "zh-CN": "可选",
+        "zh-TW": "(選填)"
+      }
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": {
+        "da": "Bjælke",
+        "de": "Zeile",
+        "en": "Bar",
+        "es": "Barra",
+        "fi": "Palkki",
+        "fr": "Barre",
+        "hi": "बार",
+        "it": "Barra",
+        "ja": "バー",
+        "ko": "바",
+        "nb": "Felt",
+        "nl": "Balk",
+        "pt-BR": "Barra",
+        "pt-PT": "Barra",
+        "sv": "Fält",
+        "th": "แถบ",
+        "zh-CN": "栏",
+        "zh-TW": "橫條"
+      },
+      "default": "#7796a8"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": {
+        "da": "Tekst",
+        "de": "Text",
+        "en": "Text",
+        "es": "Texto",
+        "fi": "Teksti",
+        "fr": "Texte",
+        "hi": "टेक्स्ट",
+        "it": "Testo",
+        "ja": "テキスト",
+        "ko": "텍스트",
+        "nb": "Tekst",
+        "nl": "Tekst",
+        "pt-BR": "Texto",
+        "pt-PT": "Texto",
+        "sv": "Text",
+        "th": "ข้อความ",
+        "zh-CN": "文本",
+        "zh-TW": "文字"
+      },
+      "default": "#fff"
+    },
+	{
+	 "type":"header",
+	 "content":"About Shop"
+	},
+	{
+	 "type":"image_picker",
+	 "id":"about_shop_img",
+	 "label":"Upload Dark Image"
+	},
+	{
+	 "type":"image_picker",
+	 "id":"about_shop_img_white",
+	 "label":"Upload White Image"
+	},
+	{
+	 "type":"text",
+	 "id":"about_shop_title",
+	 "label":"Enter title"
+	},
+	{
+	 "type":"text",
+	 "id":"about_shop_subtitle",
+	 "label":"Enter subtitle"
+	},
+	{
+	 "type":"textarea",
+	 "id":"about_shop_detail",
+	 "label":"Enter Detail"
+	},
+	{
+	 "type":"header",
+	 "content":"Show Showroom"
+	},
+	{
+	 "type":"text",
+	 "id":"link_list_title",
+	 "label":"Enter menu title here",
+	 "info":" To show the shoroom in that menu"
+	},
+	{
+	 "type":"text",
+	 "id":"showroom_title",
+	 "label":"Enter title"
+	},
+	{
+	 "type":"text",
+	 "id":"showroom_subtitle",
+	 "label":"Enter subtitle",
+	 "default":"Vist Us"                      
+	},
+	{
+	 "type":"url",
+	 "id":"showroom_title_link",
+	 "label":"Provide title link"
+	},
+	{
+	 "type":"textarea",
+	 "id":"showroom_detail",
+	 "label":"Enter detail"
+	}
+  ]
+}
+{% endschema %}

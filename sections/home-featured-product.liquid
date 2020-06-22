@@ -1,0 +1,117 @@
+<div class="home-featured-prouct" data-section-id="{{ section.id }}" data-section-type="home-featured-prouct" >
+  <div class="section-header text-center {%- if section.settings.enable_bg %} sh-with-bg-gradiant{%- endif -%}">{%- if section.settings.subtitle != blank -%}
+    <h3 class="s-subtitle">{{ section.settings.subtitle | escape }}</h3>{%- endif -%}
+    {%- if section.settings.title != blank -%}<h2 class="h2-large s-title"><span class="inner_warpper">{{ section.settings.title | escape }}</span></h2>{%- endif -%}
+    {%- assign detail_size = section.settings.detail | size %}
+    {%- if section.settings.detail != blank -%}<div class="section-header-detail {%- if detail_size > 160 %} max-size{% endif -%}">
+    {{ section.settings.detail | newline_to_br }}
+    </div>{%- endif -%}
+  </div>
+  {%- if section.settings.enable_bg -%}<div class="section-bg-color">{%- endif -%}
+    <div class="page-width">
+      <ul class="grid hfp-grid hfp-grid-slider">
+        {%- for block in section.blocks -%}
+        <li class="grid__item hfp-item medium-up--one-third">
+          {%- assign product = all_products[ block.settings.product]  -%}
+          {%- if product -%}
+          {%- include 'product-card-grid-two' ,product :product ,  max_height: 345 -%}
+          {%- else -%}          
+          <div class="grid-view-item dummy-product">
+            <a href="#" class="grid-view-item__link">
+              <div class="grid-view-item__image">
+                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+              <div class="h4 grid-view-item__title">{{ 'homepage.onboarding.product_title' | t }}</div>
+              <div class="grid-view-item__meta">
+                <span class="product-price__price">{{ '1999' | money }}</span>
+              </div>
+            </a>
+          </div>          
+          {%- endif -%}
+        </li>
+        {%- endfor -%}
+      </ul>
+
+
+</div>
+  {%- if section.settings.enable_bg -%}</div>{%- endif -%}
+</div>
+
+{% schema %}
+  {
+    "name": "Home Featured Product",
+  	"class":"index--section",
+    "settings": [
+		{
+		  "type":"text",
+		  "id":"title",
+		  "label":"Section title",
+		  "default":"Section title"		
+		},
+		{
+		  "type":"text",
+		  "id":"subtitle",
+		  "label":"Section subtitle",
+		  "default":"Section subtitle"		
+		},
+		{
+		  "type":"textarea",
+		  "id":"detail",
+		  "label":"Section detail",
+		  "default":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu nulla quis augue maximus imperdiet. Quisque sit amet velit sed lacus dignissim eleifend."
+		},
+		{
+		  "type":"checkbox",
+		  "id":"enable_bg",
+		  "label":"Show background color",
+		  "default":false		  
+		}	
+	],
+	"blocks":[
+	 {
+	 "type":"product",
+	 "name":"Select Product",
+	 "settings":[
+		{
+		 "type":"product",
+		 "id":"product",
+		 "label":"Select Product"
+		}
+	 ]
+	}
+	],
+	"presets":[
+		{
+			"name":"Home Freatured Product",
+			"category":"Product",
+			"blocks":[
+			  {
+				"type":"product"
+			  },
+			  {
+				"type":"product"
+			  },
+			  {
+				"type":"product"
+			  },
+			  {
+				"type":"product"
+			  },
+			  {
+				"type":"product"
+			  },
+			  {
+				"type":"product"
+			  }
+			]
+		}
+	]	
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

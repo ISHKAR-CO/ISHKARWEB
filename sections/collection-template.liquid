@@ -1,0 +1,591 @@
+{%- case section.settings.grid -%}
+  {% when 2 %}
+    {%- assign max_height = 530 -%}
+  {% when 3 %}
+    {%- assign max_height = 345 -%}
+  {% when 4 %}
+    {%- assign max_height = 250 -%}
+  {% when 5 %}
+    {%- assign max_height = 195 -%}
+{%- endcase -%}
+{%- if section.settings.layout == 'grid' -%}
+  {%- assign limit = section.settings.grid | times: section.settings.rows -%}
+{%- else -%}{%- assign limit = 16 -%}{%- endif -%}
+{%- assign tavrl_limit = 0 -%}
+{%- if collection.url contains '/all' -%}
+{% paginate collection.products by limit %}
+{% for product in collection.products %}
+{%- if product.tags contains 'travel' -%}
+{%- assign tavrl_limit = tavrl_limit | plus: 1 -%}
+{%- endif -%}
+{%- endfor -%}
+{% endpaginate %}
+{%- endif -%}
+{%- assign limit = limit | plus: tavrl_limit -%}
+{%- paginate collection.products by limit -%}
+{%- assign show_sbu_title = false -%}
+    {%- if collection.url contains '/all' -%}
+    {% assign show_sbu_title = true %}
+    {%- endif -%}    
+    {%- assign collection_link_list = linklists['collections'].links -%}    
+    {%- for link in collection_link_list -%}   
+    	{%- if link.url == collection.url -%}
+    	{%- assign show_sbu_title = true -%}
+    	{%- break -%}
+    	{%- endif -%}
+    {%- endfor -%}
+<div data-section-id="{{ section.id }}" data-section-type="collection-template" {% unless collection.url contains '/all' %}class="show_bg_color_"{% endunless %}>
+  {%- unless collection.url contains '/all' -%}<header class="collection-header wc_collection-header {% unless collection.url contains '/all' %}s-collection{% endunless %}">
+    {%- assign is_filter_by_available = false -%}
+    {%- if section.settings.tags_enable and collection.all_tags.size > 0 -%}
+      {%- assign is_filter_by_available = true -%}
+    {%- endif -%}
+    <div class="section-header text-center mb0 {% if collection.url contains '/all' %}header_top_yellow{% endif %}{%- if show_sbu_title %} remove-padding{%- endif -%}">
+      {%- if show_sbu_title -%}
+      <h2 class="h4 s-subtitle font-normal hide">{{ section.settings.subtitle }}</h2>
+      {%- endif -%}
+      <div class="title_outer {% if show_sbu_title -%}hide{%- endif -%}">
+        <h1 class="h3 s-title wc_s-title">
+          <span role="text" class="inner_warpper">
+            <span class="visually-hidden">{{ 'collections.general.collection_label' | t }}: </span>
+            {%- if collection.url contains '/all' -%}
+            {{ section.settings.title }}
+            {%- else -%}
+            {{ collection.title | upcase }}
+            {%- endif -%}
+          </span>
+        </h1>
+      </div>
+      {%- if collection.description != blank or section.settings.detail != blank -%}
+      <div class="section-header-detail wc_section-header-detail {% unless collection.url contains '/all' and collection.description == blank -%}hide{% endunless %}">
+        {%- if collection.url contains '/all' -%}
+        {{ section.settings.detail }}
+        {%- else -%}
+        {{ collection.description }}
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+      {%- if show_sbu_title -%}
+      {%- for link in collection_link_list -%}
+    	{%- if link.url == collection.url and link.links != blank -%}
+      <div class="verticle_till verticle_till_no left show_bg_color_ text-left">
+        <div class="banner-caption-category banner-caption-collection small--hide scroll-navigation-to">
+          <div class="page-width">            
+            {%- for childlink in link.links -%}
+            {%- assign c_coll = childlink.url | split :'/collections/' | last -%}
+            {%- assign c_coll = collections[c_coll] -%}
+            {%- assign coll_count = c_coll.products_count | plus: 0 -%}
+              {%- if c_coll and coll_count > 0 -%}
+            <div class="category_div h4"><a href="{{ childlink.url }}" title="{{childlink.title}}"  data-scrollto="#{{c_coll.id}}"  >
+              <span class="number">{%- if forloop.index < 10 %}0{%- endif -%}{{forloop.index}}/</span><br>{{ childlink.title | upcase }}</a>
+            </div>{%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>    	
+    	{%- break -%}
+    	{%- endif -%}
+    {%- endfor -%}{%- endif -%}
+    </div>   
+  </header>{%- endunless -%}
+  <div class="page-width collection-page-width {% unless collection.url contains '/all' %}collection-page-width-verticle{%- endunless -%}" id="Collection">
+    {%- if section.settings.layout == 'grid' -%}
+      {%- case section.settings.grid -%}
+      {%- when 2 -%}
+        {%- assign grid_item_width = 'medium-up--one-half' -%}
+      {%- when 3 -%}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+      {%- when 4 -%}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+      {%- when 5 -%}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
+      {%- endcase -%}
+    
+      {%- if section.settings.show_custom_product and collection.url contains '/all' -%}    
+    	{%- if section.settings.show_custom_product_using == "link_lists" -%}
+    		{%- include 'custom-collection-link-lists' -%}
+    	{%- else -%}
+    		{%- include 'custom-collection-blocks' -%}
+        {%- endif -%}
+      {%- else -%}
+      {%- assign current_coll = collection -%}
+      {%- assign collection_list = linklists[section.settings.list_custom_product].links -%}
+        {%- for coll in collection_list  -%}    
+        {%- assign coll_11 = coll.url | split:'/collections/' | last -%}    
+        {%- assign coll_11 = collections[coll_11] -%}
+          {%- if coll_11.handle == current_coll.handle -%}
+          {%- assign coll_11_ = true -%}
+          {%- endif -%}
+        {%- endfor -%}    
+      {%- if collection_list and coll_11_ -%}    
+          {%- for collection in collection_list  -%}
+          {%- assign coll_11 = collection.url | split:'/collections/' | last -%}    
+          {%- assign coll_11 = collections[coll_11] -%}
+              {%- if collection.links != blank and coll_11.id == current_coll.id -%}
+              {%- for child_coll in collection.links  -%}
+                {%- assign coll = child_coll.url | split:'/collections/' | last -%}
+    			{%- assign coll = collections[coll] -%}
+                {%- assign coll_count = coll.products_count | plus: 0 -%} 
+              {%- if coll and coll_count > 0 -%}
+    		  {%- comment -%}<div class="collection_title section-header large-up--hide"><h3 class="s-title wc_s-title s-not text-uppercase"><span class="inner_warpper">{{collection.title}}: {{child_coll.title}}</span></h3></div>{%- endcomment -%}
+              <ul id="{{ coll.id }}" class="grid grid--uniform{% if collection.products_count > 0 %} grid--view-items{% endif %}{% unless collection.url contains '/all' %} d-flex flex-wrap collection--grid{%- endunless -%}">
+                {%- comment -%}<div class="verticle-coll-title">
+                  <div class="verticle-title h3 text-uppercase s-title s-not">{{child_coll.title}}</div>
+                </div>{%- endcomment -%}
+                {% for product in coll.products %}
+                <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+                  {% include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor, collection:coll %}
+                </li>
+                {%- endfor -%} 
+              </ul>
+              {%- endif -%}
+              {%- endfor -%}        		
+              {%- endif -%}    
+      {%- endfor -%}
+        {%- else -%}    
+          <ul class="grid grid--uniform{% if collection.products_count > 0 %} grid--view-items{% endif %}{% unless collection.url contains '/all' %} d-flex flex-wrap collection--grid{%- endunless -%}" id="AjaxinateContainer">
+            {%- comment -%}{%- unless collection.url contains '/all' -%}
+            <div class="verticle-coll-title">
+              <div class="verticle-title h3 text-uppercase s-title s-not">{{ collection.title }}</div>
+            </div>
+            {%- endunless -%}{%- endcomment -%}
+            {%- for product in collection.products -%}
+            {%- if collection.url contains '/all' -%}
+                {%- unless product.tags contains 'travel' -%}
+              <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+                {% include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor %}
+              </li>{%- endunless -%}
+            {%- else -%}        	
+              <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+                {% include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor %}
+              </li>
+            {%- endif -%}
+
+            {% else %}
+              {% comment %}
+              Add default products to help with onboarding for collections/all only.
+
+              The onboarding styles and products are only loaded if the
+              store has no products.
+              {% endcomment %}
+              {% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0 %}
+                <li class="grid__item">
+                  <div class="grid grid--uniform">
+                    {% for i in (1..limit) %}
+                      <div class="grid__item {{ grid_item_width }}">
+                        <div class="grid-view-item">
+                          <a href="#" class="grid-view-item__link">
+                            <div class="grid-view-item__image">
+                              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                            </div>
+                            <div class="h4 grid-view-item__title">{{ 'homepage.onboarding.product_title' | t }}</div>
+                            <div class="grid-view-item__meta">
+                              <span class="product-price__price">$19.99</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </li>
+              {% else %}
+                {%- assign is_empty_collection = true -%}
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {%- endif -%}
+      {%- endif -%}
+    {%- else -%}
+      <ul class="list-view-items">
+        {% for product in collection.products %}
+          <li class="list-view-item">
+            {% include 'product-card-list', product: product, show_vendor: section.settings.show_vendor %}
+          </li>
+        {% else %}
+
+          {% comment %}
+          Add default products to help with onboarding for collections/all only.
+
+          The onboarding styles and products are only loaded if the
+          store has no products.
+          {% endcomment %}
+          {% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0%}
+            {% for i in (1..4) %}
+              <li class="list-view-item">
+                <a href="#" class="list-view-item__link">
+                  <div class="list-view-item__image-column">
+                    <div class="list-view-item__image-wrapper">
+                      <div class="list-view-item__image">
+                        {% capture current %}{% cycle 1, 2, 3, 4 %}{% endcapture %}
+                        {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="list-view-item__title-column">
+                    <div class="list-view-item__title">{{ 'homepage.onboarding.product_title' | t }}</div>
+                  </div>
+
+                  <div class="list-view-item__price-column">
+                    <span class="product-price__price">$19.99</span>
+                  </div>
+                </a>
+              </li>
+            {% endfor %}
+          {% else %}
+            {%- assign is_empty_collection = true -%}
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {%- endif -%}
+    {%- if is_empty_collection -%}
+      <div class="grid__item small--text-center">
+        <p class="text-center">{{ 'collections.general.no_matches' | t }}</p>
+      </div>
+    {%- endif -%}
+
+{%- unless section.settings.show_custom_product and collection.url contains '/all' -%}
+    {%- if section.settings.show_page_load -%}    
+    <div id="AjaxinatePagination" class="page_load_div {% if coll_11_ %}hide{% endif %}">
+      {% if paginate.next %}
+      <a href="{{ paginate.next.url }}" class="btn btn_frame">
+       	<img data-src="{{'frame_border.png' | asset_url }}" src="{{'frame_border.png' | asset_img_url:'100x' }}" class="frame_btn_img lazyload"/>
+        Load More
+      </a>
+      {% endif %}
+    </div>    
+    {%- else -%}  
+      {%- if paginate.pages > 1 -%}
+          {%- include 'pagination', paginate: paginate -%}    
+      {%- endif -%}
+    {%- endif -%}
+ {%- endunless -%}
+  </div></div>
+{%- endpaginate -%}
+{%- if section.settings.show_page_load -%}
+<script defer="defer">
+  document.addEventListener("DOMContentLoaded", function() {
+      var endlessScroll = new Ajaxinate({ container: '#AjaxinateContainer', pagination: '#AjaxinatePagination', method: 'click', offset: 1000 });
+    }); $(document).ready(function(){});</script>
+<script defer="defer" src="{{ 'ajaxinate.js' | asset_url }}"></script>
+{%- endif -%}
+<script defer="defer">  
+  $(document).ready(function(){ verticleCollTitle(); })  
+  function verticleCollTitle(){ if($('.verticle-coll-title').length > 0){ $('.verticle-coll-title').addClass('no-sticky');
+      $('.verticle-coll-title').each(function(){ $(this).find('.verticle-title').css('margin-right','0');
+        var offset_t = $(this).offset().top, offset_top = $(this).find('.verticle-title').offset().top, verticle  = offset_t > offset_top ? offset_t - offset_top : 0 ;        
+        var verticle_left  = $(this).find('.verticle-title').offset().left;
+        if( verticle > 0 ){ $(this).find('.verticle-title').css( 'margin-top', verticle +'px' ); $(this).find('.verticle-title').css( 'top', ( verticle + $('.site-header-main').height() + 10 ) +'px' ); } if( verticle_left < 0 ){ $(this).find('.verticle-title').css( 'margin-right', verticle_left +'px' ); }
+        $(this).removeClass('no-sticky'); }); } } 
+  $(window).on('resize',function(){ marginLeft('.collecction_banner .collection_img'); })
+  $(window).on('load',function(){ setTimeout(function(){ marginLeft('.collecction_banner .collection_img'); },100);
+                                 $('.collection--grid').addClass('loaded'); })
+  function marginLeft(marginLeft){ if( $(marginLeft).length > 0){ $(marginLeft).each(function(){ $(this).css('margin-left','0px'); if( $(this).offset().left > 0 ){ $(this).css('margin-left','-'+ $(this).offset().left +'px'); } }) } return false; }  
+</script>
+{% schema %}
+{
+  "name": {
+    "da": "Kollektionssider",
+    "de": "Kategorie-Seiten",
+    "en": "Collection pages",
+    "es": "Páginas de colección",
+    "fi": "Kokoelman sivut",
+    "fr": "Pages de collections",
+    "hi": "कलेक्शन पेज",
+    "it": "Pagine di collezioni",
+    "ja": "コレクションページ",
+    "ko": "컬렉션 페이지",
+    "nb": "Samlingssider",
+    "nl": "Collectiepagina's",
+    "pt-BR": "Páginas de coleções",
+    "pt-PT": "Páginas de Coleções",
+    "sv": "Produktseriesidor",
+    "th": "หน้าคอลเลกชัน",
+    "zh-CN": "产品系列页面",
+    "zh-TW": "商品系列頁面"
+  },
+  "class":"index-section index-section--flush",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": {
+        "da": "Layout",
+        "de": "Layout",
+        "en": "Layout",
+        "es": "Diseño",
+        "fi": "Asettelu",
+        "fr": "Mise en page",
+        "hi": "लेआउट",
+        "it": "Layout",
+        "ja": "レイアウト",
+        "ko": "레이아웃",
+        "nb": "Oppsett",
+        "nl": "Opmaak",
+        "pt-BR": "Layout",
+        "pt-PT": "Esquema",
+        "sv": "Layout",
+        "th": "เลย์เอาต์",
+        "zh-CN": "布局",
+        "zh-TW": "版面配置"
+      },
+      "default": "grid",
+      "options": [
+        {
+          "value": "grid",
+          "label": {
+            "da": "Gitter",
+            "de": "Raster",
+            "en": "Grid",
+            "es": "Cuadrícula",
+            "fi": "Ruudukko",
+            "fr": "Grille",
+            "hi": "ग्रिड",
+            "it": "Griglia",
+            "ja": "グリッド",
+            "ko": "그리드",
+            "nb": "Rutenett",
+            "nl": "Raster",
+            "pt-BR": "Grade",
+            "pt-PT": "Grelha",
+            "sv": "Rutnät",
+            "th": "กริด",
+            "zh-CN": "网格",
+            "zh-TW": "網格"
+          }
+        },
+        {
+          "value": "list",
+          "label": {
+            "da": "Liste",
+            "de": "Liste",
+            "en": "List",
+            "es": "Lista",
+            "fi": "Luettelo",
+            "fr": "Liste",
+            "hi": "सूची",
+            "it": "Elenco",
+            "ja": "リスト",
+            "ko": "목록",
+            "nb": "Liste",
+            "nl": "Lijst",
+            "pt-BR": "Lista",
+            "pt-PT": "Lista",
+            "sv": "Lista",
+            "th": "รายการ",
+            "zh-CN": "列表",
+            "zh-TW": "清單"
+          }
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "grid",
+      "label": {
+        "da": "Produkter pr. række (kun gitter)",
+        "de": "Produkte per Reihe (nur Raster)",
+        "en": "Products per row (grid only)",
+        "es": "Productos por fila (solo cuadrícula)",
+        "fi": "Tuotteita per rivi (vain ruudukko)",
+        "fr": "Produits par rangée (grille uniquement)",
+        "hi": "उत्पाद प्रति पंक्ति (केवल ग्रिड)",
+        "it": "Prodotti per riga (solo griglia)",
+        "ja": "行あたりの商品数（グリッドのみ）",
+        "ko": "열 별 제품 (그리드 전용)",
+        "nb": "Produkter per rad (kun rutenett)",
+        "nl": "Producten per rij (alleen raster)",
+        "pt-BR": "Produtos por linha (somente grade)",
+        "pt-PT": "Produtos por linha (somente grelha)",
+        "sv": "Produkter per rad (endast rutnät)",
+        "th": "สินค้าต่อแถว (กริดเท่านั้น)",
+        "zh-CN": "每行产品数（仅限网格）",
+        "zh-TW": "每列產品數 (僅限網格)"
+      },
+      "default": 4,
+      "min": 2,
+      "max": 5,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "rows",
+      "label": {
+        "da": "Rækker pr. side (kun gitter)",
+        "de": "Reihen per Seite (nur Raster)",
+        "en": "Rows per page (grid only)",
+        "es": "Filas por página (solo cuadrícula)",
+        "fi": "Rivejä per sivu (vain ruudukko)",
+        "fr": "Rangées par page (grille uniquement)",
+        "hi": "प्रति पृष्ठ पंक्तियां (केवल ग्रिड)",
+        "it": "Righe per pagina (solo griglia)",
+        "ja": "ページあたりの行数（グリッドのみ）",
+        "ko": "페이지 별 열 (그리드 전용)",
+        "nb": "Rader per side (kun rutenett)",
+        "nl": "Rijen per pagina (alleen raster)",
+        "pt-BR": "Linhas por página (somente grade)",
+        "pt-PT": "Linhas por página (somente grelha)",
+        "sv": "Rader per sida (endast rutnät)",
+        "th": "แถวต่อหน้า (กริดเท่านั้น)",
+        "zh-CN": "每行产品数（仅限网格）",
+        "zh-TW": "每頁列數 (僅限網格)"
+      },
+      "default": 2,
+      "min": 2,
+      "max": 8,
+      "step": 1
+    },
+	{
+	  "type":"checkbox",
+	  "id":"show_page_load",
+	  "label":"Enable Page Load",
+	  "default":true
+	},
+    {
+      "type": "checkbox",
+      "id": "product_count_enable",
+      "label":"Enable Product count",
+      "default": false
+    },
+	{
+		"type":"header",
+		"content":"title and detail",
+		"info":"This part not show on particluar collection"
+	},
+	{
+		"type":"text",
+		"id":"title",
+		"label":"Enter title",
+		"default":"ALL OBJECTS"
+	},
+	{
+		"type":"text",
+		"id":"subtitle",
+		"label":"Enter Subtitle",
+		"default":"The entire collection"
+	},
+	{
+		"type":"textarea",
+		"id":"detail",
+		"label":"Enter detail",
+		"default":"Handcrafted jewellery, rugs, waistcoats<br> and more.<br> Products made slow, to live long."
+	},
+	{
+		"type":"checkbox",
+		"id":"show_custom_product",
+		"label":"Product listing by collection",
+		"default": false
+	},
+	{
+		"type":"select",
+		"id":"show_custom_product_using",
+		"label":"Product listing by using",
+		"default": "link_lists",
+		"options":[
+			{
+			  "label":"Using Navigation Menu",
+			  "value":"link_lists"
+			},
+			{
+			  "label":"Using blocks",
+			  "value":"blocks"
+			}
+		]
+	},
+	{
+		"type":"link_list",
+		"id":"list_custom_product",
+		"label":"Select collection list"
+	}
+  ],
+  "blocks":[
+	{
+	  "type":"collection",
+	  "name":"Collection Blocks",
+	  "settings":[
+		{
+		  "type":"image_picker",
+		  "id":"coll_banner",
+		  "label":"Upload banner Image x557",
+		  "info":"if it's empty it took image form main collection"
+		},
+		{
+		  "type":"collection",
+		  "id":"main_collection",
+		  "label":"Select main collection"
+		},
+		{
+		  "type":"checkbox",
+		  "id":"show_see_more_btn",
+		  "label":"Show See More Button"
+		},
+		{
+		  "type":"header",
+		  "content":"Select Sub collection"
+		},
+		{
+		  "type":"collection",
+		  "id":"coll_1",
+		  "label":"Select collection 1"
+		},
+		{
+		  "type":"text",
+		  "id":"coll_pro_count_1",
+		  "label":"Enter number to show limited product for above collection"
+		},
+		{
+		  "type":"collection",
+		  "id":"coll_2",
+		  "label":"Select collection 2"
+		},
+		{
+		  "type":"text",
+		  "id":"coll_pro_count_2",
+		  "label":"Enter number to show limited product for above collection"
+		},
+		{
+		  "type":"collection",
+		  "id":"coll_3",
+		  "label":"Select collection 3"
+		},
+		{
+		  "type":"text",
+		  "id":"coll_pro_count_3",
+		  "label":"Enter number to show limited product for above collection"
+		},
+		{
+		  "type":"collection",
+		  "id":"coll_4",
+		  "label":"Select collection 4"
+		},
+		{
+		  "type":"text",
+		  "id":"coll_pro_count_4",
+		  "label":"Enter number to show limited product for above collection"
+		},
+		{
+		  "type":"collection",
+		  "id":"coll_5",
+		  "label":"Select collection 5"
+		},
+		{
+		  "type":"text",
+		  "id":"coll_pro_count_5",
+		  "label":"Enter number to show limited product for above collection"
+		},
+		{
+		  "type":"collection",
+		  "id":"coll_6",
+		  "label":"Select collection 6"
+		},
+		{
+		  "type":"text",
+		  "id":"coll_pro_count_6",
+		  "label":"Enter number to show limited product for above collection"
+		}
+	  ]
+    }
+  ]	
+}
+{% endschema %}

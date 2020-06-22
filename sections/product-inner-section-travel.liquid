@@ -1,0 +1,115 @@
+{%- include 'product-template-section' -%}
+{% schema %}
+  {
+    "name": "Travel Section",
+  "class":"product_left_part",
+    "settings": [
+	  {
+		"type":"text",
+		"id":"title",
+		"label":"Enter section title",
+		"default":"Title"
+	  },
+	  {
+		"type":"text",
+		"id":"title_2",
+		"label":"Enter title for Highlights",
+		"default":"Title 2"
+	  }
+	],
+	"blocks":[
+	  {
+		"name":"Blocks",
+		"type":"blocks",
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image"
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter title"
+		  },
+		  {
+			"type":"textarea",
+			"id":"detail",
+			"label":"Enter detail"
+		  }
+		]
+	  },
+	  {
+		"name":"Blocks 2",
+		"type":"blocks_two",
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image"
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter title"
+		  },
+		  {
+			"type":"textarea",
+			"id":"detail",
+			"label":"Enter detail"
+		  }
+		]
+	  },
+	  {
+		"name":"Banner",
+		"type":"banner",
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload banner"
+		  }
+		]
+	  },
+	  {
+		"name":"Video",
+		"type":"video",
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload banner"
+		  },
+		  {
+			"type":"video_url",
+          	"id":"oj_video_url",
+          	"label": "YouTube or Vimeo link",
+          	"accept": ["youtube", "vimeo"]
+		  },
+		  {
+			"type":"select",
+			"id":"img_height",
+			"label":"Select Height",
+			"options":[
+			  {
+				"label":"Medium",
+				"value":"medium"
+			  },
+			  {
+				"label":"Large",
+				"value":"large"
+			  }
+			],
+			"default":"medium"
+		  }
+		]
+	  }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

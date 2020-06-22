@@ -1,0 +1,144 @@
+{%- capture banner -%}
+<div class="image_banner banner-height-medium lazyload" {% if section.settings.enable_second_design != true -%}data-img-ratio="{{ section.settings.image.aspect_ratio }}"{% endif %} data-height-full="false" data-bgset="{% include 'bgset', image: section.settings.image %}" data-sizes="auto" data-parent-fit="cover" style="background-position: {{ section.settings.alignment }}; background-image: url({{ section.settings.image | img_url: '300x300' }});"></div>
+{%- endcapture -%}
+{%- capture detail -%}
+{%- if section.settings.coll_subtitle != blank or section.settings.coll_title != blank or section.settings.coll_detail != blank -%}
+    <div class="{%- if section.settings.enable_second_design %}wrapper{%- else -%}page-width{%- endif -%}"><div class="collectin_detail_cls text-left"><div class="section-header">{%- if section.settings.coll_subtitle != blank -%}<h4 class="s-subtitle">{{ section.settings.coll_subtitle }}</h4>{%- endif -%}
+          {%- if section.settings.coll_title != blank -%}<h3 class="s-title s-title-no-boder">{{ section.settings.coll_title }}</h3>{%- endif -%}</div><div class="warpper">{%- if section.settings.coll_detail != blank -%}<div class="detail">{{ section.settings.coll_detail }}</div>{%- endif -%}</div>  
+      </div></div>{%- endif -%}{%- endcapture -%}
+
+{%- capture c_block -%}
+{%- assign current_coll = collection.handle -%}
+{%- if section.blocks.size > 0 -%}<div class="banner-caption-category banner-caption-collection small--hide"><div class="page-width">{%- for block in section.blocks -%}
+        {%- if block.type == "category" -%}
+        <div class="category_div h4" {{ block.shopify_attributes }} >{%- assign collection = collections[block.settings.collection] -%}<a href="{%- if current_coll == collection.handle -%}#{%- else -%}{{ collection.url }}{%- endif -%}"><span class="number">{{- block.settings.title_number -}}</span><br/>{{- block.settings.title -}}</a></div>
+        {%- endif -%} {%- endfor -%}</div></div>{%- endif -%}{%- endcapture -%}
+
+<div class="home-banner {% if section.settings.enable_second_design %}home-banner_alter{%- endif -%}" data-section-id="{{ section.id }}" data-section-type="home-banner">  
+  {%- if section.settings.enable_second_design -%}
+  {{- banner -}}
+  <div class="banner_content">{{- detail -}}</div>
+  {%- else -%}{{- banner -}}{%- endif -%}</div>
+{%- unless section.settings.enable_second_design -%}
+  <div class="verticle_till {{ section.settings.content_alignment }} {% if section.settings.content_bg_color %} show_bg_color{% endif %}{% if section.settings.content_border_bottom %} show_border-bottom {%- endif -%}">
+    {{- detail -}}{{- c_block -}}</div>
+  {%- else -%}<div class="verticle_till_no verticle_till">{{ c_block }}</div>
+{%- endunless -%}
+{% schema %}
+  {
+    "name": "Home Banner",
+	"class":"index-section index-section--flush",
+	"max_blocks":6,
+    "settings": [
+		{
+			"type":"checkbox",
+			"id":"enable_second_design",
+			"label":"Show Alternate Design",
+			"default": false			
+		},
+		{
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image"
+		},
+		{
+			"type":"select",
+			"id":"alignment",
+			"label":"Select Image alignmnet",
+			"default":"center",
+			"options":[
+				{
+				  "value":"top center",
+				  "label":"Top"
+				},
+				{
+				  "value":"center",
+				  "label":"Middle"
+				},
+				{
+				  "value":"bottom center",
+				  "label":"Bottom"
+				}
+			]
+		},
+		{
+			"type":"header",
+			"content":"Detail Part"
+		},
+          {
+              "type":"select",
+              "id":"content_alignment",
+              "label":"Select Content alignment",
+              "default":"left",
+			  "options":[
+				{
+				  "label":"Align left",
+				  "value":"left"
+				},
+				{
+				  "label":"Align right",
+				  "value":"right"
+				}
+			  ]
+          },
+          {
+              "type":"checkbox",
+              "id":"content_bg_color",
+              "label":"Show background color",
+              "default": true
+          },
+          {
+              "type":"checkbox",
+              "id":"content_border_bottom",
+              "label":"Show bottom border",
+              "default": true
+          },
+		{
+			"type":"text",
+			"id":"coll_title",
+			"label":"Enter Title",
+			"default":"Title"
+		},
+		{
+			"type":"text",
+			"id":"coll_subtitle",
+			"label":"Enter Subtitle",
+			"default":"Subtitle"
+		},
+		{
+			"type":"richtext",
+			"id":"coll_detail",
+			"label":"Enter Detail"
+		}
+	],
+	"blocks":[
+	  {
+		"type":"category",
+		"name":"Category Block",
+		"settings":[
+		  {
+			"type":"collection",
+			"id":"collection",
+			"label":"Select Collection"
+		  },
+		  {
+			"type":"text",
+			"id":"title_number",
+			"label":"Enter Number"
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter Title"
+		  }
+		]
+	  }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

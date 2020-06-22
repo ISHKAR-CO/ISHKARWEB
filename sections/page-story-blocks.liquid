@@ -1,0 +1,312 @@
+{%- if section.settings.coll_subtitle != blank or section.settings.coll_title != blank or section.settings.coll_detail != blank -%}
+<div class="collectin_detail_cls collection_blocks_details text-center">{{--}}
+  <div class="section-header sh-with-bg-gradiant">{{--}}
+    {%- if section.settings.coll_subtitle != blank -%}
+    <h4 class="s-subtitle">{{ section.settings.coll_subtitle }}</h4>{{--}}
+    {%- endif -%}
+    {%- if section.settings.coll_title != blank -%}
+    <h3 class="s-title"><span class="inner_warpper">{{ section.settings.coll_title }}</span></h3>{{--}}
+    {%- endif -%}
+  </div>{%- if section.settings.coll_detail != blank -%}
+  <div class="warpper"><div class="detail">{{- section.settings.coll_detail -}}</div></div>{%- endif -%}
+</div>{%- endif -%}
+{%- assign block_position = section.settings.block_position | split:'-' -%}
+<div class="collection_blocks wc_collection_blocks {% unless section.settings.block_bg_color %} wc_collection_bg_none{% endunless %}{% unless section.settings.block_border %} wc_collection_border_none{% endunless %}">{{--}}
+  <div class="page-width"> {{--}} 
+    <div class="grid--no-gutters grid-coll_block d-flex"> {{--}} 
+      {%- for block_p in block_position -%}      
+      {%- case block_p  -%}
+      {%- when 'left' -%}
+      <div class="coll_block_item coll_block_item_left"> {{--}} 
+        {%- for block in section.blocks -%}
+          {%- if block.type == "left-side" -%}	
+        	{%- assign _coll = block.settings.link -%}
+            <div class="coll_img_left coll_img_div"> {{--}} 
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}" > {{--}} 
+                <div class="img_wrapper"> {{--}} 
+                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
+                </div> {{--}} 
+                <div class="text-wrapper"> {{--}} 
+                  {%- if block.settings.subtitle != blank -%}
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  {%- endif -%}
+                  {%- if block.settings.title != blank -%}
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  {%- else -%}
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  {%- endif -%}
+                </div> {{--}} 
+              </a> {{--}} 
+            </div> {{--}} 
+          {%- endif -%}
+        {%- endfor -%}
+      </div> {{--}} 
+      {%- when 'center' -%}
+      <div class="coll_block_item medium-up--hide"> {{--}} 
+      {%- for block in section.blocks -%}
+          {%- if forloop.index == 3 -%}	
+        	{%- assign _coll = block.settings.link -%}
+            <div class="coll_img_center coll_img_div coll_img_div_full"> {{--}} 
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}"> {{--}} 
+                <div class="img_wrapper"> {{--}} 
+                  <div class="img lazyload" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
+                </div> {{--}} 
+                <div class="text-wrapper"> {{--}} 
+                  {%- if block.settings.subtitle != blank -%}
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  {%- endif -%}
+                  {%- if block.settings.title != blank -%}
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  {%- else -%}
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  {%- endif -%}
+                </div> {{--}} 
+              </a> {{--}} 
+            {{--}}  </div>{%- break -%}
+          {%- endif -%}
+      {%- endfor -%}      
+      </div> {{--}} 
+      <div class="coll_block_item coll_block_item_center small--hide"> {{--}} 
+        {%- for block in section.blocks -%}
+          {%- if block.type == "center" -%}	
+        	{%- assign _coll = block.settings.link -%}
+            <div class="coll_img_center coll_img_div"> {{--}} 
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}"> {{--}} 
+                <div class="img_wrapper"> {{--}} 
+                  <div class="img lazyload" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
+                </div> {{--}} 
+                <div class="text-wrapper"> {{--}} 
+                  {%- if block.settings.subtitle != blank -%}
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  {%- endif -%}
+                  {%- if block.settings.title != blank -%}
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  {%- else -%}
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  {%- endif -%}
+                </div> {{--}} 
+              </a> {{--}} 
+            </div> {{--}}   
+          {%- endif -%}
+        {%- endfor -%}
+       {{--}} </div> {{--}} 
+      {%- when 'right' -%}
+      <div class="coll_block_item coll_block_item_right"> {{--}} 
+        {%- for block in section.blocks -%}
+        {%- if block.type == "center" and forloop.index == 4 -%}	
+        	{%- assign _coll = block.settings.link -%}
+            <div class="coll_img_center coll_img_div medium-up--hide"> {{--}} 
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}"> {{--}} 
+                <div class="img_wrapper"> {{--}} 
+                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
+                </div> {{--}} 
+                <div class="text-wrapper"> {{--}} 
+                  {%- if block.settings.subtitle != blank -%}
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  {%- endif -%}
+                  {%- if block.settings.title != blank -%}
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  {%- else -%}
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  {%- endif -%}
+                </div> {{--}} 
+              </a> {{--}} 
+             {{--}} </div> {{--}} 
+          {%- endif -%}
+          {%- if block.type == "right-side" -%}	
+        {%- assign _coll = block.settings.link -%}
+        	<div class="coll_img_right coll_img_div {% if forloop.index == 6 %}small--hide{% endif %}"> {{--}} 
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}"> {{--}} 
+                <div class="img_wrapper"> {{--}} 
+                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
+                </div> {{--}} 
+                <div class="text-wrapper"> {{--}} 
+                  {%- if block.settings.subtitle != blank -%}
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  {%- endif -%}
+                  {%- if block.settings.title != blank -%}
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  {%- else -%}
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  {%- endif -%}
+                </div> {{--}} 
+              </a> {{--}} 
+        	</div> {{--}} 
+          {%- endif -%}
+        {%- endfor -%}
+       {{--}} </div> {{--}} 
+      <div class="coll_block_item medium-up--hide"> {{--}} 
+      {%- for block in section.blocks -%}
+          {%- if forloop.index == 6 -%}	
+        	{%- assign _coll = block.settings.link -%}
+            <div class="coll_img_center coll_img_div coll_img_div_full"> {{--}} 
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}"> {{--}} 
+                <div class="img_wrapper"> {{--}} 
+                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
+                </div> {{--}} 
+                <div class="text-wrapper"> {{--}} 
+                  {%- if block.settings.subtitle != blank -%}
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  {%- endif -%}
+                  {%- if block.settings.title != blank -%}
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  {%- else -%}
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  {%- endif -%}
+                </div> {{--}} 
+              </a> {{--}} 
+             {{--}} </div>{%- break -%}
+          {%- endif -%}
+      {%- endfor -%}      
+       {{--}} </div> {{--}} 
+      {%- endcase -%}
+      {%- endfor -%}
+     {{--}} </div> {{--}} 
+ {{--}}   </div> {{--}} 
+</div> {{--}} 
+{% schema %}
+  {
+    "name": "Story Blocks",
+    "settings": [
+		{
+			"type":"header",
+			"content":"Detail Part"
+		},
+		{
+			"type":"text",
+			"id":"coll_title",
+			"label":"Enter Title",
+			"default":"Title"
+		},
+		{
+			"type":"text",
+			"id":"coll_subtitle",
+			"label":"Enter Subtitle",
+			"default":"Subtitle"
+		},
+		{
+			"type":"richtext",
+			"id":"coll_detail",
+			"label":"Enter Detail"
+		},
+		{
+			"type":"checkbox",
+			"id":"block_border",
+			"label":"Show top border",
+			"default":true
+		},
+		{
+			"type":"checkbox",
+			"id":"block_bg_color",
+			"label":"Show Background color",
+			"default":true
+		},
+		{
+			"type":"checkbox",
+			"id":"enable_b-w",
+			"label":"Enable B/W effect",
+			"default":true
+		},
+        {
+            "type":"text",
+            "id":"block_position",
+            "label":"Column Position",
+            "default":"left-center-right",
+		    "info":"For Column position you can reorder column like 'left-right-center', 'center-left-right', 'right-center-left' etc. Default column order is 'left-center-right'."
+        }
+
+	],
+	"blocks":[
+      {
+		"type":"left-side",
+		"name":"Left Side Image",
+		"limit":2,
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image"
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter Collection Title"
+		  },
+		  {
+			"type":"text",
+			"id":"subtitle",
+			"label":"Enter sub title",
+			"default":"Discover the collection"
+		  },
+		  {
+			"type":"url",
+			"id":"link",
+			"label":"Provide Link"
+		  }
+		]
+      },
+      {
+		"type":"center",
+		"name":"Center Image",
+		"limit":2,
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image"
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter Collection Title"
+		  },
+		  {
+			"type":"text",
+			"id":"subtitle",
+			"label":"Enter sub title",
+			"default":"Discover the collection"
+		  },
+		  {
+			"type":"url",
+			"id":"link",
+			"label":"Provide Link"
+		  }
+		]
+      },
+      {
+		"type":"right-side",
+		"name":"Right Side Image",
+		"limit":2,
+		"settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image"
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter Collection Title"
+		  },
+		  {
+			"type":"text",
+			"id":"subtitle",
+			"label":"Enter sub title",
+			"default":"Discover the collection"
+		  },
+		  {
+			"type":"url",
+			"id":"link",
+			"label":"Provide Link"
+		  }
+		]
+      }
+	]
+  }
+{% endschema %}
+ {{--}} 
+{% stylesheet %} {{--}} 
+{% endstylesheet %} {{--}} 
+ {{--}} 
+{% javascript %} {{--}} 
+{% endjavascript %} {{--}} 

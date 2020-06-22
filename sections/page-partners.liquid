@@ -1,0 +1,1184 @@
+{%- include 'page-block-section' -%}
+{% schema %}
+  {
+    "name": "Partners",
+	"class":"index-section--flush partners-template",
+    "settings": [	
+		{
+			"type":"header",
+			"content":"Load More Button"
+		},
+		{
+			"type":"text",
+			"id":"more_btn_label",
+			"label":"Load More Button Label",
+			"default":"Load More"
+		},
+		{
+			"type":"image_picker",
+			"id":"load_more_btn_frame",
+			"label":"Load More Button Frame"
+		}
+	],
+	"blocks":[
+		{
+		"type":"banner",
+		"name":"Banner",
+		"settings":[
+		{
+			"type":"checkbox",
+			"id":"enable_second_design",
+			"label":"Show Alternate Design",
+			"default": false			
+		},
+          {
+              "type":"image_picker",
+              "id":"image",
+              "label":"Upload Image"
+          },
+          {
+              "type":"select",
+              "id":"alignment",
+              "label":"Select Image alignmnet",
+              "default":"center",
+              "options":[
+                  {
+                    "value":"top center",
+                    "label":"Top"
+                  },
+                  {
+                    "value":"center",
+                    "label":"Middle"
+                  },
+                  {
+                    "value":"bottom center",
+                    "label":"Bottom"
+                  }
+              ]
+          },
+		{
+			"type":"header",
+			"content":"Detail Part"
+		},
+          {
+              "type":"select",
+              "id":"content_alignment",
+              "label":"Select Content alignment",
+              "default":"left",
+			  "options":[
+				{
+				  "label":"Align left",
+				  "value":"left"
+				},
+				{
+				  "label":"Align right",
+				  "value":"right"
+				}
+			  ]
+          },
+          {
+              "type":"checkbox",
+              "id":"content_bg_color",
+              "label":"Show background color",
+              "default": true
+          },
+          {
+              "type":"checkbox",
+              "id":"content_border_bottom",
+              "label":"Show bottom border",
+              "default": true
+          },
+		{
+			"type":"text",
+			"id":"coll_title",
+			"label":"Enter Title",
+			"default":"Title"
+		},
+		{
+			"type":"text",
+			"id":"coll_subtitle",
+			"label":"Enter Subtitle",
+			"default":"Subtitle"
+		},
+		{
+			"type":"richtext",
+			"id":"coll_detail",
+			"label":"Enter Detail"
+		},
+		  {
+			"type":"header",
+			"content":"Partner Categories"
+		  },
+		  {
+			"type":"text",
+			"id":"partner_1",
+			"label":"Enter Partner 1"
+		  },
+		  {
+			"type":"text",
+			"id":"partner_2",
+			"label":"Enter Partner 2"
+		  },
+		  {
+			"type":"text",
+			"id":"partner_3",
+			"label":"Enter Partner 3"
+		  },
+		  {
+			"type":"text",
+			"id":"partner_4",
+			"label":"Enter Partner 4"
+		  },
+		  {
+			"type":"text",
+			"id":"partner_5",
+			"label":"Enter Partner 5"
+		  }
+		]
+	  },
+		{
+		 "type":"hero",
+		 "name":"Hero Banner",
+		 "settings":[
+			{
+      "type": "image_picker",
+      "id": "image",
+      "label":"Image"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label":"Image alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "top",
+          "label":"Top"
+        },
+        {
+          "value": "center",
+          "label":"Middle"
+        },
+        {
+          "value": "bottom",
+          "label":"Bottom"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_layout",
+      "label": "Layout",
+      "default": "full_width",
+      "options": [
+        {
+          "label": "Full width",
+          "value": "full_width"
+        },
+        {
+          "label":"Fixed width",
+          "value": "fixed_width"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_size",
+      "label": "Section height",
+      "default": "medium",
+      "options": [
+        {
+          "label": "Adapt to image",
+          "value": "adapt"
+        },
+        {
+          "label":"Extra Small",            
+          "value": "x-small"
+        },
+        {
+          "label":"Small",
+          "value": "small"
+        },
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        },
+        {
+          "label":"Extra Large",
+          "value": "x-large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text size",
+      "default": "medium",
+      "options": [
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label":"Heading",
+      "default":"Image with text overlay"
+    },
+	{
+      "type":"text",
+      "id":"subheading",
+      "label":"Subheading",
+	  "default":"Image with text overlay"
+	},
+    {
+      "type": "richtext",
+      "id": "text",
+      "label":"Text",
+      "default":"<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label":"Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label":"Button link"
+    }
+		 ]
+		},
+	{
+		"type":"text-grid",
+		"name":"Text Grid",		
+		"settings":[
+		 {
+			"type":"header",
+			"content":"Grid 1"
+	
+		 },
+		 {
+			"type":"text",
+			"id":"subtitle_1",
+			"label":"Enter Subtitle"
+		 },
+		 {
+			"type":"text",
+			"id":"title_1",
+			"label":"Enter title"
+		 },
+		 {
+			"type":"textarea",
+			"id":"detail_1",
+			"label":"Enter detail"
+		 },
+		 {
+			"type":"url",
+			"id":"link_1",
+			"label":"Provide Link"
+		 },
+		 {
+			"type":"header",
+			"content":"Grid 2"
+	
+		 },
+		 {
+			"type":"text",
+			"id":"subtitle_2",
+			"label":"Enter Subtitle"
+		 },
+		 {
+			"type":"text",
+			"id":"title_2",
+			"label":"Enter title"
+		 },
+		 {
+			"type":"textarea",
+			"id":"detail_2",
+			"label":"Enter detail"
+		 },
+		 {
+			"type":"url",
+			"id":"link_2",
+			"label":"Provide Link"
+		 },
+		 {
+			"type":"header",
+			"content":"Grid 3"
+	
+		 },
+		 {
+			"type":"text",
+			"id":"subtitle_3",
+			"label":"Enter Subtitle"
+		 },
+		 {
+			"type":"text",
+			"id":"title_3",
+			"label":"Enter title"
+		 },
+		 {
+			"type":"textarea",
+			"id":"detail_3",
+			"label":"Enter detail"
+		 },
+		 {
+			"type":"url",
+			"id":"link_3",
+			"label":"Provide Link"
+		 }
+		]
+	},
+	{
+		"type":"video",
+		"name":"Video",		
+		"settings":[
+			{
+      "type": "image_picker",
+      "id": "image",
+      "label":"Cover image",
+      "info": "Always shown on mobile devices"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label":"Image alignment",
+      "default": "center center",
+      "options": [
+        {
+          "label":"Top left",
+          "value": "left top"
+        },
+        {
+          "label":"Top center",
+          "value": "center top"
+        },
+        {
+          "label":"Top right",
+          "value": "right top"
+        },
+        {
+          "label":"Middle left",
+          "value": "left center"
+        },
+        {
+          "label":"Middle center",
+          "value": "center center"
+        },
+        {
+          "label":"Middle right",
+          "value": "right center"
+        },
+        {
+          "label":"Bottom left",
+          "value": "left bottom"
+        },
+        {
+          "label":"Bottom center",
+          "value": "center bottom"
+        },
+        {
+          "label":"Bottom right",
+          "value": "right bottom"
+        }
+      ]
+    },
+    {
+      "type": "video_url",
+      "id": "video_link",
+      "label":"Video link",
+      "accept": [
+        "youtube"
+      ],
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label":"Show overlay",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label":"Style",
+      "default": "image_with_play",
+      "options": [
+        {
+          "label":"Image with play button",
+          "value": "image_with_play"
+        },
+        {
+          "label":"Background video",
+          "value": "background"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label":"Video height",
+      "default": "medium",
+      "options": [
+        {
+          "label":"Small",
+          "value": "small"
+        },
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "video_title",
+      "label":"Heading"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label":"Text size",
+      "default": "medium",
+      "options": [
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        }
+      ]
+    }
+	 	]
+	},
+	{
+		"type":"text-img-two",
+		"name":"Image with Text 2",
+		"settings":[
+			{
+				"type":"image_picker",
+				"id":"image",
+				"label":"Upload Image"
+			},
+			{
+				"type":"textarea",
+				"id":"shot_detail",
+				"label":"Enter Short Detail",
+				"info":"Short Detail show on image"
+			},
+			{
+				"type":"select",
+				"id":"img_size",
+				"label":"Select Image Grid",
+				"default":"medium",
+				"options":[
+					{
+						"value":"medium",
+						"label":"Medium"
+					},
+					{
+						"value":"large",
+						"label":"Large"
+					}
+				]
+			},
+			{
+				"type":"text",
+				"id":"title",
+				"label":"Enter title"
+			},
+			{
+				"type":"richtext",
+				"id":"detail",
+				"label":"Enter detail"
+			}
+		]
+	},
+	{
+		"type":"title-sub-heading",
+		"name":"Title and Sub Heading",
+		"settings":[
+			{
+				"type":"text",
+				"id":"title",
+				"label":"Enter title",
+				"default":"Block title"
+			},
+			{
+				"type":"text",
+				"id":"subtitle",
+				"label":"Enter subtitle",
+				"default":"Block Subtitle"
+			},
+			{
+				"type":"textarea",
+				"id":"detail",
+				"label":"Enter detail",
+				"default":"Donec ut ultrices sapien. Sed convallis mattis mauris, nec luctus lectus feugiat at."
+			},
+			{
+				"type":"checkbox",		
+				"id":"top_space",
+				"label":"Remove Top Space"
+			},
+			{
+				"type":"select",
+				"id":"header_bg",
+				"label":"Background",
+				"options":[
+					{
+						"value":"top_bg",
+						"label":"Background Above Title"
+					},
+					{
+						"value":"below_bg",
+						"label":"Background Below Title"
+					},
+					{
+						"value":"none_bg",
+						"label":"Background None"
+					}
+				]
+			},
+			{
+			  "type":"header",
+			  "content":"Link to header"
+			},
+			{
+			  "type":"text",
+			  "id":"link_title",
+			  "label":"Enter same title you enter in banner category"
+			}
+		]
+	},
+		{
+		 "type":"newsletter",
+		 "name":"Newsletter",
+		 "settings":[
+			{
+		  "type":"checkbox",
+		  "label":"Show this Section",
+		  "id":"Show_section",
+		  "default":true
+		},
+		{
+		  "type":"image_picker",
+		  "label":"Upload Background Image",
+		  "id":"bg_img"
+		},
+    {
+      "type": "select",
+      "id": "alignment",
+      "label":"Image alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "top",
+          "label":"Top"
+        },
+        {
+          "value": "center",
+          "label":"Middle"
+        },
+        {
+          "value": "bottom",
+          "label":"Bottom"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_layout",
+      "label": "Layout",
+      "default": "full_width",
+      "options": [
+        {
+          "label":"Full width",
+          "value": "full_width"
+        },
+        {
+          "label":"Fixed width",
+          "value": "fixed_width"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_size",
+      "label":"Section height",
+      "default": "large",
+      "options": [
+        {
+          "label":"Extra Small",
+          "value": "x-small"
+        },
+        {
+          "label":"Small",
+          "value": "small"
+        },
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        },
+        {
+          "label":"Extra Large",
+          "value": "x-large"
+        },
+        {
+          "label":"Auto",
+          "value": "auto"
+        }
+      ]
+    },
+		{
+		  "type":"text",
+		  "label":"Enter Title",
+		  "id":"title"
+		},
+		{
+		  "type":"textarea",
+		  "label":"Enter detail",
+		  "id":"detail",
+		  "default":"Be the first to know about our latest collections, pop ups & collaborations"
+		},
+		{
+		  "type":"text",
+		  "label":"Enter Button label",
+		  "id":"btn_title",
+		  "default":"SIGN UP"
+		}
+		 ]
+		},
+	 {
+	   "type":"image-block",
+	   "name":"Image Block",
+	   "settings":[
+		  {
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image 600x600"			
+		  },
+		  {
+			"type":"text",
+			"id":"subtitle",
+			"label":"Enter subtitle"			
+		  },
+		  {
+			"type":"text",
+			"id":"title",
+			"label":"Enter title"			
+		  },
+		  {
+			"type":"url",
+			"id":"link",
+			"label":"Provide Link"			
+		  }
+	   ]
+	 },
+	 {
+	   "type":"map",
+	   "name":"Map",
+	   "limit":1,
+	   "settings":[
+		  {
+			"type":"html",
+			"id":"map_html",
+			"label":"Enter iframe here"			
+		  }
+	   ]
+	 },
+	 {
+	   "type":"artisans-part",
+	   "name":"Artisans block",	   
+	   "settings":[
+		  {
+			"type":"header",
+			"content":"Detail 1"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_1",
+			"label":"Upload Image 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_1",
+			"label":"Enter title 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_1",
+			"label":"Enter location 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_1",
+			"label":"Enter work category 1"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_1",
+			"label":"Provide Link 1"			
+		  },
+		  {
+			"type":"header",
+			"content":"Detail 2"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_2",
+			"label":"Upload Image 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_2",
+			"label":"Enter title 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_2",
+			"label":"Enter location 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_2",
+			"label":"Enter work category 2"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_2",
+			"label":"Provide Link 2"			
+		  },
+		  {
+			"type":"header",
+			"content":"Detail 3"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_3",
+			"label":"Upload Image 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_3",
+			"label":"Enter title 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_3",
+			"label":"Enter location 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_3",
+			"label":"Enter work category 3"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_3",
+			"label":"Provide Link 3"			
+		  }
+	   ]
+	 },
+	 {
+	   "type":"desiners-part",
+	   "name":"Desingers block",	   
+	   "settings":[
+		  {
+			"type":"header",
+			"content":"Detail 1"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_1",
+			"label":"Upload Image 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_1",
+			"label":"Enter title 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_1",
+			"label":"Enter location 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_1",
+			"label":"Enter work category 1"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_1",
+			"label":"Provide Link 1"			
+		  },
+		  {
+			"type":"header",
+			"content":"Detail 2"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_2",
+			"label":"Upload Image 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_2",
+			"label":"Enter title 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_2",
+			"label":"Enter location 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_2",
+			"label":"Enter work category 2"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_2",
+			"label":"Provide Link 2"			
+		  },
+		  {
+			"type":"header",
+			"content":"Detail 3"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_3",
+			"label":"Upload Image 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_3",
+			"label":"Enter title 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_3",
+			"label":"Enter location 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_3",
+			"label":"Enter work category 3"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_3",
+			"label":"Provide Link 3"			
+		  }
+	   ]
+	 },
+	 {
+	   "type":"organization-part",
+	   "name":"Organization block",	   
+	   "settings":[
+		  {
+			"type":"header",
+			"content":"Detail 1"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_1",
+			"label":"Upload Image 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_1",
+			"label":"Enter title 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_1",
+			"label":"Enter location 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_1",
+			"label":"Enter work category 1"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_1",
+			"label":"Provide Link 1"			
+		  },
+		  {
+			"type":"header",
+			"content":"Detail 2"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_2",
+			"label":"Upload Image 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_2",
+			"label":"Enter title 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_2",
+			"label":"Enter location 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_2",
+			"label":"Enter work category 2"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_2",
+			"label":"Provide Link 2"			
+		  },
+		  {
+			"type":"header",
+			"content":"Detail 3"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_3",
+			"label":"Upload Image 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_3",
+			"label":"Enter title 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_3",
+			"label":"Enter location 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_3",
+			"label":"Enter work category 3"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_3",
+			"label":"Provide Link 3"			
+		  }
+	   ]
+	 },
+	 {
+	   "type":"artist-part",
+	   "name":"Artist block",	   
+	   "settings":[
+		  {
+			"type":"header",
+			"content":"Detail 1"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_1",
+			"label":"Upload Image 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_1",
+			"label":"Enter title 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_1",
+			"label":"Enter location 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_1",
+			"label":"Enter work category 1"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_1",
+			"label":"Provide Link 1"			
+		  },
+		  {
+			"type":"header",
+			"content":"Detail 2"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_2",
+			"label":"Upload Image 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_2",
+			"label":"Enter title 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_2",
+			"label":"Enter location 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_2",
+			"label":"Enter work category 2"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_2",
+			"label":"Provide Link 2"			
+		  },
+		  {
+			"type":"header",
+			"content":"Detail 3"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_3",
+			"label":"Upload Image 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_3",
+			"label":"Enter title 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_3",
+			"label":"Enter location 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_3",
+			"label":"Enter work category 3"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_3",
+			"label":"Provide Link 3"			
+		  }
+	   ]
+	 },
+	 {
+	   "type":"travel-part",
+	   "name":"Travel block",	   
+	   "settings":[
+		  {
+			"type":"header",
+			"content":"Detail 1"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_1",
+			"label":"Upload Image 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_1",
+			"label":"Enter title 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_1",
+			"label":"Enter location 1"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_1",
+			"label":"Enter work category 1"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_1",
+			"label":"Provide Link 1"			
+		  },
+		  {
+			"type":"header",
+			"content":"Detail 2"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_2",
+			"label":"Upload Image 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_2",
+			"label":"Enter title 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_2",
+			"label":"Enter location 2"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_2",
+			"label":"Enter work category 2"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_2",
+			"label":"Provide Link 2"			
+		  },
+		  {
+			"type":"header",
+			"content":"Detail 3"
+		  },
+		  {
+			"type":"image_picker",
+			"id":"image_3",
+			"label":"Upload Image 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"title_3",
+			"label":"Enter title 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"location_3",
+			"label":"Enter location 3"			
+		  },
+		  {
+			"type":"text",
+			"id":"category_3",
+			"label":"Enter work category 3"			
+		  },
+		  {
+			"type":"url",
+			"id":"link_3",
+			"label":"Provide Link 3"			
+		  }
+	   ]
+	 }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

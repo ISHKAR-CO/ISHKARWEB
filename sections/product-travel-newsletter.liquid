@@ -1,0 +1,111 @@
+{%- include 'product-newsletter' -%}
+{% schema %}
+  {
+    "name": "Newsletter",
+	"class":"newsletter-coll",
+    "settings": [
+		{
+		  "type":"checkbox",
+		  "label":"Show this Section",
+		  "id":"Show_section",
+		  "default":true
+		},
+		{
+		  "type":"image_picker",
+		  "label":"Upload Background Image",
+		  "id":"bg_img"
+		},
+    {
+      "type": "select",
+      "id": "alignment",
+      "label":"Image alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "top",
+          "label":"Top"
+        },
+        {
+          "value": "center",
+          "label":"Middle"
+        },
+        {
+          "value": "bottom",
+          "label":"Bottom"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_layout",
+      "label": "Layout",
+      "default": "full_width",
+      "options": [
+        {
+          "label":"Full width",
+          "value": "full_width"
+        },
+        {
+          "label":"Fixed width",
+          "value": "fixed_width"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "hero_size",
+      "label":"Section height",
+      "default": "large",
+      "options": [
+        {
+          "label":"Extra Small",
+          "value": "x-small"
+        },
+        {
+          "label":"Small",
+          "value": "small"
+        },
+        {
+          "label":"Medium",
+          "value": "medium"
+        },
+        {
+          "label":"Large",
+          "value": "large"
+        },
+        {
+          "label":"Extra Large",
+          "value": "x-large"
+        },
+        {
+          "label":"Auto",
+          "value": "auto"
+        }
+      ]
+    },
+		{
+		  "type":"text",
+		  "label":"Enter Title",
+		  "id":"title"
+		},
+		{
+		  "type":"textarea",
+		  "label":"Enter detail",
+		  "id":"detail",
+		  "default":"Be the first to know about our latest collections, pop ups & collaborations"
+		},
+		{
+		  "type":"text",
+		  "label":"Enter Button label",
+		  "id":"btn_title",
+		  "default":"SIGN UP"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

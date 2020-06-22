@@ -1,0 +1,76 @@
+{% include 'blog-banner' %}
+{% schema %}
+  {
+    "name": "Banner",
+	"class":"index-section--flush",
+    "settings": [
+		{
+			"type":"image_picker",
+			"id":"image",
+			"label":"Upload Image"
+		},
+		{
+			"type":"select",
+			"id":"alignment",
+			"label":"Select Image alignmnet",
+			"default":"center",
+			"options":[
+				{
+				  "value":"top center",
+				  "label":"Top"
+				},
+				{
+				  "value":"center",
+				  "label":"Middle"
+				},
+				{
+				  "value":"bottom center",
+				  "label":"Bottom"
+				}
+			]
+		},
+		{
+			"type":"text",
+			"id":"subtitle",
+			"label":"Enter Subtitle",
+			"default":"Venture"
+		},
+		{
+			"type":"richtext",
+			"id":"title",
+			"label":"Enter title",
+			"default":"<p>Beyond <em>The</em> Headlines</p>"
+		},
+		{
+			"type":"select",
+			"id":"text_postion",
+			"label":"Select Text Postion",
+			"default":"left-bottom",
+			"options":[
+				{
+				  "value":"left-bottom",
+				  "label":"Left Bottom"
+				},
+				{
+				  "value":"left-center",
+				  "label":"Left Center"
+				},
+				{
+				  "value":"center",
+				  "label":"center"
+				},
+				{
+				  "value":"center-bottom",
+				  "label":"Center Bottom"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,180 @@
+<!-- ========================= Instagram layout 3 ========================= -->
+
+{% assign user_id = section.settings.insta_user_id -%}
+{% assign access_token = section.settings.insta_access_token -%}
+
+{% if user_id and access_token != '' %}
+
+
+<div class="instagram-section small--hide" data-section-id="{{ section.id }}" data-section-type="instagram" >
+  {%- if section.settings.title != blank -%}
+  <div class="section-header text-center">
+    {%- if section.settings.subtitle != blank -%}<h3 class="s-subtitle">{{- section.settings.subtitle -}}</h3>{%- endif -%}
+      <h2 class="h2-large s-title"><span class="inner_warpper"><a class="full-width-link" href="{{ section.settings.insta_link }}" target="_blank"></a>{{ section.settings.title }}</span></h2>
+  </div>{%- endif -%}
+  {%- if section.settings.enable_custom_instagram -%}
+  <ul id="instagram_section" class="instagram_section"></ul>  
+  {%- endif -%}
+</div>
+{%- if section.settings.enable_custom_instagram -%}
+<div id="insta_user_id" data-id="{{ user_id }}" class="small--hide"></div>
+<div id="insta_access_token" data-token="{{ access_token }}"></div>
+{%- else -%}
+{{ section.settings.aap_code_insta | replace:'<div','<div class="small--hide" ' }}
+{%- endif -%}
+
+{%- if section.settings.enable_custom_instagram -%}
+<script type="text/javascript" defer="defer">  
+  $(window).on('load',function() {
+    var user_id = $('#insta_user_id').attr('data-id');
+    var access_token = $('#insta_access_token').attr('data-token');
+    var i, div_lth;
+    var ajax_url = 'https://api.instagram.com/v1/users/'+user_id+'/media/recent/?access_token='+access_token;
+    
+    $.ajax({
+      url: ajax_url,
+      type: "GET",
+      async:false,
+      dataType: "jsonp",
+      headers: {
+        "access-control-allow-origin": true,
+        "content-type": "application/json"
+      },
+      success: function(object){
+        if(object.data.length > 0){
+          div_lth = '';
+          for(i=0; i<6; i++){
+            if(typeof object.data[i] == "undefined"){}
+            else{
+              div_lth += '<li><figure><a href="'+object.data[i].link+'" target="_blank" id="'+object.data[i].id+'"><div class="insta_img lazyload" data-bgset="'+object.data[i].images.standard_resolution.url+'"></div></a></figure></li>';
+            }
+          }
+        } else{
+          $('#instagram_section').append('<p class="text-center">There is no post yet.</p>');
+        }
+        $('#instagram_section').append(div_lth);
+         setTimeout(function() {
+           var insta_arrow = "{{ 'ishaker-insta-arrow.png' | asset_url }}";
+           
+          $('.instagram_section').slick({
+            arrows: true,
+            infinite: true,
+            speed: 650,
+            slide: 'li',
+            slidesToShow: 5,
+            adaptiveHeight: true,
+            autoplay: true,
+            dots: false,
+            prevArrow : '<button class="custom-arrow slick-prev slick-arrow" aria-label="Previous" type="button" aria-disabled="false"><img class="arrow-img lazyload" data-src="'+insta_arrow+'" alt="insta-arrow-left" width="auto" height="auto"/></button>',
+            nextArrow : '<button class="custom-arrow slick-next slick-arrow" aria-label="Next" type="button" aria-disabled="false"><img class="arrow-img lazyload" data-src="'+insta_arrow+'" alt="insta-arrow-left" width="auto" height="auto"/></button>',
+            variableWidth:true,
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 4,
+                  slidesToScroll: 1
+                }
+              },
+              {
+                breakpoint: 769,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 1
+                }
+              },
+              {
+                breakpoint: 623,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 1
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1
+                }
+              }
+
+            ]
+          });
+        },100);
+      },
+      error: function (xhr, status, error) {
+        console.log(status);
+        console.log(error);
+      }
+    });
+
+    });
+</script>
+{%- endif -%}
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Instagram",
+    "settings": [
+	  {	
+		"type":"checkbox",
+		"id":"enable_custom_instagram",
+		"label":"Enable Custom Instagram",
+		"default":false,
+		"info":"This may enable custom code instagram"
+	  },
+	  {	
+		"type":"html",
+		"id":"aap_code_insta",
+		"label":"Enter Instafeed code Here",
+		"default":"<div id='insta-feed'></div>"
+	  },
+	  {
+		"type": "text",
+      	"id": "title",
+      	"label": "Section Title",
+		"default": "Follow Us"
+	  },
+	  {
+		"type":"text",
+		"id":"subtitle",
+		"label":"Section subtitle",
+		"default":"Follow us on"
+	  },
+	  {
+		"type": "text",
+      	"id": "insta_user_id",
+      	"label": "Instagram User Id"
+	  },
+	  {
+		"type": "text",
+      	"id": "insta_access_token",
+      	"label": "Instagram Access Token",
+		"info":"To genrate tokken follow this link https:\/\/archetypethemes.co\/pages\/instagram-token-generator"
+	  },
+	  {
+		"type":"url",
+		"id":"insta_link",
+		"label":"Provide Insta link"
+	  }	  
+	],
+    "presets": [
+      {
+        "name": "Instagram",
+        "category": "Image",
+        "settings": {
+          "insta_user_id": "5807732982",
+          "insta_access_token": "5807732982.1677ed0.ec90259ddb1f49d6b39f71a734299ef9"
+        }
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

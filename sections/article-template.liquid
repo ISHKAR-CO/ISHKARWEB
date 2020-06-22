@@ -1,0 +1,220 @@
+{%- assign image_hide = true -%}
+{%- if article.content contains '[replace_with_featured_image]' -%}
+  {%- assign image_hide = false -%}
+  {%- capture article_image -%}
+{%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+<img class="lazyload" src="{{ article.image | img_url: '300x300' }}" data-src="{{ img_url }}" data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]" data-aspectratio="{{ article.image.aspect_ratio }}" data-sizes="auto" alt="{{ article.image.image.alt | escape }}" />{%- endcapture -%}
+{%- endif -%}
+
+{%- capture ati_title -%}
+	<div class="grid">
+  <div class="grid__item">
+    <div class="section-header text-center mb0">
+      <div class="page-width">
+        {% comment %} <h1 class="article__title">{{ article.title }}</h1> {% endcomment %}
+        {%- if section.settings.blog_show_date -%}
+          <h3 class="s-subtitle">{{ article.published_at | time_tag: format: 'date' }}</h3>
+        {%- endif -%}
+        <h1 class="h2-large s-title wc_s-title">
+          <span class="inner_warpper iner_title_wcs">{{ article.title }}</span>
+        </h1>
+        {%- if section.settings.blog_show_author -%}
+        
+        {%- for tag in article.tags -%}
+          {%- if tag contains 'by_' -%}
+              {%- assign author = tag | split:'_' | last -%}
+          {%- endif -%}
+        {%- endfor -%}
+        
+        <h3 class="s-subtitle article__author secondary-font">{%- if author != blank -%}A guest blog by {{ author }}
+        {%- else -%}
+          {%- if article.author == 'Electra Simon' or article.author == 'Jignesh Gediya' -%}
+          	{{ 'blogs.article.by_author' | t: author: 'ISHKAR' }}
+        {%- endif -%}
+         {%- endif -%}
+        </h3>
+        
+        {%- endif -%}
+        
+        {%- comment -%}        
+        
+        {% if section.settings.blog_show_author %}
+        <span class="article__author">{{ 'blogs.article.by_author' | t: author: article.author }}</span>
+        {% endif %}
+
+        {% if section.settings.blog_show_date %}
+        <span class="article__date">
+          {{ article.published_at | time_tag: format: 'date' }}
+        </span>
+        {% endif %}
+        
+        
+        {%- endcomment -%}
+      </div>
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+
+{%- unless image_hide -%}{{ ati_title }}{%- endunless -%}
+<div {{ template.suffix }}  class="article_detailwc {% if image_hide %}article_detailwc_feature{%- if template.suffix contains 'alternate' or article.image == blank -%}_{%- endif -%}{% endif %}">
+  {%- unless template.suffix contains 'alternate' -%}
+  {%- if article.image != blank and image_hide -%}  
+    <div class="article_img text-center">
+      {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+       <img class="lazyload" src="{{ article.image | img_url: '300x300' }}" data-src="{{ img_url }}" data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]" data-aspectratio="{{ article.image.aspect_ratio }}" data-sizes="auto" alt="{{ article.image.image.alt | escape }}" />
+    </div>
+    {%- endif -%}
+  {%- endunless -%}
+  <div class="page-width art_wc_content">    
+    {%- if image_hide -%}{{ ati_title }}{%- endif -%}
+    <div class="rte">
+      {{ article.content | replace :'[replace_with_featured_image]',article_image }}
+    </div>
+    {% if section.settings.show_share_buttons %}
+    {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+    {% endif %}
+  </div>
+  
+  {%- capture current_url %}{{ shop.url }}{{ article.url }}{% endcapture -%}  
+    {%- capture buttons -%}
+    <ul class="social_buttons">
+      <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ current_url }}" target="_blank" class="icon-facebook" title="Share this on Facebook">
+      {%- include 'icon-facebook-f' -%}
+      </a></li>
+      <li>
+      <a href="https://twitter.com/intent/tweet?text=Check out {{ article.title | escape }} from {{ shop.name | escape }}: {{ current_url }}" target="_blank" class="icon-twitter" title="Share this on Twitter">
+      {%- include 'icon-twitter' -%}
+      </a></li>
+      <li>
+      <a href="mailto:?subject=I Thought you might like '{{ article.title | escape }}' this article &amp;body=Hey, I was browsing {{ shop.name | escape }} and found '{{ article.title | escape }}'. I wanted to share it with you.%0D%0A%0D%0A{{ current_url }}" target="_blank" class="icon-mail" title="Email this to a friend">
+      {%- include 'icon-mail' -%}
+      </a></li>
+      <li class="medium-up--hide">
+        <a href="whatsapp://send?text=Hey, I was browsing {{ shop.name | escape }} and found '{{ article.title | escape }}'. I wanted to share it with you. {{ current_url }}" data-action="share/whatsapp/share">{%- include 'icon-whatsapp' -%}</a>
+        </li>
+    </ul>
+    {%- endcapture -%}
+  {%- if blog.handle contains 'journal' -%}
+    <div class="article-share">
+      {{ buttons }}
+    </div>{%- endif -%}
+  {%- unless blog.url == '/blogs/travel-explore' -%}
+  <div class="text-center return-link-wrapper page-width">
+    <a href="{{ blog.url }}" class="btn_return_blog">{%- include 'icon-arrow-left' -%}{{- 'blogs.article.back_to_blog' | t: title: blog.title -}}</a>
+  </div>{%- endunless -%}
+</div>
+{%- include 'related-blog' -%}
+
+<script defer="defer">
+  $(document).ready(function(){
+    var prevArrow = '<button class="custom-arrow slick-prev slick-arrow" aria-label="Previous" type="button" aria-disabled="false"><img class="lazyload" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAjCAYAAAAXMhMjAAACgElEQVRYR82XTYhNcRjGf4/PlCwsLMSGhY8FaywsUIqUKBsRjUgSkmmkWBCpaZTULHxtZaIoZHyskYUisSCLSSkWNsLw6NW5us6ce86ZO/fcO2/d1X3P+//1/s/zvO8R4zBs7wG6NF7YbM8F5gOPa0wdh7M9E/gITEk3qmNwtpcAd4HZjW6v7XC2LwPrgFkFr5TbAmc7utMN7AMmFEANA0eAc5XC2Z4KnAd2lRDeJWBQ0rW2CMJ2P7A7B+wL8FLSyqycqjvnBmDfgP2SLuZ1tCVwto9JOpk+yHYWXHjZkKTvRVfdNJztpcCpRHl9kg7lwPWGbUh6WARU//+o4Wz3AHuBOXWFHklalQHXI+n0aIBGDZdYwVogFJUVNyRtahaiKRO2vRDYBkS38mKBpLeVw9l/jXki8LPEYb+Afklhri2P/94526+TATyvxEmLgPdlVFeiVmaKbK8ADgCbSxQ5AzyXNFAid8wpAXccOFGiUreksyXyWpby71ptXwcWJ7+8A2JO3pT0uWUUDQqN8DnbsfS9AEKpeXEhhrqkN1VBNjRh25NKKnZY0uQqAAsnRLLbh8H25QBclbSj1YCFcLUDbc8ANgJXgPRznYWr74rtsJ4QRggoolfS4XTnkjn8StKtZrpaunNZxW1vjb0sMeMtGXC1lelDsqLfkfS7LOiY4IoOabDPrQaeSfpa9Hwn4ILpB/BOUozAhlE13CAQncqLJ8AGSZ/SSVXDRf2dQO63QgI1BNyT1FWDrBQupfDtSRdDREVxFBhoG1wK9D6wpoiwI3B1xv4UCFFMzwLtKFwA2Z4GLAcetFUQRdeWuupYHpYBt4EYlSNm5GjqVZZrez1w8A+U2c2mpVNV6wAAAABJRU5ErkJggg==" alt="Previous Arrow" width="auto" height="auto" /></button>';
+    var nextArrow = '<button class="custom-arrow slick-next slick-arrow rotated--180deg" aria-label="Next" type="button" aria-disabled="false"><img class="lazyload" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAjCAYAAAAXMhMjAAACgElEQVRYR82XTYhNcRjGf4/PlCwsLMSGhY8FaywsUIqUKBsRjUgSkmmkWBCpaZTULHxtZaIoZHyskYUisSCLSSkWNsLw6NW5us6ce86ZO/fcO2/d1X3P+//1/s/zvO8R4zBs7wG6NF7YbM8F5gOPa0wdh7M9E/gITEk3qmNwtpcAd4HZjW6v7XC2LwPrgFkFr5TbAmc7utMN7AMmFEANA0eAc5XC2Z4KnAd2lRDeJWBQ0rW2CMJ2P7A7B+wL8FLSyqycqjvnBmDfgP2SLuZ1tCVwto9JOpk+yHYWXHjZkKTvRVfdNJztpcCpRHl9kg7lwPWGbUh6WARU//+o4Wz3AHuBOXWFHklalQHXI+n0aIBGDZdYwVogFJUVNyRtahaiKRO2vRDYBkS38mKBpLeVw9l/jXki8LPEYb+Afklhri2P/94526+TATyvxEmLgPdlVFeiVmaKbK8ADgCbSxQ5AzyXNFAid8wpAXccOFGiUreksyXyWpby71ptXwcWJ7+8A2JO3pT0uWUUDQqN8DnbsfS9AEKpeXEhhrqkN1VBNjRh25NKKnZY0uQqAAsnRLLbh8H25QBclbSj1YCFcLUDbc8ANgJXgPRznYWr74rtsJ4QRggoolfS4XTnkjn8StKtZrpaunNZxW1vjb0sMeMtGXC1lelDsqLfkfS7LOiY4IoOabDPrQaeSfpa9Hwn4ILpB/BOUozAhlE13CAQncqLJ8AGSZ/SSVXDRf2dQO63QgI1BNyT1FWDrBQupfDtSRdDREVxFBhoG1wK9D6wpoiwI3B1xv4UCFFMzwLtKFwA2Z4GLAcetFUQRdeWuupYHpYBt4EYlSNm5GjqVZZrez1w8A+U2c2mpVNV6wAAAABJRU5ErkJggg==" alt="Next Arrow" width="auto" height="auto" /></button>';
+    $('.image-slider').slick({ dots: false, infinite: false, speed: 650,
+      slidesToShow: 1, slidesToScroll: 1,
+                              prevArrow : prevArrow, nextArrow : nextArrow, adaptiveHeight:true })
+  })
+</script>
+
+{% schema %}
+{
+  "name": {
+    "da": "Opslag",
+    "de": "Posts",
+    "en": "Posts",
+    "es": "Publicaciones",
+    "fi": "Julkaisut",
+    "fr": "Articles",
+    "hi": "पोस्ट",
+    "it": "Articoli",
+    "ja": "投稿",
+    "ko": "게시물",
+    "nb": "Innlegg",
+    "nl": "Berichten",
+    "pt-BR": "Posts",
+    "pt-PT": "Publicações",
+    "sv": "Inlägg",
+    "th": "โพสต์",
+    "zh-CN": "文章",
+    "zh-TW": "貼文"
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "blog_show_author",
+      "label": {
+        "da": "Vis forfatter",
+        "de": "Autor anzeigen",
+        "en": "Show author",
+        "es": "Mostrar autor",
+        "fi": "Näytä tekijä",
+        "fr": "Afficher l'auteur",
+        "hi": "लेखक दिखाएं",
+        "it": "Mostra autore",
+        "ja": "執筆者を表示する",
+        "ko": "작성자 표시",
+        "nb": "Vis forfatter",
+        "nl": "Auteur weergeven",
+        "pt-BR": "Exibir autor",
+        "pt-PT": "Mostrar autor",
+        "sv": "Visa författare",
+        "th": "แสดงผู้เขียน",
+        "zh-CN": "显示作者",
+        "zh-TW": "顯示作者"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_date",
+      "label": {
+        "da": "Vis dato",
+        "de": "Datum anzeigen",
+        "en": "Show date",
+        "es": "Mostrar fecha",
+        "fi": "Näytä päivämäärä",
+        "fr": "Afficher la date",
+        "hi": "दिनांक दिखाएं",
+        "it": "Mostra data",
+        "ja": "日付を表示する",
+        "ko": "날짜 표시",
+        "nb": "Vis dato",
+        "nl": "Datum weergeven",
+        "pt-BR": "Exibir data",
+        "pt-PT": "Mostrar data",
+        "sv": "Visa datum",
+        "th": "แสดงวันที่",
+        "zh-CN": "显示日期",
+        "zh-TW": "顯示日期"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": {
+        "da": "Vis knapper til deling på sociale medier",
+        "de": "Buttons für Social Media anzeigen",
+        "en": "Show social sharing buttons",
+        "es": "Mostrar botones para compartir en redes sociales",
+        "fi": "Näytä sosiaalisen median jakamispainikkeet",
+        "fr": "Afficher les boutons de partage sur les médias sociaux",
+        "hi": "सोशल शेयरिंग बटन दिखाएं",
+        "it": "Mostra i pulsanti per la condivisione sui social",
+        "ja": "ソーシャル共有ボタンを表示する",
+        "ko": "소셜 공유 버튼 표시",
+        "nb": "Vis knapper for deling på sosiale medier",
+        "nl": "Knoppen voor sociaal delen weergeven",
+        "pt-BR": "Exibir botões de compartilhamento em redes sociais",
+        "pt-PT": "Mostrar botões de partilha nas redes sociais",
+        "sv": "Visa knappar för delning i sociala medier",
+        "th": "แสดงปุ่มสำหรับแชร์ลงโซเชียล",
+        "zh-CN": "显示社交分享按钮",
+        "zh-TW": "顯示社群分享按鈕"
+      },
+      "default": true
+    }
+  ]
+}
+{% endschema %}

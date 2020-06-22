@@ -1,0 +1,39 @@
+{%- if section.settings.subtitle != blank or section.settings.title != blank or section.settings.detail != blank -%}
+<div class="story_detail"> {{--}} 
+  <div class="header-section text-center"> {{--}} 
+    {%- if section.settings.subtitle != blank -%}<h3 class="s-subtitle">{{ section.settings.subtitle }}</h3>{%- endif -%}
+    {%- if section.settings.title != blank -%}
+    <h2 class="h2-large s-title wc_s-title"> {{--}} 
+      <span class="inner_warpper iner_title_wcs">{{ section.settings.title }}</span> {{--}} 
+    </h2> {{--}} 
+    {%- endif -%}
+  </div>{%- if section.settings.detail != blank -%}
+  <div class="story-detail secondary-font">{{ section.settings.detail }}</div>{%- endif -%}
+</div> {{--}} 
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Story detail",
+    "settings": [
+	  {
+		"type":"text",
+  		"id":"title",
+  		"label":"Enter title",
+		"default":"Title"
+	  },
+	  {
+		"type":"text",
+  		"id":"subtitle",
+  		"label":"Enter subtitle",
+		"default":"Subtitle"
+	  },
+	  {
+		"type":"richtext",
+  		"id":"detail",
+  		"label":"Enter detail"
+	  }
+	]
+  }
+{% endschema %} {{--}}
+{% stylesheet %}{% endstylesheet %} {{--}}
+{% javascript %}{% endjavascript %} {{--}}

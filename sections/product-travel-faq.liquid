@@ -1,0 +1,85 @@
+ {% assign my_value = product.metafields.sf_faq.question_1 %}
+  {%- if my_value -%}<div class="t-blocks template-faq template-faq_left yellow_template_faq_">
+  <div class="banner-faq lazyload"  data-bgset="{{ section.settings.image | img_url : '' }}" >
+    <h3 class="faq-title s-title">{{ section.settings.title }}</h3>
+  </div>
+  {%- comment -%}
+  <div class="product_accordian">
+    {% for block in section.blocks %}
+    {%- if block.type == "faq" -%}
+    {%- if block.settings.title != blank and block.settings.faq_a != blank -%}
+    <div class="accordian_content">
+      {%- if block.settings.title != blank-%}<h6 class="accordian_title">{{ block.settings.title }}</h6>{%- endif -%}
+      {%- if block.settings.faq_a != blank -%}<div class="accordian_detail">
+        <div class="warpper"><p>{{ block.settings.faq_a }}</p></div>
+      </div>{%- endif -%}
+    </div>
+    {%- endif -%}
+    {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- endcomment -%} 
+ 
+  <div class="product_accordian">
+    {% for i in (1..25) %}
+    {%- capture question -%}question_{{i}}{%- endcapture -%}
+        {%- capture answer -%}answer_{{i}}{%- endcapture -%}
+        {%- assign answer = product.metafields.sf_faq[answer] -%}
+        {%- assign question = product.metafields.sf_faq[question] -%}
+    {%- if answer != blank and question != blank -%}
+    <div class="accordian_content">
+      {%- if answer != blank-%}<h6 class="accordian_title">{{ question }}</h6>{%- endif -%}
+      {%- if question != blank -%}<div class="accordian_detail">
+        <div class="warpper"><p>{{ answer }}</p></div>
+      </div>{%- endif -%}
+    </div>
+    {%- endif -%}    
+    {%- endfor -%}
+  </div>  
+</div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Section name",
+	"class":"product_left_part",
+    "settings": [
+		{
+		  "type":"text",
+		  "id":"title",
+		  "label":"Enter title",
+		  "default":"Faq"
+		},
+		{
+		  "type":"image_picker",
+		  "id":"image",
+		  "label":"Upload Image"
+		}
+	],
+	"blocks":[
+	  {
+		"type":"faq",
+		"name":"faq block",
+		"settings":[
+			{
+			  "type":"textarea",
+			  "id":"title",
+			  "label":"Enter Question",
+			  "default":"Lorem ipsum dolor sit amet?"
+			},
+			{
+			  "type":"textarea",
+			  "id":"faq_a",
+			  "label":"Enter Answer",
+			  "default":" consectetur adipiscing elit. Duis fringilla tincidunt tristique. Pellentesque bibendum nisl dui. Nullam vel dolor vel purus cursus ultrices eget non tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas auctor lectus eget tellus elementum venenatis. Praesent imperdiet aliquam mi, et blandit massa tincidunt ut. Suspendisse vel sodales dolor, non euismod nisl. Duis pretium vitae mi ut cursus."
+			}
+		]
+	  }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
