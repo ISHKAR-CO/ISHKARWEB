@@ -150,7 +150,9 @@
     </div>
   </div>
     {%- endif -%}
-  {%- if product.tags contains 'pre-order' -%}
+  {%- if product.tags contains 'pre-order' or current_variant.inventory_policy == "continue"  -%}
+  {%- assign preoder_accordian = true -%}{%- endif -%}{%- assign preoder_accordian = true -%}
+  {%- if preoder_accordian -%}
   <div class="accordian_content">
     <h6 class="accordian_title">Preorders explained</h6>
     <div class="accordian_detail">

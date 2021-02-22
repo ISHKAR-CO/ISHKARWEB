@@ -118,29 +118,32 @@
 	{%- endif -%}
   {%- endfor -%}
 
-  {%- for custom in shop.metafields.custom -%}
-	{%- assign src = custom | last -%}
-	{%- assign key = custom | first -%}
-	{%- assign key = key | split: "ly" | last -%}
-	{%- assign translation_namespace = language | append: "cu" -%}
-	{%- assign translation_key = "id" | append: key -%}
-	{%- if shop.metafields[translation_namespace][translation_key] -%}
-	  {%- assign translation = shop.metafields[translation_namespace][translation_key] -%}
-	  {%- assign src1 = '"' | append: src | append: '"' -%}
-	  {%- assign dst1 = '"' | append: translation | append: '"' -%}
-	  {%- assign src2 = "'" | append: src | append: "'" -%}
-	  {%- assign dst2 = "'" | append: translation | append: "'" -%}
-	  {%- assign src3 = ">" | append: src | append: "<" -%}
-	  {%- assign dst3 = ">" | append: translation | append: "<" -%}
-	  {%- assign content = content | replace: src1, dst1 -%}
-	  {%- assign content = content | replace: src2, dst2 -%}
-	  {%- assign content = content | replace: src3, dst3 -%}
-	{%- endif-%}
+  {%- capture customs -%}{%- render 'ly-get-customs' -%}{%- endcapture -%}
+  {%- assign customs = customs | split : '[ly_custom]' -%}
+  {%- for custom in customs -%}
+    {%- assign used_custom = custom | split: '[ly_custom_split]' -%}
+    {%- assign src = used_custom | first -%}
+    {%- assign dst = used_custom | last -%}
+	{%- assign src1 = '"' | append: src | append: '"' -%}
+	{%- assign dst1 = '"' | append: dst | append: '"' -%}
+	{%- assign src2 = "'" | append: src | append: "'" -%}
+	{%- assign dst2 = "'" | append: dst | append: "'" -%}
+	{%- assign src3 = ">" | append: src | append: "<" -%}
+	{%- assign dst3 = ">" | append: dst | append: "<" -%}
+	{%- assign content = content | replace: src1, dst1 -%}
+	{%- assign content = content | replace: src2, dst2 -%}
+	{%- assign content = content | replace: src3, dst3 -%}
   {%- endfor -%}
 
   {%- assign tag_translation_namespace = "ta" | append: language -%}
   {%- for tag_translation in shop.metafields[tag_translation_namespace] -%}
 	{%- assign src = tag_translation | first -%}
+	{%- if src contains 'ly_tag_' -%}
+	  {%- assign tmp_tag_namespace = 'l_ta' | append: language -%}
+	  {%- if shop.metafields[tmp_tag_namespace][src] -%}
+		{%- assign src = shop.metafields[tmp_tag_namespace][src] -%}
+	  {%- endif -%}
+	{%- endif -%}
 	{%- assign translation = tag_translation | last -%}
 	{%- assign src1 = '"' | append: src | append: '"' -%}
 	{%- assign dst1 = '"' | append: translation | append: '"' -%}
@@ -155,21 +158,15 @@
 
   {%- assign translation_mode_key = 'ly' | append: theme.id -%}
   {%- if shop.metafields.translation_mode[translation_mode_key] == 'non-strict' -%}
-	{%- if template == 'product' -%}
-	  {%- for variant in product.variants -%}
-	    {%- if variant.metafields[language]['title'] -%}
-		  {%- assign src = variant.title -%}
-		  {%- assign translation = variant.metafields[language]['title'] -%}
-		  {%- assign src1 = '"' | append: src | append: '"' -%}
-		  {%- assign dst1 = '"' | append: translation | append: '"' -%}
-		  {%- assign content = content | replace: src1, dst1 -%}
-		{%- endif -%}
-	  {%- endfor -%}
-	{%- endif -%}
-
 	{%- assign vendor_translation_namespace = 've' | append: language -%}
 	{%- for vendor_translation in shop.metafields[vendor_translation_namespace] -%}
 	  {%- assign src = vendor_translation | first -%}
+	  {%- if src contains 'ly_vendor_' -%}
+		{%- assign tmp_vendor_namespace = 'l_ve' | append: language -%}
+		{%- if shop.metafields[tmp_vendor_namespace][src] -%}
+		  {%- assign src = shop.metafields[tmp_vendor_namespace][src] -%}
+		{%- endif -%}
+	  {%- endif -%}
 	  {%- assign translation = vendor_translation | last -%}
 	  {%- assign src1 = '"' | append: src | append: '"' -%}
 	  {%- assign dst1 = '"' | append: translation | append: '"' -%}
@@ -185,6 +182,12 @@
 	{%- assign type_translation_namespace = "ty" | append: language -%}
 	{%- for type_translation in shop.metafields[type_translation_namespace] -%}
 	  {%- assign src = type_translation | first -%}
+	  {%- if src contains 'ly_type_' -%}
+		{%- assign tmp_type_namespace = 'l_ty' | append: language -%}
+		{%- if shop.metafields[tmp_type_namespace][src] -%}
+		  {%- assign src = shop.metafields[tmp_type_namespace][src] -%}
+		{%- endif -%}
+	  {%- endif -%}
 	  {%- assign translation = type_translation | last -%}
 	  {%- assign src1 = '"' | append: src | append: '"' -%}
 	  {%- assign dst1 = '"' | append: translation | append: '"' -%}

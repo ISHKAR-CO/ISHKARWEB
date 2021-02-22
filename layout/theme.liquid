@@ -1,6 +1,6 @@
 {% comment %}ly_liquid_scripts_begin{% endcomment %}{% capture ly_liquid_content %}{% comment %}ly_liquid_scripts_end{% endcomment %}<!doctype html>
 <html class="no-js" lang="{{ shop.locale }}">
-<head>
+<head>{%- capture _capture -%}
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -33,7 +33,7 @@
 
   {%- include 'social-meta-tags' -%}
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="preload" as="style" />
-  <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="preload" as="style" type="text/css" />
+  <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="preload" as="style" type="text/css" />{%- endcapture -%}{{ _capture | strip | strip_newlines }}
   {%- if settings.show_preload and template contains 'index' -%}
   {{- 'theme.scss.css' | asset_url | stylesheet_tag -}} 
   {%- comment -%}<link href="{{- 'theme.scss.css' | asset_url -}} " rel="preload" as="style"  type="text/css" media="all" />{%- endcomment -%}
@@ -54,56 +54,74 @@
   {%- endif -%}  
   <!--- Mail Chimp  -->
   <script id="mcjs" defer="defer">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/8894bb3283174a9dc86c206d3/bed881c981bd6e565946e3ac1.js");</script>    
+<!-- XO-InsertCode -->
+{% include "xo-insertcode-header" %}
+<!-- End: XO-InsertCode Header-->
 </head>
 
 <body class="template-{{ request.page_type | handle }}{% if template.suffix %} template-{{ template.suffix | handle }}{% endif %}">
+<!-- XO-InsertCode -->
+{% include "xo-insertcode-body" %}
+<!-- End: XO-InsertCode Body-->{%- capture _capture -%}
   {%- if settings.show_preload and template contains 'index' -%}
   {%- include 'preload' -%}  
   {%- endif -%}
-
   <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
   {%- if settings.enable_ajax -%}{%- include 'cart-popup' -%}{%- endif -%}
-  {%- if settings.newsletter_enable -%}{%- include 'newsletter-popup' -%}{%- endif -%}  
+  {%- if settings.newsletter_enable -%}{%- include 'newsletter-popup' -%}{%- endif -%}{%- endcapture -%}{{ _capture | strip | strip_newlines }}
   {%- section 'header' -%}
   <div class="page-container drawer-page-content {% if collection %}{% unless collection.url contains '/all' or canonical_url contains '/products' %}coll_overflow_visible{% endunless %}{% endif %}" id="PageContainer">
-	{%- if settings.enable_moble_section  and template contains 'index' -%}
+	{%- capture _capture -%}{%- if settings.enable_moble_section  and template contains 'index' -%}
     <main class="main-content js-focus-hidden medium-up--hide" id="MainContentMobile" role="main" tabindex="-1">{%- section 'home-mobile-section' -%}</main>
-    {%- endif -%}
+    {%- endif -%}{%- endcapture -%}{{- _capture | strip | strip_newlines -}}
     <main class="main-content js-focus-hidden {% if settings.enable_moble_section and template contains 'index' %}small--hide{% endif %}" id="MainContent" role="main" tabindex="-1">
+      {%- if template contains 'index' -%}
+      {%- capture _capture -%}{{ content_for_layout }}{%- endcapture -%}{{- _capture | strip | strip_newlines -}}
+      {%- else -%}
       {{ content_for_layout }}
-    </main>
-    {%- section 'footer' -%}
+      {%- endif -%}</main>
+    {%- capture _capture -%}{%- section 'footer' -%}
     <div id="slideshow-info" class="visually-hidden" aria-hidden="true">{{- 'sections.slideshow.navigation_instructions' | t -}}</div>
   </div>
 
   <ul hidden><li id="a11y-refresh-page-message">{{ 'general.accessibility.refresh_page' | t }}</li><li id="a11y-selection-message">{{ 'general.accessibility.selection_help' | t }}</li></ul>  
   {%- if settings.cookie_banner -%}{%- include 'cookie_banner' -%}{%- endif -%}
   {%- include 'ajax-cart-template' -%}<script defer="defer">jQuery(function($) { ajaxCart.init({ formSelector: '.AddToCartForm_id', cartContainer: '#cart_container_id', addToCartSelector: '.add_to_cart_btn_cls', enableQtySelectors: true, moneyFormat: {{ shop.money_format | json }} }); });</script>
-  <script defer="defer" src="{{ 'wc-theme-lib.min.js' | asset_url }}"></script> {{--}} 
-   {{--}} <script defer="defer" src="{{ 'script.js' | asset_url }}"></script> {{--}}    
-  <script>setTimeout(function(){var _script = document.getElementsByTagName('script'); for( var i = 0 ; i < _script.length ; i++ ){var str = _script[i].getAttribute('src');str = str == null ? 'empty' : str;if(_script[i].getAttribute('defer') == null || str.search("jquery.min.js") < 0 ){ if (_script[i].getAttribute('async') === null ){_script[i].setAttribute('defer','defer'); }}}},100);
+  <script defer="defer" src="{{ 'wc-theme-lib.min.js' | asset_url }}"></script>
+  <script defer="defer" src="{{ 'script.js' | asset_url }}"></script>
+  <script type="text/javascript">setTimeout(function(){var _script = document.getElementsByTagName('script'); for( var i = 0 ; i < _script.length ; i++ ){var str = _script[i].getAttribute('src');str = str == null ? 'empty' : str;if(_script[i].getAttribute('defer') == null || str.search("jquery.min.js") < 0 ){ if (_script[i].getAttribute('async') === null ){_script[i].setAttribute('defer','defer'); }}}},100);
   {%- if template contains 'index' -%}
   var des_header = '',mobi_header='',mobi_header_child = '',desk_header_child = '';
     mobi_header = document.getElementById("MainContentMobile");
     mobi_header_child = mobi_header.children;
     des_header = document.getElementById("MainContent");
     desk_header_child =  des_header.children;
+    if (typeof(Storage) !== "undefined") {
+      sessionStorage.setItem("mobi_header_child", mobi_header.innerHTML);
+      sessionStorage.setItem("desk_header_child", des_header.innerHTML);
+    }
     function headerSwap(){      
-      var tem_mobi = document.getElementById("MainContentMobile"), tem_desk = document.getElementById("MainContent");
-      if( window.innerWidth > 768 ){
-        tem_mobi.innerHTML = '';        
-        return false;
-      }else{
-        if( window.innerWidth < 768 ){         
-          tem_desk.innerHTML = ''; return false;
-        }
-        if( mobi_header.hasChildNodes() != true ){ mobi_header.appendChild(mobi_header_child); }        
-        return false;
-      }      
+      var tem_mobi = document.getElementById("MainContentMobile"), tem_desk = document.getElementById("MainContent");      
+      if( window.innerWidth >= 768  ){
+        tem_mobi.innerHTML = '';
+        if(des_header.hasChildNodes() != true ){          
+          des_header.innerHTML = (desk_header_child.legnth == undefined ? sessionStorage.getItem("desk_header_child") : desk_header_child);
+          sectionCall();homepageSlider();bannerHeight();
+        }        
+      }else{        
+        tem_desk.innerHTML = '';
+        if(mobi_header.hasChildNodes() != true ){          
+          mobi_header.innerHTML = (mobi_header_child.legnth == undefined ? sessionStorage.getItem("mobi_header_child") : mobi_header_child);
+        }        
+      }
+      return false;
     }
     (function(){ headerSwap(); })();  
     window.addEventListener("resize", headerSwap);
     {% endif %}
-  </script>
-{% comment %}ly_liquid_scripts_begin{% endcomment %}{% endcapture %}{% render 'ly-liquid-scripts' content: ly_liquid_content %}{% comment %}ly_liquid_scripts_end{% endcomment %}{% comment %}ly_core_scripts_begin{% endcomment %}{% render 'ly-core-scripts' %}{% comment %}ly_core_scripts_end{% endcomment %}{% comment %}ly_switcher_factory_begin{% endcomment %}{% render 'ly-switcher-factory' %}{% comment %}ly_switcher_factory_end{% endcomment %}</body>
+  </script>{%- endcapture -%}{{ _capture | strip | strip_newlines }}
+<!-- langify-v2-scripts-begin -->{% comment %}ly_liquid_scripts_begin{% endcomment %}{% endcapture %}{% render 'ly-liquid-scripts' content: ly_liquid_content %}{% comment %}ly_liquid_scripts_end{% endcomment %}{% comment %}ly_core_scripts_begin{% endcomment %}{% render 'ly-core-scripts' %}{% comment %}ly_core_scripts_end{% endcomment %}{% comment %}ly_switcher_factory_begin{% endcomment %}{% render 'ly-switcher-factory' %}{% comment %}ly_switcher_factory_end{% endcomment %}<!-- langify-v2-scripts-end --><!-- XO-InsertCode -->
+{% include "xo-insertcode-footer" %}
+<!-- End: XO-InsertCode Footer-->
+</body> 
 </html>

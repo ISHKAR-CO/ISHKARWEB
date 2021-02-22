@@ -1,0 +1,344 @@
+{%- comment -%}
+  Comments may not appear right after they are submitted, either to be checked by Shopify's spam filter
+  or to await moderation. When a comment is submitted, the browser is redirected to a page
+  that includes the new comment id in its URL.
+    Example: http://shopname.myshopify.com/blogs/news/2022072-my-post?comment=3721372
+{%- endcomment -%}
+
+{%- if comment.status == 'pending' -%}
+  {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+{%- else -%}
+  {%- assign number_of_comments = article.comments_count -%}
+{%- endif -%}
+
+{%- assign image_hide = true -%}
+{%- if article.content contains '[replace_with_featured_image]' -%}
+  {%- assign image_hide = false -%}
+{%- endif -%}
+<div class="edits_wrapper">
+{%- if article.image != blank -%}
+<div class="Article__ImageWrapper" style="background-image: url({{ article.image | img_url:'1x1' }})">
+  {%- assign img_url = article.image -%}
+  <div class="Article__Image lazyload" data-optimumx="1.4" data-bg="{{ img_url | img_url: '300x300' }}" data-bgset="{% include 'bgset', image: img_url %}" data-sizes="auto" data-parent-fit="contain" data-aspectratio="{{ article.image.aspect_ratio }}" ></div>
+</div>
+{%- endif -%}{%- assign article_title_size = article.title | size -%}
+<div class="art_template Article__Wrapper art_template_edit_page {% if image_hide %}art_template_feature{% endif %}{% if article_title_size > 41 %} larger_title{% endif %}" {{ article_title_size }}>
+<article>
+  {% section 'article-template' %}
+</article>
+</div>{% assign slider_enable = false %}
+{% assign related-object = all_products[article.metafields.sf_related_product.select_product_1] %}
+{%- unless related-object.empty? -%}
+{% assign slider_enable = true %}
+<div class="related-object one-whole">
+  <div class="section-header text-center">
+    <div class="title_outer">
+      <h2 class="h1 s-title wc_s-title">        
+        {% assign page_section_title = article.metafields.sf_related_product.section_title %}
+        <span class="inner_warpper">{{ page_section_title | default :'Related Product' }}
+          {%- comment -%}Object By {{ related-object | replace:'made-by_','' | split:'-' | first | strip_html }}{%- endcomment -%}</span>
+      </h2>
+    </div>
+  </div>
+  <ul class="related-object-ul ishkar-arrow">    	
+    {%- for i in (1..10) -%}
+    	{%- capture object_product -%}select_product_{{i}}{%- endcapture -%}    
+    {%- assign object_product = all_products[article.metafields.sf_related_product[object_product]] -%}    
+    {%- unless object_product.empty? -%}
+    <li class="related-object-li small--one-half medium-up--one-third">
+      {%- include 'product-card-grid', product: object_product -%}
+    </li>
+    {%- endunless -%}
+    {%- endfor -%}
+    {%- comment -%}
+    {%- paginate collections['all'].products by 9999  -%}
+    {%- for product in collections['all'].products -%}      
+    {%- for tag in product.tags -%}
+    {%- if tag contains related-object %}
+    <li class="related-object-li small--one-half medium-up--one-third">
+      {%- include 'product-card-grid', product:product -%}
+    </li>
+    {%- endif -%}
+    {%- endfor -%}      
+    {%- endfor -%}
+    {%- endpaginate -%}    {%- endcomment -%}
+  </ul>
+</div>
+<script defer="defer">
+  $(document).ready(function(){
+    var prevArrow = '<button class="custom-arrow slick-prev slick-arrow" aria-label="Previous" type="button" aria-disabled="false"><img class="lazyload" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACUAAAAhCAYAAABeD2IVAAADq0lEQVRYR82XT2gcVRzHf9/3djZZN0lJdjs783aCiIdaQS+FqheFHkRsEQQRoYj2DzYl/UOUgB4qVaS9qLVqPSi0V0HR2pMgeBT0JB7Eg+Chu7P/0yTdmp1kZn4yyoZhmcnupp2N7zjvN7/vZ37v977zHuh/MgqFCT2VmjxMhMPYaSbTNPcKQa8BmAMwTkSdnYJK6bq+X9NSbwJ0CMAmBzOvjRQqn89PptPpA0LwJUA8ELVKzHx7JFBTU1Mz2Wz2RSnxIYBMXMswU4fI/yZRKMOY2J1KTV4gwlEAIqYyTMS3mek7x9mYbzabyVXKNM05KfFZuF/CUMzMRHTL87x3K5Xa5fBcYpWyLNUGkI2pzl9ra86zrVbrj6j5JKE2AKS6oszsM9PX7faduZWVlVtbWdG2oaanp3dls+M3iPBTqWS/1StiWepfKGa+43nunOO4N5aWllYH8cWhoXK53EOZTPorIuwFIJn501LJPt0rViyav3sev1KtVn8loo1BYLoxg0IJpdQRKel1Ijzc07BXSiX71DCi/WL7QU1YlnkJwCEiGFHJXNd9r1KpnesnNMx8JJRp5vdJqZ0jwsFws0Zs6Z9dd/W5arXdGEa0X2wYShSLxgkicUwI7It33WAX8Reex1er1eov/QS2M49cLlfMZMZOAThJRLvik/AqM33Qbv/98fLy8vJ2xAZ9B5al3iGiBQCTcS/5vl8jcp8plxvBTkp8dJdvTCnjjBDyBEAPxrhwYH4/MrtXbLt+PUmy3kaHUoWXhJBnADweAxf8s2zf9xZtu/ZtcCi714CxlmAYxn4pxUWAngpMMgaw4zgbjzQajT/vJVg/nyJd1wuaJq8BCODu6xX3fe9auVw9OlKokFhGKfOyEHgeQL77nJnfL5XsxQio4IODpR569K1UlJhShSNCyIsAdCL66ObN8kJvnGWplufxWdd1rzcajfYwZNuB2sxfKBQe0zT5QlSlZmeLDhGlgyOL79PVTqfzRmKnhEG/uAsVjmfm39bX3afr9Xptqzx3VamtEs/OFteJSOuNCSpHRGXfd4/Zdv2HqByJQSllLAohLvT5obeY+fNyufI2EXldwMSgAoGZmZmp8XHtoBDyEwC5ODMGsOr7/L3jrC80m81KolAhiDGl9CeFSAVwe7ZYdsf3+ctRQXU5pFK7nwC08wAdiLp+MbMzaqjNIlmW/iiznBdCvBpYR8iM2zsG1YUwTfN+Ieg4gHkA08y881BduP+ubJmXiej4P+EHZwF5InbxAAAAAElFTkSuQmCC" alt="Previous Arrow" width="auto" height="auto" /></button>';
+    var nextArrow = '<button class="custom-arrow slick-next slick-arrow rotated--180deg" aria-label="Next" type="button" aria-disabled="false"><img class="lazyload" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAjCAYAAAAXMhMjAAAD70lEQVRYR82YTWzcVBDHZ8b2kt1mE7rZD+/zrtRUohxQD0hwQEg9cYQLEl+NqiAU6IcaoqbtgYBAleCAOAAiVanoKSDBuSCQAMEFKi5BCHHpgVPXz5vECiFtN1mt/QY5bcrWu95t09iNj35jz8//N/N/fg9hh135fF4YhvGcptEY7hA2KpfLVSKcJMLXAcBg5rX7DaeNjIw8lE6n5hDp8XahmLlx3+BKpdILhqG9DwAWIuqdM8irScOlLas8g0gHAXgUESPzK6XmE4ErFot7DUM7jogTiJiNqnNmZgD+Syk+v7bW/CJWuKGhoVw2u+s9RDzcSyVmXmeG75m9WSkXfwQADj4gVjjLKs8R0aFuSt1QCf4JoK5fbxxdWVlZCcfFCletijoAlsJJg05kVqdsu36ul5XdM9zw8PDuTMYYdRz393CiatUK1BgO7t9U6m+lvHGAxT+khEY/j90ynBDFJ4n0txHxAACfunJFng0nq1TEAgBkleLPmGHOcZz5fkDt43cLp1mWeQgRXwbAA5tFrpQ6YdvOR+HE5XJ5wvO8b5aWlup3A7UZe0dwQmTzALueQcSPiajDCnyfJ6WUs1sB2GrNYaFQKOm6PqnrNNPLm5TyD0q58FUicLlcrpLJDFxCxGqvhMzsKaVmpKx/sN1gYZ9DIcRpIjwMwHsQkXqoddX3+flWq/Wr67pX4wDbgMvlctV0euAMET672fbRpsnfKaU+lXLhWwDw44K61RBCmO8Q0RQi7u6hlFKKZ6V0ppOACnerIYSYIYKXAGBft3Xwpom2fJ+nWq3WRdd1ZezKhRMUi8WnUin9AgBUEFGLmGLFrD5vNr03XNcNPGxjod7uK8rntEKhsDeVMr4mwoejaxB8ZvjTtuVjcQD2M2G6AamfJKIjUZDMfNK2nQ+TUq4jj2k+uEfT0mOI+BYiDrQHMPuTtVo90RUiSoisEOY0EY0j4mgQpJQ6YtvO+fADlUp5SilvXsqlX7aiar9p7fVOQwjzNSI6DgBna7XOtbVSsWwANpnhN0R/ulZbCP5KvDsFvRe49hwPAECzUzmrhgjW//d51fP4lWaz+cPy8vJqP8jtguuap1IRi4hYuL0+N37PG8x8wbad0wDQioKMFc6yxCUifKKHQv8yq5/W11uBX14Ox8UKVywWS7pOR4noWFjBEEiLWf2sFJ6TUl4MeiwYjxWuDSDYTI8D4KuI8GifbeJlpdQn1641vkwK7hanZeWfJkqdAcD9wYFN1JQntuPvBlAqlfbrujZHhI90gww22okrFwLVTNMMjr7eDc7jbh9L/iAnsnGFyFUBBsaI4E1EHATYQXCb1MH5yuBg5kVEmvgPPl+HyZaywvoAAAAASUVORK5CYII=" alt="Next Arrow" width="auto" height="auto" /></button>'; 
+    $('.related-object-ul').slick({
+      dots: false,
+      infinite: false,
+      speed: 650,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      prevArrow : prevArrow,
+      nextArrow : nextArrow,
+      responsive: [
+        {
+          breakpoint: 991,
+          settings: {
+            slidesToShow: 2
+          }
+        },
+        {
+          breakpoint: 512,
+          settings: {
+            slidesToShow: 1
+          }
+        }
+      ]
+    });
+  })
+</script>
+{%- endunless -%}
+</div>
+{%- if related-object.empty? -%}
+{%- include 'related-blog' , slider_enable: slider_enable -%}{%- endif -%}
+{% assign page_section_title = '' -%}
+{% assign related-object = '' %}
+{% if blog.comments_enabled? %}
+  {% if number_of_comments > 0 %}
+    <hr aria-hidden="true">
+    <div class="page-width">
+      <div class="grid">
+        <div class="grid__item">
+          <h2 class="h3">{{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}</h2>
+
+          {% paginate article.comments by 5 %}
+
+            {% comment %}
+              #comments is required, it is used as an anchor link by Shopify.
+            {% endcomment %}
+            <div id="comments">
+              <ul class="comments">
+                {% comment %}
+                  If a comment was just submitted with no blank field, show it.
+                {% endcomment %}
+                {% if comment.status == 'pending' %}
+                  <li id="{{ comment.id }}" class="comment">
+                    {% include 'comment', comment: comment %}
+                  </li>
+                {% endif %}
+
+                {% for comment in article.comments %}
+                  <li id="{{ comment.id }}" class="comment">
+                    {% include 'comment', comment: comment %}
+                  </li>
+                {% endfor %}
+              </ul>
+
+              {%- if paginate.pages > 1 -%}
+                {% include 'pagination', paginate: paginate %}
+              {%- endif -%}
+
+            </div>
+          {% endpaginate %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <hr aria-hidden="true" style="border:0px;">
+  <div class="page-width">
+    <div class="grid">
+      <div class="grid__item">
+        <div class="comment-form form-vertical">
+          {% form 'new_comment', article %}
+
+            {%- assign formId = 'CommentForm' -%}
+
+            <h2 class="h3">{{ 'blogs.comments.title' | t }}</h2>
+
+            {%- assign post_message = 'blogs.comments.success' -%}
+            {%- if blog.moderated? and comment.status == 'pending' -%}
+              {%- assign post_message = 'blogs.comments.success_moderated' -%}
+            {%- elsif comment.status == 'unapproved' or comment.status == 'spam' -%}
+              {%- assign post_message = 'blogs.comments.unapproved' -%}
+            {%- endif -%}
+
+            {% include 'form-status', form: form, form_id: formId, success_message: post_message %}
+
+            <div class="grid">
+
+              <div class="grid__item medium-up--one-half">
+                <label for="{{ formId }}-author">{{ 'blogs.comments.name' | t }}</label>
+                <input type="text" name="comment[author]" id="{{ formId }}-author" class="input-full{% if form.errors contains 'author' %} input--error{% endif %}" value="{{ form.author }}"{% if form.errors contains 'author' %} aria-invalid="true" aria-describedby="{{ formId}}-author-error"{% endif %}>
+                {% if form.errors contains 'author' %}
+                  <span id="{{ formId}}-author-error" class="input-error-message">
+                    <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                    {% include 'icon-error' %}
+                    <span>{{ 'blogs.comments.name' | t }} {{ form.errors.messages['author'] }}.</span>
+                  </span>
+                {% endif %}
+              </div>
+
+              <div class="grid__item medium-up--one-half">
+                <label for="{{ formId }}-email">{{ 'blogs.comments.email' | t }}</label>
+                <input type="email" name="comment[email]" id="{{ formId }}-email" class="input-full{% if form.errors contains 'email' %} input--error{% endif %}" value="{{ form.email }}" autocorrect="off" autocapitalize="off" {% if form.errors contains 'email' %} aria-invalid="true" aria-describedby="{{ formId}}-email-error"{% endif %}>
+                {% if form.errors contains 'email' %}
+                  <span id="{{ formId}}-email-error" class="input-error-message">
+                    <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                    {% include 'icon-error' %}
+                    <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                  </span>
+                {% endif %}
+              </div>
+
+              <div class="grid__item">
+                <label for="{{ formId }}-body">{{ 'blogs.comments.message' | t }}</label>
+                <textarea name="comment[body]" id="{{ formId }}-body" class="input-full{% if form.errors contains 'body' %} input--error{% endif %}"{% if form.errors contains 'body' %} aria-invalid="true" aria-describedby="{{ formId}}-body-error"{% endif %}>{{ form.body }}</textarea>
+                {% if form.errors contains 'body' %}
+                  <span id="{{ formId}}-body-error" class="input-error-message">
+                    <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                    {% include 'icon-error' %}
+                    <span>{{ 'blogs.comments.message' | t }} {{ form.errors.messages['body'] }}.</span>
+                  </span>
+                {% endif %}
+              </div>
+
+            </div>
+
+            {% if blog.moderated? %}
+              <p class="fine-print">{{ 'blogs.comments.moderated' | t }}</p>
+            {% endif %}
+
+            <input type="submit" class="btn" value="{{ 'blogs.comments.post' | t }}">
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{%- section 'article-newsletter' -%}
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "articleBody": {{ article.content | strip_html | json }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ shop.url | append: page.url | json }}
+  },
+  "headline": {{ article.title | json }},
+  {% if article.excerpt != blank %}
+    "description": {{ article.excerpt | strip_html | json }},
+  {% endif %}
+  {% if article.image %}
+    {% assign image_size = article.image.width | append: 'x' %}
+    "image": [
+      {{ article | img_url: image_size | prepend: "https:" | json }}
+    ],
+  {% endif %}
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  "author": {
+    "@type": "Person",
+    "name": {{ article.author | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    {% if settings.share_image %}
+      {% assign image_size = settings.share_image.width | append: 'x' %}
+      "logo": {
+        "@type": "ImageObject",
+        "height": {{ settings.share_image.height | json }},
+        "url": {{ settings.share_image | img_url: image_size | prepend: "https:" | json }},
+        "width": {{ settings.share_image.width | json }}
+      },
+    {% endif %}
+    "name": {{ shop.name | json }}
+  }
+}
+</script>
+<script type="text/javascript" defer="defer">
+  $(document).ready(function(){
+    if ($('.article-content-slider').length){
+      $('.article-content-slider').slick({ arrows: false, adaptiveHeight: !0, dots: !0 })
+    }
+  })
+</script>
+<style>
+  .Article__Wrapper.art_template .article_detailwc .wc_s-title .inner_warpper:before,.Article__Wrapper.art_template .article_detailwc .wc_s-title .inner_warpper:after{ display: none; }
+  .edits_wrapper{ background-color: #fffdf2; }
+.Article__ImageWrapper { overflow: hidden; height: 215px; position: relative; z-index: 1; margin-top: -35px; }
+  .Article__Wrapper { position: relative; margin: 0 auto 0 auto; padding: 24px 0 70px; background: #fffdf2; z-index: 1; text-align: center; }
+  .Article__Wrapper .page-width { max-width: 620px; }
+  .Article__Wrapper.art_template:before { display: none; }
+  .Article__Wrapper .rte p{ color: inherit; }
+  .Article__Wrapper .article_detailwc{ background-color: transparent; padding: 0px; margin: 0px; }
+  .Article__Wrapper .page-width .rte{ padding:0; }
+  .Article__Image { position: relative; height: 100%; width: 100%; background-size: cover; background-position: center; }  
+  .Article__Wrapper.art_template .rte .image-text .text { padding-left: 0px; }
+  .Article__Wrapper.art_template .rte .image-text .one-half,.Article__Wrapper.art_template .rte .one-half{ width:100%; }
+  .Article__Wrapper.art_template .rte .image-text:not(:last-child),.Article__Wrapper.art_template .rte .image-text .image { margin-bottom: 19.44444px; }
+  .article-content-slider{ margin-top: 35px; }
+  .article-content-slider img { width: auto; max-width:100%; margin-left:auto; margin-right: auto; }
+  .article-content-slider .slick-dots{ margin: -30px 0 6px; }
+  .article-content-slider .slick-dots li { margin: 0; vertical-align: middle; width: 10px; height: 10px; margin-left: 6px; box-shadow: 0 0 8px -3px #000; border-radius:50%; }
+  .article-content-slider .slick-dots li button::before {content:''; text-indent: -9999px; background-color: transparent; border-radius: 100%; border-color: #fffdf2; background-color: #fffdf2; width: 10px; height: 10px; opacity: 0.4; transition: all 0.2s; }
+  .article-content-slider .slick-dots li.slick-active button::before { opacity: 1; }  
+  .edits_wrapper + .section-header .s-title:before,.Article__Wrapper ~ .related-object .section-header .s-title:before { content: ''; display: block; height: 50% !important; top: 0px !important; left: -20px !important; width: calc(100% + 40px) !important; z-index: 0; background-color: #fffdf2 !important; }
+  .edits_wrapper + .section-header .s-title:before{ left: -5vw !important; width: 120vw !important; }
+  .article-slider ~ .related-object .section-header .s-title:before{ background-color:transparent !important; }
+  .Article__Wrapper.art_template .article_detailwc{ margin-top:0; }  
+  .related-object .s-title { text-transform: uppercase; }
+  .related-object-ul:not(.slick-slider){ display: -ms-flexbox; display: -webkit-flex; display: flex;
+    -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row;
+    -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap;
+    -webkit-align-items: center; -ms-flex-align: center; align-items: center; }    
+  
+  .Article__Wrapper ~ .related-object .ishkar-arrow .slick-arrow{ top: calc(37% - 12.5px); }
+  .Article__Wrapper.art_template.art_template_feature .page-width .rte{ padding-top:15px; }
+  
+  @media only screen and (min-width: 768px){ 
+    .Article__ImageWrapper { height: 335px; }
+    .Article__ImageWrapper+.Article__Wrapper { margin-top: -45px; }
+    .Article__ImageWrapper { margin-top: -55px; }
+    .article-content-slider .slick-dots li { width: 12px; height: 12px; margin-left: 8px; }
+    .article-content-slider .slick-dots li button::before { width: 12px; height: 12px; }
+    .Article__Wrapper { max-width: 90%; overflow: hidden; }
+    .Article__Wrapper ~ .related-object { width: 90%; margin-left: auto; margin-right: auto; }    
+    .Article__Wrapper + .section-header .page-width{ max-width:90%; }
+    .Article__Wrapper ~ .related-object{ padding-bottom:20px; }
+    .Article__Wrapper ~ .related-object .related-object-ul { max-width: 90%;  padding:0; margin: 0 auto; }
+    .Article__Wrapper ~ .related-object .related-object-ul .slick-prev { left: -30px; }
+    .Article__Wrapper ~ .related-object .related-object-ul .slick-next { right: -30px; }
+    .Article__Wrapper { padding: 35px 20px 45px }
+    .Article__Wrapper .art_wc_content .rte{font-size: 16px;}
+  }
+  @media screen and (min-width: 992px){ .Article__ImageWrapper { height: 450px; }    
+    .Article__Wrapper .page-width { max-width: 780px; }
+    .Article__ImageWrapper+.Article__Wrapper { margin-top: -70px; }
+    .edits_wrapper ~ .article-slider { margin-top: 50px; margin-bottom: 50px !important; }
+    .larger_title .section-header .s-title:not(.s-not) { font-size: 20px !important; }
+    .Article__ImageWrapper+.larger_title article { margin-top: 6px; }
+    .Article__Wrapper { max-width: 80%; padding-top: 52px; }
+    .Article__Wrapper ~ .related-object { margin-top: 0; width: 80%; }    
+    .Article__Wrapper + .section-header .page-width{ max-width:80%; }
+    .Article__Wrapper ~ .related-object .related-object-ul { max-width: 80%; margin: 70px auto 0; }
+    .Article__Wrapper ~ .related-object{ padding-bottom:40px; }
+    .Article__Wrapper ~ .related-object .related-object-ul .slick-prev { left: -50px; }
+    .Article__Wrapper ~ .related-object .related-object-ul .slick-next { right: -50px; }
+    .Article__Wrapper ~ .related-object .related-object-ul .related-object-li { padding: 0 5px; }
+  }
+  @media screen and (min-width: 1240px){ .Article__ImageWrapper { height: 600px; }  
+  .Article__Wrapper,.Article__Wrapper + .section-header .page-width{ width: 65%; max-width: 870px; }
+    .Article__Wrapper ~ .related-object { width: 65%; }
+    .larger_title .section-header .s-title:not(.s-not) { font-size: 25px !important; }
+    .Article__ImageWrapper+.larger_title article { margin-top: 3px; }
+  }
+  @media only screen and (min-width: 1367px){    
+    .Article__Wrapper ~ .related-object .related-object-ul .related-object-li { padding: 0 20px; }
+  }
+  @media screen and (max-width: 991px){
+    .art_template.art_template_feature .page-width .rte{ padding-top:0; }    
+  }
+  @media screen and (max-width: 767px){
+    .article-slider ~ .related-object { margin-top: 35px; }
+}
+</style>

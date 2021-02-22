@@ -315,6 +315,18 @@
                 {%- endif -%}
               </div>
             </div>
+        <div class="pro-vari-info hide">
+        	{%- for variant in product.variants -%}
+          <div class="pro-vari-info-div" data-var-id="{{ variant.id }}" data-ip="{{ variant.inventory_policy }}" data-ipi="{%- if variant.inventory_quantity < 1 -%}true{% else %}false{% endif %}" 
+               data-text="{%- if variant.inventory_quantity < 1 and variant.inventory_policy == "continue" -%}
+                          {{ 'products.product.pre_order' | t }}
+                          {%- elsif variant.inventory_quantity < 1 and variant.inventory_policy != "continue" -%}
+                          {{ 'products.product.sold_out' | t }}
+                          {% else %}
+                          {{ 'products.product.add_to_cart' | t }}{% endif %}"></div>
+          	{%- endfor -%}
+        </div>
+        
           {% endform %}
         </div>
 
@@ -462,15 +474,15 @@
       prevArrow : pro_prevArrow,
       nextArrow : pro_nextArrow,
     });
-  })
-  
+  });
+  document.addEventListener('DOMContentLoaded', (event) => {
   $(window).scroll(function(e){
     if( $('.product-single').length > 0 && $(window).outerWidth() > 991 ){
       var scroll_top = $(this).scrollTop() + $('.site-header-main.header-fixed').outerHeight();
       var window_height = $(window).outerHeight() - $('.site-header-main.header-fixed').outerHeight();
       over_content = $('.product-single .product-inner').outerHeight() > window_height ? true : false;
-      var overall_height = ( $('.product-template__container_outer').offset().top + $('.product-template__container_outer').outerHeight() ) - $('.site-header-main.header-fixed').outerHeight();  
-      var xyz = $('.site-footer').offset().top  -  Number( ($('.site-footer').css('margin-top')).replace("px", "") );    
+      var overall_height = ( $('.product-template__container_outer').offset().top + $('.product-template__container_outer').outerHeight() ) - $('.site-header-main.header-fixed').outerHeight();      
+      var xyz = $('.site-footer').offset().top - Number(($('.site-footer').css('margin-top')).replace("px", ""));    
       setTimeout(function(){
         var abc = fixed_part.offset().top + fixed_part.outerHeight();
 
@@ -508,6 +520,6 @@
         }
       },50)
     }else{ $('.product-single .product-inner').removeAttr('style')  }
-  })
+  }); });
 </script>
 {%- endif -%}

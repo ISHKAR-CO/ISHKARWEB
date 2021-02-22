@@ -1,6 +1,6 @@
-<div class="story_template">
-{%- section 'page-story-banner' -%} 
-{%- section 'page-story-detail' -%} 
-{%- section 'page-story-blocks' -%} 
-{%- section 'page-story-newsletter' -%} 
-</div>
+{%- capture _section -%}<div class="story_template">
+{%- section 'page-story-banner' -%}  
+{%- section 'page-story-detail' -%}    
+{%- section 'page-story-blocks' -%}  
+{%- section 'page-story-newsletter' -%}
+</div>{%- endcapture -%}{{ _section | strip | strip_newlines }}

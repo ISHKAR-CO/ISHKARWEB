@@ -17,7 +17,8 @@
 <div class="home-banner {% if section.settings.enable_second_design %}home-banner_alter{%- endif -%}" data-section-id="{{ section.id }}" data-section-type="home-banner">  
   {%- if section.settings.enable_second_design -%}
   {{- banner -}}
-  <div class="banner_content">{{- detail -}}</div>
+  {%- assign detail_size = detail | strip | strip_html | size -%}
+  <div class="banner_content{% if detail_size > 399 %} banner_content_large{% endif %}">{{- detail -}}{%- include 'icon-right_angle_triangle' -%}</div>
   {%- else -%}{{- banner -}}{%- endif -%}</div>
 {%- unless section.settings.enable_second_design -%}
   <div class="verticle_till {{ section.settings.content_alignment }} {% if section.settings.content_bg_color %} show_bg_color{% endif %}{% if section.settings.content_border_bottom %} show_border-bottom {%- endif -%}">

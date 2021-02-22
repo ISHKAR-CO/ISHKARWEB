@@ -1,7 +1,7 @@
 <div class="page-width">
-  <header class="section-header text-center">
+  {%- comment -%}<header class="section-header text-center">
     <h1>{{ page_title }}</h1>
-  </header>
+  </header>{%- endcomment -%}
 
   {%- assign blocks = section.blocks | sort: 'collection.all_products_count' -%}
 
@@ -29,10 +29,10 @@
           {%- assign collections = collections | sort: 'published_at' -%}
       {% endcase %}
       {% if section.settings.sort == 'products_low' or section.settings.sort == 'date' or section.settings.sort == 'alphabetical' %}
-        {% for collection in collections %}
+        {% for collection in collections %}{%- if collection.products_count > 0 -%}
           <li class="grid__item {{ grid_item_width }}">
             {% include 'collection-grid-item', collection: collection %}
-          </li>
+          </li>{%- endif -%}
         {% endfor %}
       {% else %}
         {% for collection in collections reversed %}

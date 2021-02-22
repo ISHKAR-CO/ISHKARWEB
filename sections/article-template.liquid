@@ -18,22 +18,14 @@
         <h1 class="h2-large s-title wc_s-title">
           <span class="inner_warpper iner_title_wcs">{{ article.title }}</span>
         </h1>
-        {%- if section.settings.blog_show_author -%}
-        
+        {%- if section.settings.blog_show_author -%}        
         {%- for tag in article.tags -%}
           {%- if tag contains 'by_' -%}
               {%- assign author = tag | split:'_' | last -%}
           {%- endif -%}
         {%- endfor -%}
-        
-        <h3 class="s-subtitle article__author secondary-font">{%- if author != blank -%}A guest blog by {{ author }}
-        {%- else -%}
-          {%- if article.author == 'Electra Simon' or article.author == 'Jignesh Gediya' -%}
-          	{{ 'blogs.article.by_author' | t: author: 'ISHKAR' }}
-        {%- endif -%}
-         {%- endif -%}
-        </h3>
-        
+        {%- capture author_sub_title -%}{%- if author != blank -%}A guest blog by {{ author }}{%- else -%}{%- if article.author == 'Electra Simon' or article.author == 'Jignesh Gediya' -%}{{ 'blogs.article.by_author' | t: author: 'ISHKAR' }}{%- endif -%}{%- endif -%}{%- endcapture -%}
+        {%- if author_sub_title != blank -%}<h3 class="s-subtitle article__author secondary-font">{{ author_sub_title }}</h3>{%- endif -%}
         {%- endif -%}
         
         {%- comment -%}        
@@ -58,7 +50,7 @@
 
 {%- unless image_hide -%}{{ ati_title }}{%- endunless -%}
 <div {{ template.suffix }}  class="article_detailwc {% if image_hide %}article_detailwc_feature{%- if template.suffix contains 'alternate' or article.image == blank -%}_{%- endif -%}{% endif %}">
-  {%- unless template.suffix contains 'alternate' -%}
+  {%- unless template.suffix contains 'alternate' or template.suffix == 'edit_page' -%}
   {%- if article.image != blank and image_hide -%}  
     <div class="article_img text-center">
       {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
@@ -105,7 +97,8 @@
     <a href="{{ blog.url }}" class="btn_return_blog">{%- include 'icon-arrow-left' -%}{{- 'blogs.article.back_to_blog' | t: title: blog.title -}}</a>
   </div>{%- endunless -%}
 </div>
-{%- include 'related-blog' -%}
+{%- unless template.suffix == 'edit_page' -%}
+{%- include 'related-blog' -%}{%- endunless -%}
 
 <script defer="defer">
   $(document).ready(function(){

@@ -56,8 +56,8 @@
 {%- endcapture -%}
 <div class="home-banner{%- if block.settings.enable_second_design %} home-banner_alter{% endif -%}" data-section-id="{{ block.id }}" data-section-type="home-banner">{{--}}
   {%- if block.settings.enable_second_design -%}
-  {{- banner -}}
-  {{--}}<div class="banner_content">{{- detail -}}</div>{{--}}
+  {{- banner -}} {%- assign detail_size = detail | strip | strip_html | size -%}
+  {{--}}<div class="banner_content{% if detail_size > 399 %} banner_content_large{% endif %}">{{- detail -}}{%- include 'icon-right_angle_triangle' -%}</div>{{--}}
   {%- else -%}
   {{- banner -}}
   {%- if block.settings.top_center_text != blank -%}<div class="s-subtitle top_center_text">{{ block.settings.top_center_text }}</div>{%- endif -%}

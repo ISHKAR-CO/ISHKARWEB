@@ -1,169 +1,169 @@
 {%- if section.settings.coll_subtitle != blank or section.settings.coll_title != blank or section.settings.coll_detail != blank -%}
-<div class="collectin_detail_cls collection_blocks_details text-center">{{--}}
-  <div class="section-header sh-with-bg-gradiant">{{--}}
+<div class="collectin_detail_cls collection_blocks_details text-center">
+  <div class="section-header sh-with-bg-gradiant">
     {%- if section.settings.coll_subtitle != blank -%}
-    <h4 class="s-subtitle">{{ section.settings.coll_subtitle }}</h4>{{--}}
+    <h4 class="s-subtitle">{{ section.settings.coll_subtitle }}</h4>
     {%- endif -%}
     {%- if section.settings.coll_title != blank -%}
-    <h3 class="s-title"><span class="inner_warpper">{{ section.settings.coll_title }}</span></h3>{{--}}
+    <h3 class="s-title"><span class="inner_warpper">{{ section.settings.coll_title }}</span></h3>
     {%- endif -%}
   </div>{%- if section.settings.coll_detail != blank -%}
   <div class="warpper"><div class="detail">{{- section.settings.coll_detail -}}</div></div>{%- endif -%}
 </div>{%- endif -%}
 {%- assign block_position = section.settings.block_position | split:'-' -%}
-<div class="collection_blocks wc_collection_blocks {% unless section.settings.block_bg_color %} wc_collection_bg_none{% endunless %}{% unless section.settings.block_border %} wc_collection_border_none{% endunless %}">{{--}}
-  <div class="page-width"> {{--}} 
-    <div class="grid--no-gutters grid-coll_block d-flex"> {{--}} 
+<div class="collection_blocks wc_collection_blocks {% unless section.settings.block_bg_color %} wc_collection_bg_none{% endunless %}{% unless section.settings.block_border %} wc_collection_border_none{% endunless %}">
+  <div class="page-width">  
+    <div class="grid--no-gutters grid-coll_block d-flex">  
       {%- for block_p in block_position -%}      
       {%- case block_p  -%}
       {%- when 'left' -%}
-      <div class="coll_block_item coll_block_item_left"> {{--}} 
+      <div class="coll_block_item coll_block_item_left">  
         {%- for block in section.blocks -%}
           {%- if block.type == "left-side" -%}	
         	{%- assign _coll = block.settings.link -%}
-            <div class="coll_img_left coll_img_div"> {{--}} 
-              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}" > {{--}} 
-                <div class="img_wrapper"> {{--}} 
-                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
-                </div> {{--}} 
-                <div class="text-wrapper"> {{--}} 
+            <div class="coll_img_left coll_img_div">  
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}" >  
+                <div class="img_wrapper">  
+                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div>  
+                </div>  
+                <div class="text-wrapper">  
                   {%- if block.settings.subtitle != blank -%}
-                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3>  
                   {%- endif -%}
                   {%- if block.settings.title != blank -%}
-                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2>  
                   {%- else -%}
-                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2>  
                   {%- endif -%}
-                </div> {{--}} 
-              </a> {{--}} 
-            </div> {{--}} 
+                </div>  
+              </a>  
+            </div>  
           {%- endif -%}
         {%- endfor -%}
-      </div> {{--}} 
+      </div>  
       {%- when 'center' -%}
-      <div class="coll_block_item medium-up--hide"> {{--}} 
+      <div class="coll_block_item medium-up--hide">  
       {%- for block in section.blocks -%}
           {%- if forloop.index == 3 -%}	
         	{%- assign _coll = block.settings.link -%}
-            <div class="coll_img_center coll_img_div coll_img_div_full"> {{--}} 
-              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}"> {{--}} 
-                <div class="img_wrapper"> {{--}} 
-                  <div class="img lazyload" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
-                </div> {{--}} 
-                <div class="text-wrapper"> {{--}} 
+            <div class="coll_img_center coll_img_div coll_img_div_full">  
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}">  
+                <div class="img_wrapper">  
+                  <div class="img lazyload" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div>  
+                </div>  
+                <div class="text-wrapper">  
                   {%- if block.settings.subtitle != blank -%}
-                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3>  
                   {%- endif -%}
                   {%- if block.settings.title != blank -%}
-                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2>  
                   {%- else -%}
-                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2>  
                   {%- endif -%}
-                </div> {{--}} 
-              </a> {{--}} 
-            {{--}}  </div>{%- break -%}
+                </div>  
+              </a>  
+              </div>{%- break -%}
           {%- endif -%}
       {%- endfor -%}      
-      </div> {{--}} 
-      <div class="coll_block_item coll_block_item_center small--hide"> {{--}} 
+      </div>  
+      <div class="coll_block_item coll_block_item_center small--hide">  
         {%- for block in section.blocks -%}
           {%- if block.type == "center" -%}	
         	{%- assign _coll = block.settings.link -%}
-            <div class="coll_img_center coll_img_div"> {{--}} 
-              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}"> {{--}} 
-                <div class="img_wrapper"> {{--}} 
-                  <div class="img lazyload" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
-                </div> {{--}} 
-                <div class="text-wrapper"> {{--}} 
+            <div class="coll_img_center coll_img_div">  
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}">  
+                <div class="img_wrapper">  
+                  <div class="img lazyload" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div>  
+                </div>  
+                <div class="text-wrapper">  
                   {%- if block.settings.subtitle != blank -%}
-                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3>  
                   {%- endif -%}
                   {%- if block.settings.title != blank -%}
-                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2>  
                   {%- else -%}
-                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2>  
                   {%- endif -%}
-                </div> {{--}} 
-              </a> {{--}} 
-            </div> {{--}}   
+                </div>  
+              </a>  
+            </div>    
           {%- endif -%}
         {%- endfor -%}
-       {{--}} </div> {{--}} 
+        </div>  
       {%- when 'right' -%}
-      <div class="coll_block_item coll_block_item_right"> {{--}} 
+      <div class="coll_block_item coll_block_item_right">  
         {%- for block in section.blocks -%}
         {%- if block.type == "center" and forloop.index == 4 -%}	
         	{%- assign _coll = block.settings.link -%}
-            <div class="coll_img_center coll_img_div medium-up--hide"> {{--}} 
-              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}"> {{--}} 
-                <div class="img_wrapper"> {{--}} 
-                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
-                </div> {{--}} 
-                <div class="text-wrapper"> {{--}} 
+            <div class="coll_img_center coll_img_div medium-up--hide">  
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}">  
+                <div class="img_wrapper">  
+                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div>  
+                </div>  
+                <div class="text-wrapper">  
                   {%- if block.settings.subtitle != blank -%}
-                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3>  
                   {%- endif -%}
                   {%- if block.settings.title != blank -%}
-                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2>  
                   {%- else -%}
-                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2>  
                   {%- endif -%}
-                </div> {{--}} 
-              </a> {{--}} 
-             {{--}} </div> {{--}} 
+                </div>  
+              </a>  
+              </div>  
           {%- endif -%}
           {%- if block.type == "right-side" -%}	
         {%- assign _coll = block.settings.link -%}
-        	<div class="coll_img_right coll_img_div {% if forloop.index == 6 %}small--hide{% endif %}"> {{--}} 
-              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}"> {{--}} 
-                <div class="img_wrapper"> {{--}} 
-                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
-                </div> {{--}} 
-                <div class="text-wrapper"> {{--}} 
+        	<div class="coll_img_right coll_img_div {% if forloop.index == 6 %}small--hide{% endif %}">  
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}">  
+                <div class="img_wrapper">  
+                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div>  
+                </div>  
+                <div class="text-wrapper">  
                   {%- if block.settings.subtitle != blank -%}
-                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3>  
                   {%- endif -%}
                   {%- if block.settings.title != blank -%}
-                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2>  
                   {%- else -%}
-                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2>  
                   {%- endif -%}
-                </div> {{--}} 
-              </a> {{--}} 
-        	</div> {{--}} 
+                </div>  
+              </a>  
+        	</div>  
           {%- endif -%}
         {%- endfor -%}
-       {{--}} </div> {{--}} 
-      <div class="coll_block_item medium-up--hide"> {{--}} 
+        </div>  
+      <div class="coll_block_item medium-up--hide">  
       {%- for block in section.blocks -%}
           {%- if forloop.index == 6 -%}	
         	{%- assign _coll = block.settings.link -%}
-            <div class="coll_img_center coll_img_div coll_img_div_full"> {{--}} 
-              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}"> {{--}} 
-                <div class="img_wrapper"> {{--}} 
-                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div> {{--}} 
-                </div> {{--}} 
-                <div class="text-wrapper"> {{--}} 
+            <div class="coll_img_center coll_img_div coll_img_div_full">  
+              <a href="{{_coll}}" title="{{ block.settings.title }}" id="{{_coll | handleize}}">  
+                <div class="img_wrapper">  
+                  <div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div>  
+                </div>  
+                <div class="text-wrapper">  
                   {%- if block.settings.subtitle != blank -%}
-                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3> {{--}} 
+                  <h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3>  
                   {%- endif -%}
                   {%- if block.settings.title != blank -%}
-                  <h2 class="h3 s-title">{{ block.settings.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ block.settings.title }}</h2>  
                   {%- else -%}
-                  <h2 class="h3 s-title">{{ _coll.title }}</h2> {{--}} 
+                  <h2 class="h3 s-title">{{ _coll.title }}</h2>  
                   {%- endif -%}
-                </div> {{--}} 
-              </a> {{--}} 
-             {{--}} </div>{%- break -%}
+                </div>  
+              </a>  
+              </div>{%- break -%}
           {%- endif -%}
       {%- endfor -%}      
-       {{--}} </div> {{--}} 
+        </div>  
       {%- endcase -%}
       {%- endfor -%}
-     {{--}} </div> {{--}} 
- {{--}}   </div> {{--}} 
-</div> {{--}} 
+      </div>  
+    </div>  
+</div>
 {% schema %}
   {
     "name": "Story Blocks",
@@ -305,8 +305,6 @@
   }
 {% endschema %}
  {{--}} 
-{% stylesheet %} {{--}} 
-{% endstylesheet %} {{--}} 
+{% stylesheet %}{% endstylesheet %} {{--}} 
  {{--}} 
-{% javascript %} {{--}} 
-{% endjavascript %} {{--}} 
+{% javascript %}{% endjavascript %} {{--}} 

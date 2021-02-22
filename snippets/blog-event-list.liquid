@@ -3,8 +3,8 @@
 {%- endif -%}
 {%- assign limt = section.settings.pagination_limit -%}
 {% paginate blog.articles by limt %}
-<div class="event_list_wrap {% if template contains 'blog.journal' %}journal_list{% endif %}{% if section.settings.blog == blank %} default_blog{% endif %}">
-  <div class="section-header text-center mb0 {% if template contains 'blog.journal' or template contains 'blog.event' %}header_nobg{% else %}header_btm_yellow{% endif %}">
+<div class="event_list_wrap {% if template contains 'blog.journal' or template contains 'blog.edits' %}journal_list{% endif %}{% if section.settings.blog == blank %} default_blog{% endif %}">
+  <div class="section-header text-center mb0 {% if template contains 'blog.journal' or template contains 'blog.event' or template contains 'blog.edits' %}header_nobg{% else %}header_btm_yellow{% endif %}">
    {%- if section.settings.sub_title != blank -%} <h3 class="h4 s-subtitle">{{section.settings.sub_title}}</h3>{%- endif -%}
     <div class="title_outer {{ section.settings.title | default:'blank' | handleize }}">
     <h2 class="h3 s-title wc_s-title">

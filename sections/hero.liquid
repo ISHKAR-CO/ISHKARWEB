@@ -80,7 +80,7 @@
          data-bgset="{% include 'bgset', image: section.settings.image %}"
          data-sizes="auto"
          data-parent-fit="cover"
-         style="background-position: {{ section.settings.alignment }}; background-image: url('{{ section.settings.image | img_url: '300x300' }});"
+         style="background-position: {{ section.settings.alignment }}; background-image: url('{{ section.settings.image | img_url: '300x300' }}');"
          {%- endif -%}>
       {%- if section.settings.show_slope -%}
       <div class="show-slope"></div>

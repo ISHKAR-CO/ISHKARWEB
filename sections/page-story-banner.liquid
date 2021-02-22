@@ -1,51 +1,51 @@
-<div class="home-banner" data-section-id="{{ section.id }}" data-section-type="home-banner"> {{--}} 
-  <div class="image_banner banner-height-medium lazyload" data-img-ratio="{{ section.settings.image.aspect_ratio }}" {{ -}} 
-        {{- }}  data-height-full="false" {{--}} 
-        {{- }} data-bgset="{% include 'bgset', image: section.settings.image %}" {{--}}  
-        {{- }} data-sizes="auto" {{--}} 
-        {{- }} data-parent-fit="cover" {{--}} 
-        {{- }} style="background-position: {{ section.settings.alignment }}; background-image: url('{{ section.settings.image | img_url: '300x300' }});"></div> {{--}} 
-   {{--}} <div class="banner-caption text-alignment-{{ section.settings.text_postion }}"> {{--}} 
-     {{--}} <div class="page-width"> {{--}} 
-       {{--}} <div class="banner_warpper banner-font"> {{--}} 
+<div class="home-banner" data-section-id="{{ section.id }}" data-section-type="home-banner">  
+  <div class="image_banner banner-height-medium lazyload" data-img-ratio="{{ section.settings.image.aspect_ratio }}"  
+          data-height-full="false"  
+         data-bgset="{% include 'bgset', image: section.settings.image %}"   
+         data-sizes="auto"  
+         data-parent-fit="cover"
+        style="background-position: {{ section.settings.alignment }}; background-image: url('{{ section.settings.image | img_url: '300x300' }});"></div>
+    <div class="banner-caption text-alignment-{{ section.settings.text_postion }}">  
+      <div class="page-width">  
+        <div class="banner_warpper banner-font">  
         {%- if section.settings.subtitle != blank -%}
-         {{--}} <h3 class="h2 b-subtitle">{{- section.settings.subtitle -}}</h2>{%- endif -%}
+          <h3 class="h2 b-subtitle">{{- section.settings.subtitle -}}</h2>{%- endif -%}
         {%- if section.settings.title != blank -%}
-         {{--}} <h2 class=" h1 b-title">{{- section.settings.title | remove:'<p>' | remove:'</p>' | replace:'em>','span>' -}}</h1> {{--}} 
+          <h2 class=" h1 b-title">{{- section.settings.title | remove:'<p>' | remove:'</p>' | replace:'em>','span>' -}}</h1>  
         {%- endif -%}
-       {{--}} </div> {{--}} 
-     {{--}} </div> {{--}} 
-   {{--}} </div> {{--}} 
+        </div>  
+      </div>  
+    </div>  
   {%- if section.settings.top_center_text != blank -%}<div class="s-subtitle top_center_text">{{ section.settings.top_center_text }}</div>{%- endif -%}
   {%- if section.blocks.size < -1 -%}
-   {{--}} <div class="banner-caption-category banner-caption-collection small--hide"> {{--}} 
+    <div class="banner-caption-category banner-caption-collection small--hide">  
     {%- for block in section.blocks -%}
     {%- if block.type == "category" -%}
-     {{--}} <div class="category_div h4" {{ block.shopify_attributes }} > {{--}} 
-       {{--}} <a href="#{{ block.settings.link | handleize }}"> {{--}} 
+      <div class="category_div h4" {{ block.shopify_attributes }} >  
+        <a href="#{{ block.settings.link | handleize }}">  
         {{- block.settings.title -}}</a>
-     {{--}} </div> {{--}} 
+      </div>  
     {%- endif -%}
     {%- endfor -%}    
-   {{--}} </div> {{--}} 
+    </div>  
   {%- endif -%}
-</div> {{--}} 
- {{--}} 
-<div class="verticle_till"> {{--}} 
+</div>  
+  
+<div class="verticle_till">  
   {%- if section.settings.coll_subtitle != blank or section.settings.coll_title != blank or section.settings.coll_detail != blank -%}
-   {{--}} <div class="page-width"> {{--}} 
-     {{--}} <div class="collectin_detail_cls text-left"> {{--}} 
-       {{--}} <div class="section-header"> {{--}} 
+    <div class="page-width">  
+      <div class="collectin_detail_cls text-left">  
+        <div class="section-header">  
         {%- if section.settings.coll_subtitle != blank -%}
-         {{--}} <h4 class="s-subtitle">{{ section.settings.coll_subtitle }}</h4> {{--}} 
+          <h4 class="s-subtitle">{{ section.settings.coll_subtitle }}</h4>  
         {%- endif -%}
         {%- if section.settings.coll_title != blank -%}
-         {{--}} <h3 class="s-title s-title-no-boder">{{ section.settings.coll_title }}</h3> {{--}} 
+          <h3 class="s-title s-title-no-boder">{{ section.settings.coll_title }}</h3>  
         {%- endif -%}
-       {{--}} </div> {{--}} 
-       {{--}} <div class="warpper"> {{--}} 
+        </div>  
+        <div class="warpper">  
         {%- if section.settings.coll_detail != blank -%}
-         {{--}} <div class="detail"> {{--}} 
+          <div class="detail">  
           {{- section.settings.coll_detail -}}
           {%- comment -%}
 
@@ -63,31 +63,31 @@
           {%- endfor -%}
 
           {%- endcomment -%}
-         {{--}} </div>{%- endif -%}
-       {{--}} </div>  {{--}}  
-     {{--}} </div> {{--}} 
-   {{--}} </div> {{--}} 
+          </div>{%- endif -%}
+        </div>    
+      </div>  
+    </div>  
   {%- endif -%}
- {{--}} 
+  
   {%- assign current_coll = collection.handle -%}
- {{--}} 
+  
   {%- if section.blocks.size > 0 -%}
-<div class="banner-caption-category banner-caption-collection small--hide"> {{--}} 
-     {{--}} <div class="page-width"> {{--}} 
+<div class="banner-caption-category banner-caption-collection small--hide">  
+      <div class="page-width">  
       {%- for block in section.blocks -%}
       {%- if block.type == "category" -%}
-       {{--}} <div class="category_div h4" {{ block.shopify_attributes }} > {{--}} 
+        <div class="category_div h4" {{ block.shopify_attributes }} >  
         {%- assign collection = collections[block.settings.collection] -%}
-         {{--}} <a href="{{ block.settings.link }}"> {{--}} 
-           {{--}} <span class="number">{{- block.settings.title_number -}}</span><br/>
-          {{- block.settings.title -}}</a> {{--}} 
-       {{--}} </div> {{--}} 
+          <a href="{{ block.settings.link }}">  
+            <span class="number">{{- block.settings.title_number -}}</span><br/>
+          {{- block.settings.title -}}</a>  
+        </div>  
       {%- endif -%}
       {%- endfor -%}
-     {{--}} </div> {{--}} 
-   {{--}} </div> {{--}} 
+      </div>  
+    </div>  
   {%- endif -%}
-</div> {{--}} 
+</div>
 {% schema %}
   {
     "name": "Stroy Banner",
@@ -201,6 +201,6 @@
 	  }
 	]
   }
-{% endschema %} {{--}}
-{% stylesheet %}{% endstylesheet %} {{--}}
-{% javascript %}{% endjavascript %} {{--}}
+{% endschema %}
+{% stylesheet %}{% endstylesheet %}
+{% javascript %}{% endjavascript %}
