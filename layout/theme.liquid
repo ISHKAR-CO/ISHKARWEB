@@ -5,8 +5,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="{{ settings.color_button }}">  
-  <script defer="defer"> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-83506200-1', 'auto'); ga('send', 'pageview'); </script>
   <link rel="canonical" href="{{ canonical_url }}">
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-57LCMJW');</script>
+<!-- End Google Tag Manager -->
   {%- if settings.favicon != blank -%} <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png"> {%- endif -%}
   {%- capture seo_title -%}
     {%- if request.page_type == 'search' and search.performed == true -%}
@@ -56,10 +62,15 @@
   <script id="mcjs" defer="defer">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/8894bb3283174a9dc86c206d3/bed881c981bd6e565946e3ac1.js");</script>    
 <!-- XO-InsertCode -->
 {% include "xo-insertcode-header" %}
+  <meta name="p:domain_verify" content="7743d0f8bc15b74af84e20b5e59d3c92"/>
 <!-- End: XO-InsertCode Header-->
 </head>
 
 <body class="template-{{ request.page_type | handle }}{% if template.suffix %} template-{{ template.suffix | handle }}{% endif %}">
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-57LCMJW"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <!-- XO-InsertCode -->
 {% include "xo-insertcode-body" %}
 <!-- End: XO-InsertCode Body-->{%- capture _capture -%}
@@ -120,8 +131,8 @@
     window.addEventListener("resize", headerSwap);
     {% endif %}
   </script>{%- endcapture -%}{{ _capture | strip | strip_newlines }}
-<!-- langify-v2-scripts-begin -->{% comment %}ly_liquid_scripts_begin{% endcomment %}{% endcapture %}{% render 'ly-liquid-scripts' content: ly_liquid_content %}{% comment %}ly_liquid_scripts_end{% endcomment %}{% comment %}ly_core_scripts_begin{% endcomment %}{% render 'ly-core-scripts' %}{% comment %}ly_core_scripts_end{% endcomment %}{% comment %}ly_switcher_factory_begin{% endcomment %}{% render 'ly-switcher-factory' %}{% comment %}ly_switcher_factory_end{% endcomment %}<!-- langify-v2-scripts-end --><!-- XO-InsertCode -->
+<!-- XO-InsertCode -->
 {% include "xo-insertcode-footer" %}
 <!-- End: XO-InsertCode Footer-->
-</body> 
+<!-- langify-v2-scripts-begin -->{% comment %}ly_liquid_scripts_begin{% endcomment %}{% endcapture %}{% render 'ly-liquid-scripts' content: ly_liquid_content %}{% comment %}ly_liquid_scripts_end{% endcomment %}{% comment %}ly_core_scripts_begin{% endcomment %}{% render 'ly-core-scripts' %}{% comment %}ly_core_scripts_end{% endcomment %}{% comment %}ly_switcher_factory_begin{% endcomment %}{% render 'ly-switcher-factory' %}{% comment %}ly_switcher_factory_end{% endcomment %}<!-- langify-v2-scripts-end --></body> 
 </html>

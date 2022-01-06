@@ -1,10 +1,14 @@
+<!-- ***** Load the polyfills ***** -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver%2CIntersectionObserverEntry%2CMutationObserver"></script>
+<!-- ****************************** -->
+
 {% if shop.url contains 'https://' %}{% assign used_protocol = 'https://' %}{% else %}{% assign used_protocol = 'http://' %}{% endif %}
 {% assign supported_4_letter_codes = 'zh-TW,zh-CN,pt-PT,pt-BR' | split: ',' %}
 
 {%- if current_language == nil -%}
   {%- assign current_language_num = 0 -%}
   {%- for language in shop.metafields.language_codes -%}
-    {%- assign used_request_locale_iso_code = request.locale.iso_code | slice: 0, 2 -%}
+    {%- assign used_request_locale_iso_code = request.locale.iso_code -%}
     {%- if language.last == used_request_locale_iso_code  -%}
       {%- assign language_id_num = language.first | replace: "ly", "" | plus: 0 %}
       {%- if current_language_num < language_id_num  -%}
@@ -43,7 +47,11 @@
 
   {%- if themeSettings -%}
     langify.settings = Object.assign(langify.settings, {{ themeSettings | json }});
-  {%- endif -%}
+  {% endif %}
+
+  langify.settings.theme = {{ themeSettings | json }};
+  langify.settings.switcher = {{ switcherSettings | json }};
+
 
   langify.helper = langify.helper || {
     extractImageObject: function(val) {
@@ -62,9 +70,9 @@
       url = url.substring(url.lastIndexOf("/") + 1, url.length);
       var hostBegin = val.indexOf('//') ? val.indexOf('//') : 0;
       host = val.substring(hostBegin, val.lastIndexOf('/') + 1);
-      name = url.replace(/(_[0-9]+x[0-9]*|_{width}x)?(_crop_(top|center|bottom|left|right))?(@[0-9]*x)?(\.progressive)?\.(jpe?g|png|gif)/gi, "");
+      name = url.replace(/(_[0-9]+x[0-9]*|_{width}x)?(_crop_(top|center|bottom|left|right))?(@[0-9]*x)?(\.progressive)?\.(jpe?g|png|gif|webp)/gi, "");
       type = url.substring(url.lastIndexOf('.')+1, url.length);
-      file = url.replace(/(_[0-9]+x[0-9]*|_{width}x)?(_crop_(top|center|bottom|left|right))?(@[0-9]*x)?(\.progressive)?\.(jpe?g|png|gif)/gi, '.'+type);
+      file = url.replace(/(_[0-9]+x[0-9]*|_{width}x)?(_crop_(top|center|bottom|left|right))?(@[0-9]*x)?(\.progressive)?\.(jpe?g|png|gif|webp)/gi, '.'+type);
 
       return {
         host: host,
@@ -73,25 +81,21 @@
         file: file
       }
     },
-    getSelectedLanguage: function() {
-      var selectedLanguage = '{{ cart.attributes["language"] }}';
-      if(selectedLanguage == '') {
-        selectedLanguage = '{{ shop.metafields["languages"]["default"] }}';
-      }
-      return selectedLanguage;
+    getCurrentLanguage: function() {
+      return {{ request.locale.iso_code | json }};
     },
-    saveLanguage: function(language, href) {
-      ShopifyAPI.getCart(function (cart) {
-        var note = cart.note;
-        if(note == 'null') {
-          note = '';
-        }
-        ShopifyAPI.updateCartNote(note, function () {
-          ShopifyAPI.updateCartAttributes({'language': language}, function(data) {
-            window.location = href;
-          });
-        });
-      });
+    setLanguage: function(code) {
+      if(!langify.locale.languages.find(x => x.iso_code === code)) return false;
+      var rootUrl = langify.locale.languages.find(x => x.iso_code === code).root_url;
+      if(rootUrl == '/') {rootUrl = '';}
+      {%- assign used_root_url = request.locale.root_url %}{% assign replace_part = used_root_url | append: '/' %}{% assign replacement = '/' -%}
+      {%- assign path = request.path | split: "'" -%}
+      {%- if used_root_url == path[0] %}{% assign replace_part = used_root_url %}{% assign replacement = '' %}{% endif %}
+      var finalUrl = rootUrl + {{ path[0] | replace: replace_part, replacement | replace_first: '/','' | json }};
+      if(finalUrl == '') {finalUrl = '/';}
+
+      window.location.href = finalUrl;
+      return true;
     },
     getCookie: function(name) {
       var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
@@ -102,7 +106,32 @@
       var d = new Date;
       d.setTime(d.getTime() + 24*60*60*1000*days);
       document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
-    }
+    },
+    getVersion: function() {
+      return 2;
+    },
+    isOutOfViewport: function (elem) {
+      var bounding = elem.getBoundingClientRect();
+      var out = {};
+      out.top = bounding.top < 0;
+      out.left = bounding.left < 0;
+      out.bottom = Math.ceil(bounding.bottom) >= (window.innerHeight || document.documentElement.clientHeight);
+      out.right = bounding.right > (window.innerWidth || document.documentElement.clientWidth);
+      out.any = out.top || out.left || out.bottom || out.right;
+      out.inViewport = bounding.x > 0 && bounding.y > 0;
+      return out;
+    },
+    getVal: function(str) {
+      var v = window.location.search.match(new RegExp('(?:[?&]'+str+'=)([^&]+)'));
+      return v ? v[1] : null;
+    },
+    inIframe: function() {
+      try {
+        return window.self !== window.top;
+      } catch (e) {
+        return true;
+      }
+    },
   };
 
 
@@ -137,6 +166,42 @@
   {%- endif -%}
   {% endfor %}
 
+
+
+  var languageUrls = [];
+  {%- assign current_root_url = request.locale.root_url | downcase | append: '/' -%}
+  {%- assign path = request.path | split: "'" -%}
+  {%- assign unlocalized_path = path[0] | downcase | replace_first: current_root_url, '/' -%}
+  {%- if unlocalized_path == request.locale.root_url -%}
+    {%- assign unlocalized_path = '' -%}
+  {%- endif -%}
+  {%- for language in languages -%}
+    {%- assign isValid = false -%}
+    {%- for locale in shop.published_locales -%}
+      {%- if isValid == false -%}
+        {%- if supported_4_letter_codes contains locale.iso_code -%}
+        {%- assign used_locale_iso_code = locale.iso_code -%}
+      {%- else -%}
+        {%- assign used_locale_iso_code = locale.iso_code | slice: 0, 2 -%}
+      {%- endif -%}
+        {%- if language.iso_code == used_locale_iso_code -%}
+          {%- assign isValid = true -%}
+          {% assign url = locale.root_url | downcase | append: unlocalized_path | replace: '//', '/' | replace: '///', '/' %}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if isValid == false -%}
+      {%- if shop.metafields.langify_v2.cross_domain_links[request.host][language.iso_code] -%}
+        {%- assign isValid = true -%}
+        {% assign url = shop.metafields.langify_v2.cross_domain_links[request.host][language.iso_code].root_url | downcase | append: unlocalized_path | replace: '//', '/' | replace: '///', '/' %}
+      {% assign url = shop.metafields.langify_v2.cross_domain_links[request.host][language.iso_code].host | append: url %}
+      {%- endif -%}
+    {%- endif -%}
+    {%- if isValid == true -%}
+    languageUrls['{{ language.iso_code }}'] = '{{ url }}';
+    {%- endif -%}
+  {%- endfor -%}
+
   langify.locale = langify.locale || {
     primary: {{ request.locale.primary | json }},
     iso_code: {{ request.locale.iso_code | json }},
@@ -146,19 +211,19 @@
     {%- for language in languages -%}
       {%- assign isValid = false -%}
       {%- for locale in shop.published_locales -%}
-      {%- if isValid == false -%}
-        {%- if supported_4_letter_codes contains locale.iso_code -%}
-          {%- assign used_locale_iso_code = locale.iso_code -%}
-        {%- else -%}
-          {%- assign used_locale_iso_code = locale.iso_code | slice: 0, 2 -%}
+        {%- if isValid == false -%}
+          {%- if supported_4_letter_codes contains locale.iso_code -%}
+            {%- assign used_locale_iso_code = locale.iso_code -%}
+          {%- else -%}
+            {%- assign used_locale_iso_code = locale.iso_code | slice: 0, 2 -%}
+          {%- endif -%}
+          {%- if language.iso_code == used_locale_iso_code -%}
+            {%- assign isValid = true -%}
+            {%- assign used_root_url = locale.root_url -%}
+            {%- assign used_domain = '' -%}
+          {%- endif -%}
         {%- endif -%}
-        {%- if language.iso_code == used_locale_iso_code -%}
-          {%- assign isValid = true -%}
-          {%- assign used_root_url = locale.root_url -%}
-          {%- assign used_domain = '' -%}
-        {%- endif -%}
-      {%- endif -%}
-    {%- endfor -%}
+      {%- endfor -%}
 
       {%- if isValid == false -%}
         {%- if shop.metafields.langify_v2.cross_domain_links[request.host][language.iso_code] -%}
@@ -207,54 +272,106 @@
     }
 
     var langifyObserverCore = function() {
+      var observedNodes = [];
+      var intersectionObs = null;
       var mutationObs = null;
+      var mutationObsConfig = {
+        characterData: true,
+        characterDataOldValue: true,
+        attributes: true,
+        attributeOldValue: true,
+        childList: true,
+        subtree: true,
+      };
 
       function init() {
         if(langify.settings.observe) {
           spreadCustomContents();
           if (window.MutationObserver) {
-            startMutationObserver(null);
+            if (langify.settings.lazyload && window.IntersectionObserver) {
+              startIntersectionObserver();
+            } else {
+              startMutationObserver(null);
+            }
           } else {
             startMutationEvents();
           }
         }
       }
 
-      function spreadCustomContents() {
-        var getFileName = function(url) {
-          if(!url || url == '') return;
-          url = url.substring(0, (url.indexOf("#") == -1) ? url.length : url.indexOf("#"));
-          url = url.substring(0, (url.indexOf("?") == -1) ? url.length : url.indexOf("?"));
-          url = url.substring(url.lastIndexOf("/") + 1, url.length);
-          url = url.replace(/(_[0-9]+x[0-9]*|_{width}x)?(_crop_(top|center|bottom|left|right))?(@[0-9]*x)?(\.progressive)?\.(jpe?g|png|gif)/gi, "");
-          return '/' + url;
-        }
-        Object.entries(customContents).forEach(function(entry) {
-          if(/<\/?[a-z][\s\S]*>/i.test(entry[0])) customContents_html[entry[0]] = entry[1];
-          //else if(/(http(s?):)?([/|.|\w|\s|-])*\.(?:jpe?g|gif|png)/.test(entry[0])) customContents_image[getFileName(entry[0])] = getFileName(entry[1]);
-          else if(/(http(s?):)?([/|.|\w|\s|-])*\.(?:jpe?g|gif|png)/.test(entry[0])) customContents_image[langify.helper.extractImageObject(entry[0]).file] = langify.helper.extractImageObject(entry[1]);
-          else customContents_text[entry[0]] = entry[1];
+
+      // Intersection Observer
+      function startIntersectionObserver() {
+        intersectionObs = new IntersectionObserver(callbackIntersectionChange);
+        var elementNodes = document.getElementsByClassName('shopify-section');
+        Array.prototype.slice.call(elementNodes).forEach(function(node) {
+          intersectionObs.observe(node);
         });
-        log('CUSTOM CONTENTS:', {customContents, customContents_text, customContents_html, customContents_image}, 'info')
       }
 
+      function callbackIntersectionChange(intersections) {
+        intersections.forEach(function(intersection) {
+          var target = intersection.target;
+          var targetIsIntersecting = Boolean(target.getAttribute('ly-is-intersecting') === "true" ? true : false);
+
+          if(typeof targetIsIntersecting == 'undefined' || targetIsIntersecting == null) {
+            target.setAttribute('ly-is-intersecting', intersection.isIntersecting);
+            targetIsIntersecting = intersection.isIntersecting;
+          }
+          
+          // On Screen
+          if(targetIsIntersecting == false && intersection.isIntersecting == true) {
+            if(!target.getAttribute('ly-is-observing')) {
+              startMutationObserver(target);
+              intersectionObs.unobserve(target);
+
+              // As the mutation observer didn't see the "add" of the elememts, trigger the initial translation manually
+              var elementNodes = getNodesUnder(target, 'SHOW_ELEMENT');
+              var textNodes = getNodesUnder(target, 'SHOW_TEXT');
+              var nodes = elementNodes.concat(textNodes);
+              nodes.forEach(function(node) {
+                translate(node, 'mutation -> childList');
+              });
+            }
+          } 
+          // Off Screen
+          //else if(targetIsIntersecting == true && intersection.isIntersecting == false) {
+          //  stopMutationObserver(target);
+          //}
+          target.setAttribute('ly-is-intersecting', intersection.isIntersecting);
+        });
+      }
+
+
+      // Mutation Observer
       function startMutationObserver(observerTarget) {
         if (!observerTarget) {
           var target = document.documentElement || document.body; // main window
         } else {
-          var target = observerTarget.contentDocument || observerTarget.contentWindow.document; // iframe
+          if (observerTarget.nodeName  === 'IFRAME') {
+            var target = observerTarget.contentDocument || observerTarget.contentWindow.document; // iframe
+          } else {
+            var target = observerTarget;
+          }
         }
-        var config = {
-          characterData: true,
-          characterDataOldValue: true,
-          attributes: true,
-          attributeOldValue: true,
-          childList: true,
-          subtree: true,
-        };
         mutationObs = new MutationObserver(callbackDomChange);
-        mutationObs.observe(target, config);
+        mutationObs.observe(target, mutationObsConfig);
+        observedNodes.push(target);
+        try { target.setAttribute('ly-is-observing', 'true'); } catch(e) {}
       }
+
+      function stopMutationObserver(target) {
+        if(observedNodes.indexOf(target) > -1) {
+          observedNodes.splice(observedNodes.indexOf(target), 1);
+        }
+        var mutations = mutationObs.takeRecords();
+        mutationObs.disconnect();
+        observedNodes.forEach(node => {
+          mutationObs.observe(node, mutationObsConfig);
+        });
+        try { target.removeAttribute('ly-is-observing'); } catch(e) {}
+      }
+
 
       function callbackDomChange(mutations, mutationObs) {
         for (var i = 0, length = mutations.length; i < length; i++) {
@@ -300,9 +417,6 @@
         }
         // CC-Hook
         if (node.nodeName  !== 'SCRIPT' && node.nodeName  !== 'STYLE') {
-          if (node.nodeType === 1) {
-            translateElementNode(node, info);
-          }
           if (node.nodeType === 3) {
             translateTextNode(node, info);
           }
@@ -325,8 +439,8 @@
         // Iframe Observation
         if (node.nodeName  === 'IFRAME') {
           // Todo: handle srcdoc iframe content observing
-          if (node.getAttribute('ly-observing') == null && node.getAttribute('src') == null && !node.hasAttribute('srcdoc')) {
-            node.setAttribute('ly-observing', 'true');
+          if (node.getAttribute('ly-is-observing') == null && node.getAttribute('src') == null && !node.hasAttribute('srcdoc')) {
+            node.setAttribute('ly-is-observing', 'true');
             startMutationObserver(node);
           }
         }
@@ -339,50 +453,6 @@
       }
 
       var mutationCount = 0;
-      function translateElementNode(node, info) {
-        if(langify.settings.observeCustomContents === false || Object.keys(customContents_html).length === 0) {
-          return;
-        }
-        var source = node.outerHTML;
-        var flatSource = source.replace(/(\r\n|\n|\r)/gim,"").replace(/\s+/g," ");
-        var hasMatch = false;
-        var matches = [];
-        var CCRegEx = new RegExp(Object.keys(customContents_html).join("|").replace(/(\r\n|\n|\r)/gim,"").replace(/\s+/g," ").replace(/\//g, "\\/"), "gim"); // .replace(/\[/g, "\\[").replace(/\]/g, "\\]")
-        var replacement = flatSource.replace(CCRegEx, function(matched) {
-          log('MATCH (HTML)', {source: matched, target: customContents_html[matched]}, 'success');
-          hasMatch = true; // wichtig!!!
-          matches.push(matched);
-          return customContents_html[matched];
-        });
-        if(hasMatch && replacement != node.outerHTML) {
-          if(flatSource === matches[0]) {
-            if(!node.hasAttribute('data-ly-mutation-count') || parseInt(node.getAttribute('data-ly-mutation-count')) < langify.settings.maxMutations) {
-              if(node.hasAttribute('data-ly-mutation-count')) var count = parseInt(node.getAttribute('data-ly-mutation-count'));
-              else var count = 0;
-              node.setAttribute('data-ly-mutation-count', count+1);
-              node.outerHTML = replacement;
-
-              mutationCount = mutationCount + 1;
-              log('REPLACED (HTML)', {
-                  oldValue: flatSource,
-                  newValue: replacement,
-                  mutationCount,
-                }, 'success'
-              );
-            
-              var event = new CustomEvent('langify.observer.aftertranslatehtml', { 
-                bubbles: true,
-                detail: {
-                  target: node,
-                  original: flatSource,
-                  translation: replacement
-                }
-              });
-              node.dispatchEvent(event);
-            }
-          }
-        }
-      }
 
       function translateTextNode(node, info) {
         if(langify.settings.observeCustomContents === false || !node.textContent || node.textContent.trim().length === 0) {
@@ -423,10 +493,10 @@
         if(langify.settings.observeLinks === false || node.hasAttribute('data-ly-locked') || !url || (url.indexOf('mailto:') !== -1 || url.indexOf('javascript:') !== -1 || url.indexOf('tel:') !== -1 || url.indexOf('file:') !== -1 || url.indexOf('ftp:') !== -1 || url.indexOf('sms:') !== -1 || url.indexOf('market:') !== -1 || url.indexOf('fax:') !== -1 || url.indexOf('callto:') !== -1 || url.indexOf('ts3server:') !== -1)) {
           return;
         }
-        var isLocalized = (url.indexOf('/'+{{ request.locale.iso_code | json }}+'/') === 0 || url === '/'+{{ request.locale.iso_code | json }});
+        var isLocalized = (url.indexOf('/'+{{ request.locale.iso_code | json }}+'/') === 0 || url === '/'+{{ request.locale.iso_code | json }} || url.indexOf('/'+{{ request.locale.iso_code | downcase | json }}+'/') === 0 || url === '/'+{{ request.locale.iso_code | downcase | json }});
         var link = url.replace({{ shop.url | json }}, '').replace(/\/{{ request.locale.iso_code | replace: '-', '\-' }}\//gi, '/');
         var isUrlAbsolute = (link.indexOf('://') > 0 || link.indexOf('//') === 0);
-        var blacklist = ['#','/apps/','/a/','/tools/'].concat(langify.settings.linksBlacklist);
+        var blacklist = ['#'].concat(langify.settings.linksBlacklist);
         var isUrlBlacklisted = blacklist.find(x => url.indexOf(x) === 0);
         if(!isLocalized && !isUrlAbsolute && !isUrlBlacklisted && {{ request.locale.root_url | json }} != '/') {
           if(node.hasAttribute('href')) var attrName = 'href'; else var attrName = 'action';
@@ -571,6 +641,24 @@
         }
       }
 
+      function spreadCustomContents() {
+        var getFileName = function(url) {
+          if(!url || url == '') return;
+          url = url.substring(0, (url.indexOf("#") == -1) ? url.length : url.indexOf("#"));
+          url = url.substring(0, (url.indexOf("?") == -1) ? url.length : url.indexOf("?"));
+          url = url.substring(url.lastIndexOf("/") + 1, url.length);
+          url = url.replace(/(_[0-9]+x[0-9]*|_{width}x)?(_crop_(top|center|bottom|left|right))?(@[0-9]*x)?(\.progressive)?\.(jpe?g|png|gif|webp)/gi, "");
+          return '/' + url;
+        }
+        Object.entries(customContents).forEach(function(entry) {
+          //if(/<\/?[a-z][\s\S]*>/i.test(entry[0])) customContents_html[entry[0]] = entry[1];
+          //else if(/(http(s?):)?([/|.|\w|\s|-])*\.(?:jpe?g|gif|png)/.test(entry[0])) customContents_image[getFileName(entry[0])] = getFileName(entry[1]);
+          if(/(http(s?):)?([/|.|\w|\s|-])*\.(?:jpe?g|gif|png|webp)/.test(entry[0])) customContents_image[langify.helper.extractImageObject(entry[0]).file] = langify.helper.extractImageObject(entry[1]);
+          else customContents_text[entry[0]] = entry[1];
+        });
+        log('CUSTOM CONTENTS:', {customContents, customContents_text, customContents_image}, 'info')
+      }
+
       // Polyfill for old browsers
       function startMutationEvents() {
         var target = document.querySelector('body');
@@ -621,12 +709,6 @@
   }
 
 
-
-
-
-
-
-
   langify.tools = langify.tools || {
     compareJQueryVersion: function(a,b) {if (a === b) {return 0;}var a_components = a.split(".");var b_components = b.split(".");var len = Math.min(a_components.length, b_components.length);for (var i = 0; i < len; i++) {if (parseInt(a_components[i]) > parseInt(b_components[i])) {return 1;}if (parseInt(a_components[i]) < parseInt(b_components[i])) {return -1;}}if (a_components.length > b_components.length) {return 1;}if (a_components.length < b_components.length) {return -1;}return 0;}
   };
@@ -656,20 +738,22 @@
   };
 
   langify.switcher = langify.switcher || {
-    toggleSwitcherOpen: function(e) {
-      e.classList.toggle('ly-is-open');
-    },
     init: function() {
       var lyForceOff = location.search.split('ly-force-off=')[1];
-      var switcherElements = Array.prototype.slice.call(document.getElementsByClassName('ly-languages-switcher'));
+      var switcherElements = Array.prototype.slice.call(document.getElementsByClassName('ly-switcher-wrapper'));
+      if(!switcherElements.length) {
+        switcherElements = Array.prototype.slice.call(document.getElementsByClassName('ly-languages-switcher'));
+      }
 
       document.addEventListener('click', function(event) {
-        for(i = 0; i < switcherElements.length; i++) {
-          if(!switcherElements[i].contains(event.target) && switcherElements[i].classList.contains('ly-is-open')) {
-            switcherElements[i].classList.remove('ly-is-open');
+        if(!event.target.closest('.ly-languages-switcher')) {
+          var openSwitchers = document.querySelectorAll('.ly-languages-switcher.ly-is-open')
+          for(i = 0; i < openSwitchers.length; i++) {
+            openSwitchers[i].classList.remove('ly-is-open');
           }
         }
       });
+
       // Custom positioning
       for(i = 0; i < switcherElements.length; i++) {
         if(lyForceOff !== 'true' && langify.locale.languages.length > 1) {
@@ -691,115 +775,334 @@
         links[l].setAttribute('href', links[l].getAttribute('href') + window.location.search);
         links[l].addEventListener('click', function(event) {
           langify.helper.setCookie('ly-lang-selected', this.getAttribute('data-ly-code'), 365);
-          //event.preventDefault();
-          //langify.helper.saveLanguage(this.getAttribute('data-ly-code'), this.getAttribute('href'))
         });
       }
-      document.addEventListener('DOMContentLoaded',function(){
-        if(lyForceOff == 'true') {
-          document.getElementById('preview-bar-iframe').classList.add('ly-hide');
-        }
-      });
 
       // Native select event handling
-      var languageUrls = [];
-
-      {%- assign current_root_url = request.locale.root_url | downcase | append: '/' -%}
-      {%- assign unlocalized_path = request.path | downcase | replace_first: current_root_url, '/' -%}
-      {%- if unlocalized_path == request.locale.root_url -%}
-        {%- assign unlocalized_path = '' -%}
-      {%- endif -%}
-
-      {%- for language in languages -%}
-        {%- assign isValid = false -%}
-        {%- for locale in shop.published_locales -%}
-          {%- if isValid == false -%}
-            {%- if supported_4_letter_codes contains locale.iso_code -%}
-            {%- assign used_locale_iso_code = locale.iso_code -%}
-          {%- else -%}
-            {%- assign used_locale_iso_code = locale.iso_code | slice: 0, 2 -%}
-          {%- endif -%}
-            {%- if language.iso_code == used_locale_iso_code -%}
-              {%- assign isValid = true -%}
-              {% assign url = locale.root_url | downcase | append: unlocalized_path | replace: '//', '/' | replace: '///', '/' %}
-            {%- endif -%}
-          {%- endif -%}
-        {%- endfor -%}
-
-        {%- if isValid == false -%}
-          {%- if shop.metafields.langify_v2.cross_domain_links[request.host][language.iso_code] -%}
-            {%- assign isValid = true -%}
-            {% assign url = shop.metafields.langify_v2.cross_domain_links[request.host][language.iso_code].root_url | downcase | append: unlocalized_path | replace: '//', '/' | replace: '///', '/' %}
-          {% assign url = shop.metafields.langify_v2.cross_domain_links[request.host][language.iso_code].host | append: url %}
-          {%- endif -%}
-        {%- endif -%}
-
-        {%- if isValid == true -%}
-        languageUrls['{{ language.iso_code }}'] = '{{ url }}';
-        {%- endif -%}
-      {%- endfor -%}
-
       var nativeLangifySelects = document.getElementsByClassName('ly-native-select');
       for(var i = 0; i < nativeLangifySelects.length; i++) {
-        nativeLangifySelects[i].onchange = function () {
+        nativeLangifySelects[i].onchange = function() {
           var selectedLanguageCode = this[this.selectedIndex].getAttribute('key');
           var url = languageUrls[selectedLanguageCode];
           if(url) {
             langify.helper.setCookie('ly-lang-selected', selectedLanguageCode, 365);
             window.location.replace(url+window.location.search);
           }
-        }
+        };
       }
 
       // Initial cart.attributes update
       ShopifyAPI.getCart(function (cart) {
-        var currentLanguage = {{ request.locale.iso_code | json }};
+        var currentLanguage = langify.locale.iso_code;
         if(!cart.attributes.language || cart.attributes.language != currentLanguage) {
           ShopifyAPI.updateCartAttributes({'language': currentLanguage}, function(data){});
         }
       });
 
+      // Custom Dropdown
+      var switcher = document.getElementsByClassName('ly-custom-dropdown-switcher');
+      for(var a = 0; a < switcher.length; a++) {
+      	switcher[a].classList.toggle('ly-is-open');
+        var isOut = langify.helper.isOutOfViewport(switcher[a]);
+        if(isOut.bottom && isOut.inViewport) {
+          switcher[a].classList.add('ly-is-dropup');
+          var arrows = switcher[a].querySelectorAll('.ly-arrow');
+          for(var b = 0; b < arrows.length; b++) {
+            arrows[b].classList.add('ly-arrow-up');    
+          }
+        }
+      	switcher[a].classList.toggle('ly-is-open');
+      }
+
       if(langify.locale.languages.length === 1) {
         console.info(`%c LANGIFY INFO:\n`, 'font-weight: bold;', 'All languages are disabled! There must be at least one active language in order that the languages switcher is displayed.')
       }
-    }
+
+      this._currencySwitcherBindings();
+    },
+    _currencySwitcherBindings: function() {
+      var currencySwitcherForm = document.getElementById('currency_switcher_form');
+      if(currencySwitcherForm) {
+        var currencySelectSwitcher = document.querySelectorAll('select.ly-currency-switcher');
+        var currencyCustomSwitcher = document.querySelectorAll('div.ly-currency-switcher a');
+        currencySwitcherForm.querySelector('input[name="return_to"]').value = window.location.pathname;
+        for(var i=0; i<currencyCustomSwitcher.length; i++) {
+          currencyCustomSwitcher[i].addEventListener('click', function() {
+            currencySwitcherForm.querySelector('input[name="currency"]').value = this.getAttribute('data-currency');
+            currencySwitcherForm.submit();
+          });
+        }
+        for(var a=0; a<currencySelectSwitcher.length; a++) {
+          currencySelectSwitcher[a].addEventListener('change', function(){
+            currencySwitcherForm.querySelector('input[name="currency"]').value = this.getAttribute('data-currency');
+            currencySwitcherForm.submit();
+          });
+        }
+      }
+    },
+    toggleSwitcherOpen: function(e) {
+      var target = e;
+      if(!target.classList.contains('ly-is-open')) {
+        var openSwitchers = document.querySelectorAll('.ly-custom-dropdown-switcher.ly-is-open')
+        for(i = 0; i < openSwitchers.length; i++) {
+          openSwitchers[i].classList.remove('ly-is-open');
+        }
+      }
+      target.classList.toggle('ly-is-open');
+      var isOut = langify.helper.isOutOfViewport(target);
+      if(isOut.bottom) {
+        target.classList.add('ly-is-dropup');
+      }
+    },
+    togglePopupOpen: function(e) {
+      e.closest('.ly-popup-switcher').classList.toggle('ly-is-open');
+    },
   };
 
-  langify.currency = langify.currency || {
-    getHasSelectedCurrency: function() {return '{{ cart.attributes["custom_currency"] }}' == 'true';},
-    getCurrencyForLanguage: function(language) {var languageToCurrencies = [];{% for mf in shop.metafields.lang_to_currency %}{% assign split = mf | first | split: '#' %}{% assign themeId = split | first %}{% assign compareThemeId = 'ly' | append: theme.id %}{% if themeId == compareThemeId %}{% assign languageValue = split | last %}languageToCurrencies['{{ languageValue }}'] = '{{ mf | last }}';{% endif %}{% endfor %}return languageToCurrencies[language];},
-    getCurrencySwitcher: function() {var currencySwitcher = $('#currencies');if(currencySwitcher.length) {return currencySwitcher;} else {return null;}},
+  langify.recommendation = langify.recommendation || {
+    recommendated: null,
     init: function() {
-      if(!langify.currency.getHasSelectedCurrency()) {
-        {% assign switcher_setting_key = 'ly' | append: theme.id %}
-        {% if shop.metafields.ly_c_switcher[switcher_setting_key] == 'enabled' %}
-        var currencySwitcher = langify.currency.getCurrencySwitcher();
-        if(typeof Currency != 'undefined' && currencySwitcher) {
-          currencySwitcher.change(function() {
-            ShopifyAPI.getCart(function (cart) {
-              var note = cart.note;
-              if(note == 'null') {note = '';}
-              ShopifyAPI.updateCartNote(note, function () {
-                ShopifyAPI.updateCartAttributes({'custom_currency': 'true'},function() {});
-              });
-            });
-          });
-          var selectedLanguage = langify.helper.getSelectedLanguage();
-          var currencyForLanguage = langify.currency.getCurrencyForLanguage(selectedLanguage);
-          if(currencyForLanguage) {
-            var currentCurrency = Currency.cookie.read();
-            Currency.currentCurrency = currencyForLanguage;
-            Currency.cookie.write(currencyForLanguage);
-            Currency.convertAll(currentCurrency, currencyForLanguage);
-            currencySwitcher.val(currencyForLanguage);
-            var selectedCurrencySpan = $('span.selected-currency');
-            if(selectedCurrencySpan.length) {
-              selectedCurrencySpan.text(currencyForLanguage);
+	    var recommendated = this._findRecommendedLanguage();
+      this.recommendated = recommendated;
+      if(recommendated && recommendated !== langify.locale.iso_code && !langify.helper.getCookie('ly-lang-selected')) {
+        this._translateStrings(recommendated);
+        this._bindings();
+      } else {
+        return false;
+      }
+    },
+    _findRecommendedLanguage: function() {
+      var currentLang = langify.locale.iso_code;
+      var browserLang = navigator.language || navigator.userLanguage;
+      var match = languageUrls[browserLang];
+      var recommendatedLang = false;
+      if(!match) {
+        browserLang = browserLang.substring(0, 2);
+        match = languageUrls[browserLang];
+      }
+      if(!match) {
+        for(var lang in languageUrls) {
+          if(lang.substring(0, 2) === browserLang) {
+            browserLang = lang;
+            match = languageUrls[browserLang];
+        	recommendatedLang = browserLang;
+          }
+        }
+      } else {
+        recommendatedLang = browserLang;
+      }
+      return recommendatedLang;
+    },
+    _translateStrings: function(languageCode) {
+      var recommendationElement = document.querySelectorAll('.ly-recommendation')[0];
+      var strings = langify.settings.switcher.recommendation_strings[languageCode];
+      var recommendationStr = 'Looks like your browser is set to English. Change the language?';
+      var buttonStr = 'Change';
+      var languageStr = 'English';
+      if(strings) {
+        recommendationStr = strings.recommendation ? strings.recommendation : 'Looks like your browser is set to English. Change the language?';
+        buttonStr = strings.button ? strings.button : 'Change';
+        languageStr = strings.language ? strings.language : 'English';
+      }
+      var newCode = recommendationElement.innerHTML;
+      newCode = newCode.replaceAll('[[recommendation]]', recommendationStr).replaceAll('[[button]]', buttonStr);
+      recommendationElement.innerHTML = newCode;     
+    },
+    _bindings: function() {
+	    var recommendated = this._findRecommendedLanguage();
+      var currentLang = langify.locale.iso_code;
+      var userLang = navigator.language || navigator.userLanguage;
+      var lyForceOff = location.search.split('ly-force-off=')[1];
+      var recommendationElement = document.querySelectorAll('.ly-recommendation')[0];
+      var form = recommendationElement.querySelectorAll('.ly-recommendation-form')[0];
+      var links = recommendationElement.getElementsByClassName('ly-languages-switcher-link');
+      var customDropdown = recommendationElement.querySelectorAll('.ly-languages-switcher.ly-custom-dropdown-switcher');
+      var nativeSelects = recommendationElement.getElementsByClassName('ly-native-select');
+
+      form.setAttribute('action', languageUrls[this.recommendated]);
+      form.addEventListener('submit', function() {
+        langify.helper.setCookie('ly-lang-selected', recommendated, 365);
+      });
+      
+      for(var i = 0; i < nativeSelects.length; i++) {
+        nativeSelects[i].onchange = function() {
+          event.preventDefault();
+          var selectedLanguageCode = this[this.selectedIndex].getAttribute('key');
+          var url = languageUrls[selectedLanguageCode];
+          if(url) {
+            form.setAttribute('action', url+window.location.search);
+          }
+        };
+        this._selectLanguage(nativeSelects[i], recommendated);
+      }
+      for(l = 0; l < links.length; l++) {
+        links[l].addEventListener('click', function(event) {
+          event.preventDefault();
+          form.setAttribute('action', this.getAttribute('href'));
+        });
+        this._selectLanguage(links[l], recommendated);
+      }
+      for(i = 0; i < customDropdown.length; i++) {
+      	if(recommendationElement.className.indexOf('bottom') > -1) {
+          customDropdown[i].classList.add('ly-is-dropup');       
+      	}	
+        form.setAttribute('action', customDropdown[i].querySelector('.ly-custom-dropdown-list li[key="'+ recommendated +'"] a').getAttribute('href'));
+        this._selectLanguage(customDropdown[i], recommendated);
+      } 
+      if(!lyForceOff) {
+        recommendationElement.classList.add('ly-is-open');
+      }
+    },
+    _selectLanguage: function(element, valueToSelect) {
+      if(element.classList.contains('ly-native-select')) {
+      	element.value = valueToSelect;  
+      }
+      if(element.classList.contains('ly-custom-dropdown-switcher')) {
+        var currentElem = element.querySelector('.ly-custom-dropdown-current');
+        var currentIcon = currentElem.querySelector('.ly-icon');        
+        var currentLabel = currentElem.querySelector('span');
+
+      	element.querySelector('.ly-custom-dropdown-list li.current').classList.remove('current');  
+      	element.querySelector('.ly-custom-dropdown-list li[key="'+ valueToSelect +'"]').classList.add('current');  
+
+        currentLabel.innerHTML = element.querySelector('.ly-custom-dropdown-list li.current span').innerHTML;
+        currentIcon.classList = element.querySelector('.ly-custom-dropdown-list li.current .ly-icon').classList;
+      }
+	  },
+    toggleOpen: function(e) {
+      e.closest('.ly-recommendation').classList.toggle('ly-is-open');
+      if(!e.closest('.ly-recommendation').classList.contains('ly-is-open')) {
+        langify.helper.setCookie('ly-lang-selected', this.recommendated, 365);
+      }
+    },
+  };
+
+  langify.languageDetection = langify.languageDetection || {
+    init: function() {
+      var currentLang = langify.locale.iso_code;
+
+      if(langify.helper.getVal('redirected') === 'true') {
+        langify.helper.setCookie('ly-lang-selected', {{ request.locale.iso_code | json }}, 365);
+        var _href = window.location.href;
+        history.replaceState(null, '', _href.replace(/(\?|&)(redirected=true)/i, ''));
+      }
+      
+      var userLang = navigator.language || navigator.userLanguage;
+      var bot = /bot|google|baidu|bing|msn|duckduckbot|teoma|slurp|yandex|Chrome-Lighthouse/i.test(navigator.userAgent);
+      var blockedRoutes = window.lyBlockedRoutesList || [];
+      var blockedRoute = blockedRoutes.find(x => window.location.pathname.indexOf(x) === 0);
+      var is404 = document.getElementsByClassName('template-404').length;
+
+      if(!langify.helper.inIframe() && !is404 && !bot && !blockedRoute && langify.helper.getVal('ly-lang-detect') !== 'off') {
+        if(userLang && !langify.helper.getCookie('ly-lang-selected')) {
+          var rootUrl = languageUrls[userLang];
+          if(!rootUrl) {
+            userLang = userLang.substring(0, 2);
+            rootUrl = languageUrls[userLang];
+          }
+          if(!rootUrl) {
+            for(var lang in languageUrls) {
+              if(lang.substring(0, 2) === userLang) {
+                userLang = lang;
+                rootUrl = languageUrls[userLang];
+              }
+            }
+          }
+          {% if languageDetectionDefault %}
+          if(!rootUrl) {
+            userLang = {{ languageDetectionDefault | json }};
+            rootUrl = languageUrls[userLang];
+          }
+          {% endif %}
+          if(rootUrl) {
+            if(currentLang !== userLang) {
+              langify.helper.setCookie('ly-lang-selected', userLang, 365);
+              this.redirect(rootUrl);
+            }
+          }
+        } else {
+          if(langify.helper.getCookie('ly-lang-selected') && langify.helper.getCookie('ly-lang-selected') !== currentLang) {
+            if(languageUrls[langify.helper.getCookie('ly-lang-selected')]) {
+              this.redirect(languageUrls[langify.helper.getCookie('ly-lang-selected')]);
             }
           }
         }
-        {% endif %}
       }
+
+      this._fixDomainCookies();
+      this._geolocationAppSupport();
+    },
+    redirect: function(url) {
+      var params = window.location.search;
+      var link = document.createElement("a");
+
+      // TODO: Only append when redirecting to another domain
+      var append = '?redirected=true';
+      if(params.indexOf('?') >= 0) {
+        append = '&redirected=true';
+      }
+
+      link.setAttribute('data-ly-locked', 'true');
+      link.href = url + params + append;
+      document.body.appendChild(link);
+      link.click();
+    },
+    _fixDomainCookies: function() {
+      // FIX: Language Detection + Domain Feature
+      if(!langify.locale.languages.find(function(lang) {return (lang.iso_code === langify.locale.iso_code)}).domain) return false;
+      function lyHandleLinkClick(e) {
+        var target = e.currentTarget;
+        if(target.href.indexOf('redirected=true') >= 0) return false; 
+        e.preventDefault();
+        var append = '?redirected=true';
+        if(target.href.indexOf('?') >= 0) {
+          append = '&redirected=true';
+        }
+        target.href = target.href + append;
+        target.removeEventListener('click', lyHandleLinkClick);
+        target.click();
+      }
+      window.onload = function () {
+        document.querySelectorAll('.ly-languages-switcher-link').forEach(item => {
+          item.addEventListener('click', lyHandleLinkClick);
+        });
+      }  
+    },
+    _geolocationAppSupport: function() {
+      var target = document.querySelector('body');
+      var config = { childList: true, subtree: true };
+      var geolocationObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            var target = mutation.target.getElementsByClassName('locale-bar__form');
+            if(target[0]) {
+              target[0].onsubmit = function() {
+                var locale_code = target[0].elements['locale_code'].value;
+                var selector = target[0].getElementsByClassName('locale-bar__selector');
+                if(selector.length >= 1) {
+                  locale_code = selector[0].options[selector[0].selectedIndex].value;
+                }
+                langify.helper.setCookie('ly-lang-selected', locale_code, 365);
+              };
+            }
+            var selectors = mutation.target.getElementsByClassName('locale-selectors__selector');
+            if(selectors.length > 0) {
+              for(var selector of selectors) {
+                if(selector.getAttribute('name') === 'locale_code') {
+                  selector.onchange = function() {
+                    var locale_code = selector.options[selector.selectedIndex].value;
+                    langify.helper.setCookie('ly-lang-selected', locale_code, 365);
+                  };        
+                }
+              }
+            }
+          }
+        });
+      });
+      geolocationObserver.observe(target, config);
+      setTimeout(function() {
+        geolocationObserver.disconnect();
+      }, 10000);
     }
   };
 
@@ -812,12 +1115,27 @@
       ShopifyAPI.updateCartAttributes = function(attributes, callback) {var data = '';var that = this;if(jQuery.isArray(attributes)) {jQuery.each(attributes, function(indexInArray, valueOfElement) {var key = that.attributeToString(valueOfElement.key);if (key !== '') {data += 'attributes[' + key + ']=' + that.attributeToString(valueOfElement.value) + '&';}});} else if ((typeof attributes === 'object') && attributes !== null) {jQuery.each(attributes, function(key, value) {data += 'attributes[' + that.attributeToString(key) + ']=' + that.attributeToString(value) + '&';});}var params = {type: 'POST',url: root_url+'/cart/update.js',data: data,dataType: 'json',success: function(cart) {if((typeof callback) === 'function') {callback(cart);}},error: this.onError};jQuery.ajax(params);};
       ShopifyAPI.onError = function(XMLHttpRequest, textStatus) {};
 
-      //langify.translator.init();
       langify.switcher.init();
-      langify.currency.init();
+
+      if(langify.settings.switcher) {
+        if(langify.settings.switcher.recommendation && langify.settings.switcher.recommendation_enabled) {
+          langify.recommendation.init();
+        } else {
+          if(langify.settings.switcher.languageDetection && parseInt(langify.settings.switcher.version.replaceAll('.', '')) >= 300) {
+            langify.languageDetection.init();
+          }        
+        }
+      }
     },
 
     init: function() {
+      var lyForceOff = location.search.split('ly-force-off=')[1];
+      if(lyForceOff == 'true') {
+        document.getElementById('preview-bar-iframe').classList.add('ly-hide');
+        return false;
+      }
+
+
       if(typeof jQuery === 'undefined') {
         langify.loader.loadScript('//cdn.jsdelivr.net/jquery/1.9.1/jquery.min.js', function() {
           langify.core.onComplete();
