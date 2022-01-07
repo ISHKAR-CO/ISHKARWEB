@@ -1,4 +1,4 @@
-<div data-section-id="{{ section.id }}" data-section-type="home-grid-section-two" class="home-grid-section home-grid-section-two">
+<div data-section-id="{{ section.id }}" data-section-type="home-grid-section-two" class="home-grid-section home-grid-section-two" >
   <div class="page-width">
     <div class="grid grid--no-gutters">
       	{%- assign grid_grid = 'one-whole' -%}
@@ -15,7 +15,7 @@
           {%- for block in section.blocks -%}
           {%- if block.type == "text" -%}
           <li class="grid__item medium-up--one-third hgs-grid-items">
-            <div class="wrapper">              
+            <div class="wrapper">
               {%- if block.settings.subtitle != blank -%}
               <h4 class="s-subtitle">{{ block.settings.subtitle }}</h4>
               {%- endif -%}{%- if block.settings.title != blank -%}
@@ -26,7 +26,7 @@
           </li>
           {%- endif -%}
           {%- endfor -%}
-</ul> 
+</ul>
       </div>
     </div>
   </div>
@@ -89,7 +89,7 @@
       "name": "Home Grid 2",
       "category": "Text",
 	  "blocks":[
-		 { 
+		 {
           "type": "text",
 		   "settings":{
 				"subtitle":"Explore our",
@@ -99,7 +99,7 @@
 				"link":"#"
 			}
         },
-		 { 
+		 {
           "type": "text",
 		   "settings":{
 				"subtitle":"Shop our",
@@ -109,7 +109,7 @@
 				"link":"#"
 			}
         },
-		 { 
+		 {
           "type": "text",
 		   "settings":{
 				"subtitle":"Discover our",

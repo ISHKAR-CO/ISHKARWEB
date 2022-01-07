@@ -1,7 +1,7 @@
 <div class="home-featured-prouct" data-section-id="{{ section.id }}" data-section-type="home-featured-prouct" >
-  <div class="section-header text-center {%- if section.settings.enable_bg %} sh-with-bg-gradiant{%- endif -%}">{%- if section.settings.subtitle != blank -%}
+  <div class="section-header text-center {%- if section.settings.enable_bg %} sh-with-bg-gradiant{%- endif -%}" style="margin: 0; padding: 40px 0 ;">{%- if section.settings.subtitle != blank -%}
     <h3 class="s-subtitle">{{ section.settings.subtitle | escape }}</h3>{%- endif -%}
-    {%- if section.settings.title != blank -%}<h2 class="h2-large s-title"><span class="inner_warpper">{{ section.settings.title | escape }}</span></h2>{%- endif -%}
+    {%- if section.settings.title != blank -%}<h2 class="h2-large s-title" style="margin: 0;"><span class="inner_warpper">{{ section.settings.title | escape }}</span></h2>{%- endif -%}
     {%- assign detail_size = section.settings.detail | size %}
     {%- if section.settings.detail != blank -%}<div class="section-header-detail {%- if detail_size > 160 %} max-size{% endif -%}">
     {{ section.settings.detail | newline_to_br }}
@@ -15,7 +15,7 @@
           {%- assign product = all_products[ block.settings.product]  -%}
           {%- if product -%}
           {%- include 'product-card-grid-two' ,product :product ,  max_height: 345 -%}
-          {%- else -%}          
+          {%- else -%}
           <div class="grid-view-item dummy-product">
             <a href="#" class="grid-view-item__link">
               <div class="grid-view-item__image">
@@ -27,7 +27,7 @@
                 <span class="product-price__price">{{ '1999' | money }}</span>
               </div>
             </a>
-          </div>          
+          </div>
           {%- endif -%}
         </li>
         {%- endfor -%}
@@ -47,13 +47,13 @@
 		  "type":"text",
 		  "id":"title",
 		  "label":"Section title",
-		  "default":"Section title"		
+		  "default":"Section title"
 		},
 		{
 		  "type":"text",
 		  "id":"subtitle",
 		  "label":"Section subtitle",
-		  "default":"Section subtitle"		
+		  "default":"Section subtitle"
 		},
 		{
 		  "type":"textarea",
@@ -65,8 +65,8 @@
 		  "type":"checkbox",
 		  "id":"enable_bg",
 		  "label":"Show background color",
-		  "default":false		  
-		}	
+		  "default":false
+		}
 	],
 	"blocks":[
 	 {
@@ -106,7 +106,7 @@
 			  }
 			]
 		}
-	]	
+	]
   }
 {% endschema %}
 

@@ -1,12 +1,13 @@
 {%- if first_part != blank -%}
-<ul class="site-nav list--inline"> {{--}} 
-  {%- for link in linklists[nav_link].links limit:first_part -%}  
-  	{%- include 'main-site-nav-inner' -%}  
+<ul class="site-nav list--inline">
+  {{--}}
+  {%- for link in linklists[nav_link].links limit:first_part -%}
+  	{%- include 'main-site-nav-inner' -%}
   {%- endfor -%}
-</ul> {{--}} 
+</ul> {{--}}
 {%- else -%}
-<ul class="site-nav list--inline"> {{--}} 
+<ul class="site-nav list--inline"> {{--}}
 {%- for link in linklists[nav_link].links  -%}
-  {%- include 'main-site-nav-inner' -%}	
-  {%- endfor -%}</ul> {{--}} 
+  {%- include 'main-site-nav-inner' -%}
+  {%- endfor -%}</ul> {{--}}
 {%- endif -%}

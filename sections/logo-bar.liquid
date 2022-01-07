@@ -1,13 +1,13 @@
 <div class="logo-parent-div">
   {% if section.settings.title != blank %}
-    <div class="section-header text-center sh-with-bg-gradiant-re_ sh-with-bg_">
+    <div class="section-header text-center sh-with-bg-gradiant-re_ sh-with-bg_" style="padding-top: 0; margin-bottom: 0;">
       {%- if section.settings.subtitle != blank -%}<h3 class="s-subtitle" >{{ section.settings.subtitle | escape }}</h3>{%- endif -%}
       <h2 class="h2-large s-title"><span class="inner_warpper">{{ section.settings.title | escape }}</span>
         <span class="s-title-cover"></span>
       </h2>
     </div>
   {% endif %}
-  <div class="page-width">
+  <div class="page-width" style="padding: 0 0 30px">
       {% if section.blocks.size > 0 %}
       <ul class="logo-bar{% if section.settings.title_enable %} logo-bar--large{% endif %} d-flex justify-content-between align-items-center">
         {% for block in section.blocks %}
@@ -39,7 +39,7 @@
       {% if section.blocks.size == 0 %}
       {% include 'no-blocks' %}
       {% endif %}
-</div>  
+</div>
 </div>
 
 
