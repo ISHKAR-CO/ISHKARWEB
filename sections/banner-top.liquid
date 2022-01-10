@@ -1,0 +1,23 @@
+<div class="page-width" data-section-id="{{ section.id }}" data-section-type="quotes">
+    <h2>{{ section.id }}</h2>
+</div>
+
+
+{% schema %}
+{
+"name": "Banner Top",
+"class": "index-section index-section--flush",
+"settings": [
+{
+"id": "cta_1_title",
+"type": "text",
+"label": "CTA 1 Title",
+"default": "Dryups Specials"
+}
+],
+"presets": [{
+"name": "Call to Actions",
+"category": "Text"
+}]
+}
+{% endschema %}

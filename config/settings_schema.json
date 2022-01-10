@@ -1608,6 +1608,34 @@
     ]
   },
   {
+    "name": "Top Banner",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "top_banner_enable",
+        "label": "Enable Top Banner",
+        "default": false
+      },
+      {
+        "type": "richtext",
+        "id": "top_banner_richtext",
+        "label": "Top Banner"
+      },
+      {
+        "type" : "color",
+        "id" : "top_banner_color",
+        "label" : "Background Color",
+        "default" : "#ffffff"
+      },
+      {
+        "type" : "color",
+        "id" : "top_banner_text_color",
+        "label" : "Text Color",
+        "default" : "#000000"
+      }
+    ]
+  },
+  {
     "name": "Preload logo",
     "settings": [
       {
