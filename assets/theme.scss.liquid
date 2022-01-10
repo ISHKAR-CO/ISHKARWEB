@@ -10015,7 +10015,7 @@ img{
   .news_detail{ /*text-transform: uppercase;*/ max-width: 950px; margin: 0 auto; color: #fffdfb; font-size: 30px; }
   .form_container {
     form{ margin-bottom:0; }
-    margin-top: 35px;
+    margin-top: 25px;
     .input-group{ @include flex-direction(column); @include align-items(center); }
     #mc_embed_signup .mc-field-group input[type="email"], input[type="email"]{ font-family:$base-font-family-italic; letter-spacing: -0.13px; font-size: 16px; text-align: center; background-color: transparent; color: #fffdfb; border-color: #fffdfb; max-width:285px; height: 55px;
     @include flex(1 0 auto);  width: 100%; margin-bottom: 10px; transition: all .9s ease-out; border-width:2px; font-style: italic; font-weight: 600;
@@ -10027,7 +10027,17 @@ img{
         /*border-color: darken($color-border-form, 10%);*/
       }
     }
-    #mc_embed_signup .mc-field-group input[type="submit"],*[type="submit"]{ color: #fffdfb; letter-spacing: 2.78px; background-color: transparent; font-size: 25px; min-height: 1px; border-width: 0; padding: 0; margin-top: 10px;
+    #mc_embed_signup .mc-field-group input[type="submit"],*[type="submit"]{ 
+      color: #fffdfb; 
+      letter-spacing: 2.78px; 
+      background-color: transparent; 
+      font-size: 25px; 
+      min-height: 1px; 
+      border-width: 0; 
+      padding: 0; 
+      margin-top: 10px; 
+      width: 100%;
+      text-indent: 0; 
       &:hover,&:focus {
         color: #000; text-shadow: 0px 0px 5px #fff; -webkit-text-shadow: 0px 0px 5px #fff;
       }
