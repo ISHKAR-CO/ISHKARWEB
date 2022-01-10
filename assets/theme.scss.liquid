@@ -11010,13 +11010,24 @@ img{
     &:nth-child(1){
       .accordian_title { border-top-color: #060606; }
     }
-    .accordian_title{ letter-spacing: 0.89px; text-transform: uppercase; margin-bottom: 0; padding: 11px 0; position:relative;
+    .accordian_title{ 
+      letter-spacing: 0.89px; 
+      text-transform: uppercase;
+      margin-bottom: 0; 
+      padding: 11px 0; 
+      position:relative;
       border-top: 1px solid #b3b3b3; color: #474646; cursor: pointer; padding-right: 12px;
-      &:before{ content: '+';
-        position: absolute; top: calc(50% - 12px);
-        right: 0; font-size: 18px;
-        letter-spacing: 1px; line-height: 24px;
-        height: 24px; width: 9px;
+      border:1px solid red;
+      &:before{ 
+        content: '+';
+        position: absolute; 
+        top: calc(50% - 12px);
+        right: 0; 
+        font-size: 18px;
+        letter-spacing: 1px; 
+        line-height: 24px;
+        height: 24px; 
+        width: 9px;
       }
       &.active{
         &:before{ content:'-'; }
