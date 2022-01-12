@@ -14572,6 +14572,40 @@ div[data-section-type="collection-template"]{ position: relative; background-col
     .search-form__input{
       display: none;
     }
+    .search-form__input-active-mobile{
+      display: block;
+      position: absolute;
+      width: 260px;
+      max-width: none;
+      top: -25px;
+      left: -220px;
+      z-index: 99999;
+      background-color: white!important;
+      border-color: rgba(135, 135, 135, 0.71);
+    }
+  }
+
+  @media screen and (max-width: 427px) {
+    .search-form__input-active-mobile{
+      left: -420%;
+    }
+  }
+
+  @media screen and (max-width: 415px) {
+    .search-form__input-active-mobile{
+      left: -400%;
+      width: 200px;
+    }
+  }
+
+  @media screen and (max-width: 375px) {
+    .search-form__input-active-mobile{
+      transform: scale(.8);
+      left: -155px;
+    }
+    .search-form__submit{
+      right: -10px;
+    }
   }
 
   .search-form__input-active{
