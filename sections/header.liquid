@@ -33,8 +33,21 @@
   {%- endif -%}
    {{--}} 
   <header {{ template }} class="site-header {% if template contains 'index' %}home_header{% endif %} {% if satict_header  %}header_static{% endif %} header_{{ section.settings.mm-bg-color }}" role="banner"  {% if template contains 'index' and settings.home_header_bg != blank %}style="background-image:url({{settings.home_header_bg | img_url:'master'}});"{% endif %}> {{--}} 
-     {{--}} <div class="page-width"><div class="site-header-upper d-flex justify-content-between flex-row header-font font-semi-bold align-items-center">{%- if trigger_btn != blank -%}<div class="other-content-left other-content d-flex flex-row d-lg-none">{{- trigger_btn -}}</div>{%- endif -%}<div class="upper-logo one-whole">{%- render 'header-logo' , logo_img : section.settings.logo, logo_max_width : section.settings.logo_max_width , logo_img_white : section.settings.logo_white -%}</div><div class="other-content d-flex flex-row align-items-center justify-content-end">
-          {%- capture lang_switcher -%}
+     {{--}} <div class="page-width"><div class="site-header-upper d-flex justify-content-between flex-row header-font font-semi-bold align-items-center">{%- if trigger_btn != blank -%}<div class="other-content-left other-content d-flex flex-row d-lg-none">{{- trigger_btn -}}</div>{%- endif -%}<div class="upper-logo one-whole">{%- render 'header-logo' , logo_img : section.settings.logo, logo_max_width : section.settings.logo_max_width , logo_img_white : section.settings.logo_white -%}</div><div class="other-content d-flex flex-row align-items-center justify-content-end" style="max-width: none;">
+          
+        <form action="{{routes.search_url}}" method="get" role="search" class="search-form"> 
+          <input id="Search" type="search" class="search-form__input  {%-if its_home_page -%} {{' home-input'}} {%-endif-%}" aria-label="Search" placeholder="Search"
+              name="q" value="{{ search.terms |  escape }}">
+          <button class="search-form__submit {%-if its_home_page -%} {{' home-submit'}} {%-endif-%}" type="submit">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                  x="0px" y="0px" width="16" height="16" viewBox="0 0 24 24">
+                  <path
+                      d="M 9 2 C 5.1458495 2 2 5.1458524 2 9 C 2 12.854148 5.1458495 16 9 16 C 10.747999 16 12.345009 15.348024 13.574219 14.28125 L 14 14.707031 L 14 16 L 20 22 L 22 20 L 16 14 L 14.707031 14 L 14.28125 13.574219 C 15.348024 12.345009 16 10.747997 16 9 C 16 5.1458524 12.854151 2 9 2 z M 9 4 C 11.773271 4 14 6.2267307 14 9 C 14 11.773269 11.773271 14 9 14 C 6.226729 14 4 11.773269 4 9 C 4 6.2267307 6.226729 4 9 4 z">
+                  </path>
+              </svg>
+          </button>
+        </form>
+      {%- capture lang_switcher -%}
           {%- if section.settings.header_lag_switcher -%}
            {{--}} <div class="lang_swicther d-flex"><span class="lang active" data-lang="en">EN</span> <span href="#" data-lang="fr" class="lang">FR</span></div>{%- endif -%}{%- endcapture -%}          
           {%- if lang_switcher != blank -%}{{- lang_switcher -}}{%- endif -%}          
@@ -57,6 +70,9 @@
         {%- assign second =  linklists[section.settings.main_linklist].links.size | minus: first_part -%}
         {%- endif -%}
         
+
+        
+
         {%- capture mobile_nav_close -%}<button type="button" class="btn-nav-close d-lg-none">{%- include 'icon-close' -%}</button>{%- endcapture -%}
         
         {%- capture wc_close -%}

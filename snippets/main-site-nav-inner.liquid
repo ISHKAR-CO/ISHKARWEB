@@ -15,7 +15,15 @@
         <div class="dropdown-wrapper">
         <{% if link.url == "#" %}span{% else %}a href="{{ link.url }}"{% endif %} class="site-nav__link site-nav__link--main site-nav__link--button{% if link.child_active %} site-nav__link--active_{% endif %}"
                                                                                   type="button" aria-expanded="false"
-                                                                                  style="color: {{ section.settings.color_text_header}}"
+                                                                                  {%- if template contains 'index' 
+                                                                                        or template contains 'page.travel' 
+                                                                                        or template contains 'page.story' 
+                                                                                        or template contains 'blog.event' 
+                                                                                        or template contains 'blog.journal' 
+                                                                                        or template contains 'product.travel' 
+                                                                                        or template contains 'page.impact' -%}
+                                                                                        style="color: {{ section.settings.color_text_header}}"
+                                                                                  {%- endif -%}
                                                                                   aria-controls="SiteNavLabel-{{ child_list_handle }}"><span
                     class="site-nav__label">{{ link.title | escape }}</span>      </{% if link.url == "#" %}span{% else %}a{% endif %}><span
                     class="dropdown-btn d-lg-none mobile_arrow_btn">{% comment %}{%- include 'icon-plus' -%}{% endcomment %}</span>
