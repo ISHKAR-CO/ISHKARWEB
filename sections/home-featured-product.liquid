@@ -1,7 +1,7 @@
 <div class="home-featured-prouct" data-section-id="{{ section.id }}" data-section-type="home-featured-prouct" >
-  <div class="section-header text-center {%- if section.settings.enable_bg %} sh-with-bg-gradiant{%- endif -%}" style="margin: 0; padding: 40px 0 ;">{%- if section.settings.subtitle != blank -%}
+  <div class="section-header text-center {%- if section.settings.enable_bg %} sh-with-bg-gradiant{%- endif -%}" {% if tempalte contains 'index' %} style="margin: 0; padding: 40px 0 ;" {%endif%}>{%- if section.settings.subtitle != blank -%}
     <h3 class="s-subtitle">{{ section.settings.subtitle | escape }}</h3>{%- endif -%}
-    {%- if section.settings.title != blank -%}<h2 class="h2-large s-title" style="margin: 0;"><span class="inner_warpper">{{ section.settings.title | escape }}</span></h2>{%- endif -%}
+    {%- if section.settings.title != blank -%}<h2 class="h2-large s-title" {% if tempalte contains 'index' %} style="margin: 0;"  {%endif%} ><span class="inner_warpper">{{ section.settings.title | escape }}</span></h2>{%- endif -%}
     {%- assign detail_size = section.settings.detail | size %}
     {%- if section.settings.detail != blank -%}<div class="section-header-detail {%- if detail_size > 160 %} max-size{% endif -%}">
     {{ section.settings.detail | newline_to_br }}

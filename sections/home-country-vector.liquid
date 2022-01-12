@@ -1,6 +1,6 @@
 <div
 	class="section-header text-center {%- if section.settings.enable_bg %} sh-with-bg-gradiant{%- endif -%}"
-	style="margin: 40px 0 0"
+	{% if tempalte contains 'index' %} style="margin: 40px 0 0" {%endif%}
 >	{%- if section.settings.subtitle != blank -%}
     	<h3 class="s-subtitle">{{ section.settings.subtitle | escape }}</h3>
 	{%- endif -%}
