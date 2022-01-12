@@ -32,7 +32,8 @@
   {%- assign satict_header = true -%}
   {%- endif -%}
    {{--}} 
-  <header {{ template }} class="site-header {% if template contains 'index' %}home_header{% endif %} {% if satict_header  %}header_static{% endif %} header_{{ section.settings.mm-bg-color }}" role="banner"  {% if template contains 'index' and settings.home_header_bg != blank %}style="background-image:url({{settings.home_header_bg | img_url:'master'}});"{% endif %}> {{--}} 
+  <header {{ template }} 
+    class="site-header {% if template contains 'index' %}home_header{% endif %} {% if satict_header  %}header_static{% endif %} header_{{ section.settings.mm-bg-color }}  {% if settings.top_banner_enable == true and settings.top_banner_show_only_home and template contains 'index' %} top-header-only-home-banner-active {% endif %}" role="banner"  {% if template contains 'index' and settings.home_header_bg != blank %}style="background-image:url({{settings.home_header_bg | img_url:'master'}});"{% endif %}> {{--}} 
      {{--}} <div class="page-width"><div class="site-header-upper d-flex justify-content-between flex-row header-font font-semi-bold align-items-center">{%- if trigger_btn != blank -%}<div class="other-content-left other-content d-flex flex-row d-lg-none">{{- trigger_btn -}}</div>{%- endif -%}<div class="upper-logo one-whole">{%- render 'header-logo' , logo_img : section.settings.logo, logo_max_width : section.settings.logo_max_width , logo_img_white : section.settings.logo_white -%}</div><div class="other-content d-flex flex-row align-items-center justify-content-end" style="max-width: none;">
           
       <!-- SEARCHF FUNCTION -->
@@ -48,7 +49,6 @@
               </svg>
           </button>
         </form>
-      <!-- END SEARCH FUNCTION -->
 
       <script>
         const form = document.getElementById('search-form-header');
@@ -88,19 +88,14 @@
           }
         })
 
-        // input.addEventListener("keyup", function(event) {
-        //   if (isMobile() && event.keyCode === 13) {
-        //     event.preventDefault();
-        //     form.submit();
-        //   }
-        // });
-
         input.addEventListener("focusout", function(event) {
           if (isMobile() && activeController) {
               hideSearch();
           }
         });
       </script>
+      <!-- END SEARCH FUNCTION -->
+
 
 
       {%- capture lang_switcher -%}
@@ -117,7 +112,7 @@
           {%- capture cart_html -%}
            {{--}} <a href="{{ routes.cart_url }}" class="site-header__icon site-header__cart d-flex"><img class="dark_img lazyload" data-src="{{ 'Black_Bag_300x.png' | asset_img_url:'50x' }}" width="auto" height="auto" /><img class="white_img lazyload" data-src="{{ 'White_Bag_300x.png' | asset_img_url:'50x' }}" width="auto" height="auto" /><span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span><div class="mobile-cart-bubble show_in_mobile" data-cart-count-bubble>{{ cart.item_count }}</div><div id="CartCount" class="cart-total-price light-color hide_in_mobile" data-cart-count-bubble>{%- if request.page_type == 'index' -%}{{- cart.total_price | money -}}{%- else -%}{{- cart.total_price | money -}}{%- endif -%}</div></a>{%- endcapture -%}
           {{- cart_html -}}</div><div class="s-subtitle v-beyond v-beyond_white">- Venture Beyond the Headlines -</div></div> {{--}} 
-       {{--}} <div class="site-header-main">         {{--}} 
+       {{--}} <div class="site-header-main {% if settings.top_banner_enable == true and settings.top_banner_show_only_home and template contains 'index' %} {{' top-header-fixed-only-home-banner-active'}} {% endif %}">         {{--}} 
         {%- if linklists[section.settings.main_linklist].links.size > 3 -%}
         {%- assign first_part =  linklists[section.settings.main_linklist].links.size | divided_by: 2 | round -%}
         {%- if first_part < 3 -%}

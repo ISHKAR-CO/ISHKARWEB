@@ -127,11 +127,17 @@
     <!-- End: XO-InsertCode Header-->
 </head>
 
-<body class="template-{{ request.page_type | handle }}{% if template.suffix %} template-{{ template.suffix | handle }}{% endif %}">
+<body class="template-{{ request.page_type | handle }}{% if template.suffix %} template-{{ template.suffix | handle }}{% endif %} {%if settings.top_banner_enable and settings.top_banner_show_only_home and template contains 'index'%} {{' body-padding-top-onlye-home-banner-active'}} {%endif%}">
 
 <!-- TOP BANNER PROMOTION -->
 {% if settings.top_banner_enable %}
-    <div class="top-banner-promotion" style="background-color:{{ settings.top_banner_color }}; color: {{ settings.top_banner_text_color }}">{{ settings.top_banner_richtext }}</div>
+    {% if settings.top_banner_show_only_home %}
+        {%if template contains 'index'%}
+        <a href="{{ settings.top_banner_link }}"><div class="top-banner-promotion" style="background-color:{{ settings.top_banner_color }}; color: {{ settings.top_banner_text_color }}">{{ settings.top_banner_copy }}</div></a>
+        {% endif %}
+    {% else %}
+        <a href="{{ settings.top_banner_link }}"><div class="top-banner-promotion" style="background-color:{{ settings.top_banner_color }}; color: {{ settings.top_banner_text_color }}">{{ settings.top_banner_copy }}</div></a>
+    {%endif%}
 {% endif %}
 <!-- END  TOP BANNER PROMOTION -->
 
@@ -186,7 +192,9 @@
         });</script>
     <script defer="defer" src="{{ 'wc-theme-lib.min.js' | asset_url }}"></script>
     <script defer="defer" src="{{ 'script.js' | asset_url }}"></script>
-    <script type="text/javascript">setTimeout(function () {
+    <script type="text/javascript">
+    
+        setTimeout(function () {
             var _script = document.getElementsByTagName('script');
             for (var i = 0; i < _script.length; i++) {
                 var str = _script[i].getAttribute('src');

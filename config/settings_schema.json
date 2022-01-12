@@ -1617,9 +1617,20 @@
         "default": false
       },
       {
-        "type": "richtext",
-        "id": "top_banner_richtext",
-        "label": "Top Banner"
+        "type": "checkbox",
+        "id": "top_banner_show_only_home",
+        "label": "Show only on home page",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "top_banner_copy",
+        "label": "Banner Copy"
+      },
+      {
+        "type" : "url",
+        "id" : "top_banner_link",
+        "label" : "Banner Link"
       },
       {
         "type" : "color",
