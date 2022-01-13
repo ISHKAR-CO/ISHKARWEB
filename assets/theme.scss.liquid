@@ -10878,11 +10878,25 @@ img{
   .selected_currency{ padding: 2.5px 18px 2.5px 8px;
     display: inline-block;
     width: 100%;
-    background: {
-      image: url({{ 'select_dropdown_2.png' | asset_url}});
-      repeat: no-repeat;
-      position: 90% 8px;
-      size:12px;
+    position: relative;
+    // background: {
+    //   image: url({{ 'select_dropdown_2.png' | asset_url}});
+    //   repeat: no-repeat;
+    //   position: 90% 8px;
+    //   size:12px;
+    // }
+    &:after{
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 3px;
+      width: 0; 
+      height: 0; 
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      
+      border-top: 6px solid #fff;
     }
     &:hover {
       color: #fffdfd;
@@ -14683,3 +14697,8 @@ div[data-section-type="collection-template"]{ position: relative; background-col
 }
 
 // ------ END SEARCH FORM ------ //
+
+
+.lang:nth-child(odd):after{
+  color: inherit!important;
+}

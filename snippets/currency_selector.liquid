@@ -29,7 +29,14 @@
   </li>{%- endcomment -%}
   {%- assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ',' -%}
   {%- assign supported_codes = settings.supported_currencies | split: ' ' -%}
-  <li class="currency_picker_cls"><a href="#{{- default_symbol -}}" class="selected_currency">{{- default_symbol -}}</a><div class="currency-modal"><div class="currency-container"><ul><li class="currency_li_cls"><a href="#{{ default_symbol }}" data-value="{{- shop.currency -}}" data-symbol="{{ default_symbol }}">{{ default_symbol }}</a></li>
+  <li class="currency_picker_cls"><a href="#{{- default_symbol -}}" class="selected_currency" {%if template contains 'index'%} style="color: {{ section.settings.color_text_top_header }}!important;" {%endif%}>{{- default_symbol -}}</a><div class="currency-modal"><div class="currency-container"><ul><li class="currency_li_cls"><a href="#{{ default_symbol }}" data-value="{{- shop.currency -}}" data-symbol="{{ default_symbol }}" {%if template contains 'index'%} style="color: {{ section.settings.color_text_top_header }}!important;" {%endif%}>{{ default_symbol }}</a></li>
+          {%if template contains 'index'%} 
+            <style>
+              .selected_currency:after{
+                border-top-color: {{ section.settings.color_text_top_header }} !important;
+              }
+            </style>
+          {%endif%}
           {%- for code in supported_codes -%}
           {%- if code != shop.currency and codes contains code -%}
           {%- assign symbol = '' -%}
@@ -38,7 +45,7 @@
           {%- assign symbol = sym | split:'_' | last -%}
           {%- break -%}
           {%- endif -%}
-          {%- endfor -%}<li class="currency_li_cls"><a href="#{{- symbol -}}" data-value="{{ code }}" data-currency="{{ code }}" data-symbol="{{- symbol -}}">{{- symbol -}}</a></li>{%- endif -%}{%- endfor -%}</ul></div></div></li></ul>
+          {%- endfor -%}<li class="currency_li_cls"><a href="#{{- symbol -}}" data-value="{{ code }}" data-currency="{{ code }}" data-symbol="{{- symbol -}}" {%if template contains 'index'%} style="color: {{ section.settings.color_text_top_header }}!important;" {%endif%}>{{- symbol -}}</a></li>{%- endif -%}{%- endfor -%}</ul></div></div></li></ul>
 
 <script type="text/javascript" defer="defer">$(document).ready(function() { function change_class(){$('.currency_li_cls').removeClass('selected_li');$('.currency_li_cls a').removeClass('selected');var selected_currency = $('#currency-list .disclosure-list__item--current .disclosure-list__option').data('value');$('.currency_li_cls a[data-value="'+selected_currency+'"]').addClass('selected');$('.currency_li_cls a[data-value="'+selected_currency+'"]').parent().addClass('selected_li');$('.currency_picker_cls .selected_currency').text($('.currency_li_cls a[data-value="'+selected_currency+'"]').text());
                             {%- comment -%}
