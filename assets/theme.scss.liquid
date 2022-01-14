@@ -8750,9 +8750,13 @@ $linklist-spacing-small: 12px;
       padding-top: 8px;
       margin-bottom:0; padding-bottom:5px;
       color: #101010;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      h4{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+        padding: 0;
+      }
     }
     .prodcut-info{ padding-top: 5px;
       .place-name{
@@ -14537,6 +14541,56 @@ div[data-section-type="collection-template"]{ position: relative; background-col
   .template-story .collectin_detail_cls, .story_detail .s-subtitle{font-size: 22px; font-size:16px; }
   .cart-header__title, .cart-related-title { font-size: 20px; }
 }
+
+// ------ HOME UPDATE STYLE MODIFICATIONS ------ //
+
+.home-featured-product-update{
+  margin: 0 auto 60px !important;
+}
+
+// ------ END HOME UPDATE STYLE MODIFICATIONS ------ //
+
+
+// ------ OBJECT STYLE MODIFICATIONS ------ //
+
+.tooltip:before {
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #777777;
+  bottom: -6px;
+  content: "";
+  height: 0;
+  left: 50%;
+  margin-left: -6px;
+  position: absolute;
+  width: 0;
+}
+
+.tooltip {
+  background-color: #777777;
+  color: #FFFFFF;
+  display: none;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  top: -150%;
+  text-align: center;
+  font-size: .75rem;
+  font-weight: normal;
+}
+
+.product-card__title{
+  position: relative;
+  z-index: 12;
+  &:hover{
+    .tooltip{ display:block; }
+  }
+}
+
+
+// ------ END OBJECT UPDATE STYLE MODIFICATIONS ------ //
+
+
 
 
 // ------ TOP BANNER ------ //

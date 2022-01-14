@@ -89,6 +89,8 @@
     </div>   
   </header>{%- endunless -%}
   <div class="page-width collection-page-width {% unless collection.url contains '/all' %}collection-page-width-verticle{%- endunless -%}" id="Collection">
+    
+    <div>{{section.settings}}</div>
     {%- if section.settings.layout == 'grid' -%}
       {%- case section.settings.grid -%}
       {%- when 2 -%}
@@ -132,8 +134,11 @@
                 {%- comment -%}<div class="verticle-coll-title">
                   <div class="verticle-title h3 text-uppercase s-title s-not">{{child_coll.title}}</div>
                 </div>{%- endcomment -%}
-                {% for product in coll.products %}
+                <p>{{collections[0] | json}}</p>
+                {% assign products = coll.products | sort: 'type' %}
+                {% for product in products %}
                 <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+                  <p>Tags {{product.tags | json}}</p>
                   {% include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor, collection:coll %}
                 </li>
                 {%- endfor -%} 

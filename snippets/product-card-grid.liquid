@@ -22,7 +22,7 @@
   {%- unless request.page_type == 'index' -%}
   <div class="product_info_wrapper">
   {%- endunless -%}
-    <div class="h4 grid-view-item__title product-card__title" aria-hidden="true">{{ product.title }}</div>
+    <div class="h4 grid-view-item__title product-card__title" aria-hidden="true"> <h4>{{ product.title }}</h4> <span class="tooltip">{{product.title}}</span></div>
 {%- unless product.tags contains 'hide_price' -%}
     <div class="prodcut-info {%if product.description contains '[split_place-name]' %}d-flex show-pn justify-content-between align-item-center{% endif %} ">    
       {%- if product.description contains '[split_place-name]' -%}{%- assign place-name = product.description  | split: '[split_place-name]' | first -%}

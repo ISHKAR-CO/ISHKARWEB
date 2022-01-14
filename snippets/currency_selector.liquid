@@ -30,13 +30,23 @@
   {%- assign codes = 'USD,EUR,GBP,CAD,ARS,AUD,BBD,BDT,BSD,BHD,BRL,BOB,BND,BGN,ILS,MMK,KYD,CLP,CNY,COP,CRC,HRK,CZK,DKK,DOP,XCD,EGP,XPF,FJD,GHS,GTQ,GYD,GEL,HKD,HUF,ISK,INR,IDR,NIS,JMD,JPY,JOD,KZT,KES,KWD,LVL,LTL,MXN,MYR,MUR,MDL,MAD,MNT,MZN,ANG,NZD,NGN,NOK,OMR,PKR,PYG,PEN,PHP,PLN,QAR,RON,RUB,SAR,RSD,SCR,SGD,SYP,ZAR,KRW,LKR,SEK,CHF,TWD,THB,TZS,TTD,TRY,UAH,AED,UYU,VEB,VND,ZMK' | split: ',' -%}
   {%- assign supported_codes = settings.supported_currencies | split: ' ' -%}
   <li class="currency_picker_cls"><a href="#{{- default_symbol -}}" class="selected_currency" {%if template contains 'index'%} style="color: {{ section.settings.color_text_top_header }}!important;" {%endif%}>{{- default_symbol -}}</a><div class="currency-modal"><div class="currency-container"><ul><li class="currency_li_cls"><a href="#{{ default_symbol }}" data-value="{{- shop.currency -}}" data-symbol="{{ default_symbol }}" {%if template contains 'index'%} style="color: {{ section.settings.color_text_top_header }}!important;" {%endif%}>{{ default_symbol }}</a></li>
-          {%if template contains 'index'%} 
             <style>
+              .selected_currency{
+                background-image: none !important;
+              } 
+
+              {%if template contains 'index'%} 
               .selected_currency:after{
                 border-top-color: {{ section.settings.color_text_top_header }} !important;
               }
+
+              {%else%}
+              .selected_currency:after{
+                border-top-color: currentColor !important;
+              }
+            {%endif%}
+
             </style>
-          {%endif%}
           {%- for code in supported_codes -%}
           {%- if code != shop.currency and codes contains code -%}
           {%- assign symbol = '' -%}
