@@ -38,10 +38,8 @@
     <div class="grid__item product-single__media-group {{ product_media_width }}{% if section.settings.media_size == 'full' %} product-single__media-group--full{% endif %}" data-product-single-media-group>
      
       <div class="inr_pro_Wc">
-      
       <div class="inner-product-image">
         {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
-
         
         <ul class="product_images">
           {%- for media in product.media -%}
@@ -80,6 +78,17 @@
         </button>
         {%- endif -%}
       </div>
+      <!-- <div class="dots-indicator-container">
+        <ul>
+          <li class="dots-indicator__dot"></li>
+          <li class="dots-indicator__dot"></li>
+          <li class="dots-indicator__dot"></li>
+          <li class="dots-indicator__dot active-dots"></li>
+          <li class="dots-indicator__dot"></li>
+          <li class="dots-indicator__dot"></li>
+        </ul>
+      </div> -->
+
       {%- comment -%}
       {% if product.media.size > 1 %}
         {% if product.media.size > 4 %}
