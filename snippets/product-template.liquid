@@ -78,16 +78,6 @@
         </button>
         {%- endif -%}
       </div>
-      <!-- <div class="dots-indicator-container">
-        <ul>
-          <li class="dots-indicator__dot"></li>
-          <li class="dots-indicator__dot"></li>
-          <li class="dots-indicator__dot"></li>
-          <li class="dots-indicator__dot active-dots"></li>
-          <li class="dots-indicator__dot"></li>
-          <li class="dots-indicator__dot"></li>
-        </ul>
-      </div> -->
 
       {%- comment -%}
       {% if product.media.size > 1 %}
@@ -482,6 +472,7 @@
       arrows:true,
       prevArrow : pro_prevArrow,
       nextArrow : pro_nextArrow,
+      dots: true,
     });
   });
   document.addEventListener('DOMContentLoaded', (event) => {

@@ -1,4 +1,5 @@
 <div class="product_accordian">
+  <h2>IM HERE</h2>
   
   {%- for i in (1..5)  -%}
   {%- capture accordion_title -%}title_{{i}}{%- endcapture -%}
@@ -209,5 +210,12 @@
     </div>
   </div>
   {%- endif -%}
-  
+  <div class="accordian_content">
+    <h6 class="accordian_title">Reviews</h6>
+    <div class="accordian_detail">
+      <div class="wrapper">
+        <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+      </div>
+    </div>
+  </div>
 </div>
