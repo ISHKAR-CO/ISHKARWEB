@@ -14783,8 +14783,17 @@ div[data-section-type="collection-template"]{ position: relative; background-col
       color: white !important;
     }
   }
-  
-  
+
+  .search-form:active, .search-form:focus, .search-form:hover{
+    .home-input::placeholder{
+      color: black !important;
+    }
+    .home-submit{
+      > svg{
+        fill: black !important;
+      }
+    }
+  }
   
   .home-submit{
     > svg{
