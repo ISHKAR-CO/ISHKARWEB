@@ -15,6 +15,11 @@
  {%- assign second_image = '' -%}
 {%- endif -%}
 
+{%if product.metafields.my_fields.gif_hover_.value.src%}
+  {%assign second_image = product.metafields.my_fields.gif_hover_.value.src%}
+{%endif%}
+
+
 <div class="grid-view-item{% unless product.available %} grid-view-item--sold-out{% endunless %} product-card">
   <a class="grid-view-item__link grid-view-item__image-container full-width-link" href="{{ product.url | within: collection }}"></a>
   {%- assign current_variant = product.selected_or_first_available_variant -%}
