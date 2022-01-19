@@ -34,26 +34,35 @@
   data-enable-history-state="true"
   data-ajax-enabled="{{ settings.enable_ajax }}"
 >
+
+  <!-- <p>{{product.metafields.my_fields.gif_hover_.value.src  }}</p> -->
   <div class=" d-flex justify-content-between grid product-single{% if section.settings.enable_payment_button %} product-single--{{ section.settings.media_size }}-media{% endif %} grid--no-gutters">
     <div class="grid__item product-single__media-group {{ product_media_width }}{% if section.settings.media_size == 'full' %} product-single__media-group--full{% endif %}" data-product-single-media-group>
      
       <div class="inr_pro_Wc">
       <div class="inner-product-image">
         {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
-        
+        {% assign external_videos = product.media | where: "media_type", "external_video" %}
+
         <ul class="product_images">
           {%- for media in product.media -%}
           <li class="product_image_item" data-image-url="{{ media | img_url:'' }}">
-            <div class="inner_wrapper">
-              {%- assign img_url = media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
-              <img class="feature-row__image lazyload"
-                   src="{{ media | img_url: '300x300' }}"
-                   data-src="{{ img_url }}"
-                   data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
-                   data-aspectratio="{{ media.preview_image.aspect_ratio }}"
-                   data-sizes="auto"
-                   alt="{{ media.alt | escape }}" />
-            </div>
+            {%if media.media_type == 'external_video'%}
+              <div class="inner_wrapper video-external">
+                {{ product.featured_media | external_video_tag }}
+              </div>
+            {%else%}
+              <div class="inner_wrapper">
+                {%- assign img_url = media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                <img class="feature-row__image lazyload"
+                    src="{{ media | img_url: '300x300' }}"
+                    data-src="{{ img_url }}"
+                    data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                    data-aspectratio="{{ media.preview_image.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ media.alt | escape }}" />
+              </div>
+            {%endif%}
           </li>
           {%- endfor -%}
         </ul>
