@@ -10992,12 +10992,24 @@ img{
 .product-single__media-group{
   .product_images{
     .product_image_item{
-      .inner_wrapper{ padding-bottom: calc(100% / 1.125); position: relative;
+      .inner_wrapper{ 
+        // padding-bottom: calc(100% / 1.125); 
+        height: 50vmax;
+        max-height: 900px;
+        position: relative;
+        @media screen and (max-width: 991px){
+          height: 45vh;
+          img{
+            object-fit: contain;
+          }
+        }
+          
+        }
         .feature-row__image{ position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; object-position:center; }
       }
     }
   }
-}
+
 
 .site-header-main .site-nav__childlist .site-nav__childlist-item .childlist-item_wrapper .site-nav__link{ font-family: $base-font-family; white-space: normal; }
 .site-header-main{
@@ -12683,7 +12695,10 @@ div[data-section-type="collection-template"]{ position: relative; background-col
       padding-left: 30px; 
       max-width: 504px; 
       float: right;
-      @media screen and (min-width: 1550px) {
+      @media screen and (min-width: 1350px) and (max-width: 1649px){
+        right: 3%;
+      }
+      @media screen and (min-width: 1650px) {
         right: 8%;
       }
     }
@@ -14844,18 +14859,18 @@ div[data-section-type="collection-template"]{ position: relative; background-col
 }
 // --- END Customize product reviews --- //
 
-.video-external{
-  padding-bottom: 0 !important;
-  position: absolute !important;
-  bottom: 0;
-  width: 100%;
-  height: fit-content;
-  > iframe{
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 16/9;
-  }
-}
+// .video-external{
+//   padding-bottom: 0 !important;
+//   position: absolute !important;
+//   bottom: 0;
+//   width: 100%;
+//   height: fit-content;
+//   > iframe{
+//     width: 100%;
+//     height: 100%;
+//     aspect-ratio: 16/9;
+//   }
+// }
 
 .slick-slide.c {
   display: inline-block;
@@ -14870,6 +14885,23 @@ div[data-section-type="collection-template"]{ position: relative; background-col
   }
 }
 
+.video-wrapper-external{
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: none !important;
+  iframe{
+    aspect-ratio: 16/9;
+    top: initial;
+    height: auto;
+    width: 100%;
+  }
+}
+
+
+// --- Announcement Bar --- //
 .announcement-bar{
   position: absolute;
   width: 100%;

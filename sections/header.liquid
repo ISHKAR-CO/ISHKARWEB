@@ -33,7 +33,7 @@
   {%- endif -%}
    {{--}} 
   <header {{ template }} 
-    class="site-header {% if template contains 'index' %}home_header{% endif %} {% if satict_header  %}header_static{% endif %} header_{{ section.settings.mm-bg-color }}  {% if section.settings.message == true %} announcement-bar-active {% endif %}" role="banner"  {% if template contains 'index' and settings.home_header_bg != blank %}style="background-image:url({{settings.home_header_bg | img_url:'master'}});"{% endif %}> {{--}} 
+    class="site-header {% if template contains 'index' %}home_header{% endif %} {% if satict_header  %}header_static{% endif %} header_{{ section.settings.mm-bg-color }}  {% if section.settings.message == true %} {% if section.settings.home_page_only%} {%if template contains 'index'%}  announcement-bar-active {%endif%} {%else%}  announcement-bar-active {%endif%}{% endif %}" role="banner"  {% if template contains 'index' and settings.home_header_bg != blank %}style="background-image:url({{settings.home_header_bg | img_url:'master'}});"{% endif %}> {{--}} 
      {{--}} <div class="page-width"><div class="site-header-upper d-flex justify-content-between flex-row header-font font-semi-bold align-items-center">{%- if trigger_btn != blank -%}<div class="other-content-left other-content d-flex flex-row d-lg-none">{{- trigger_btn -}}</div>{%- endif -%}<div class="upper-logo one-whole">{%- render 'header-logo' , logo_img : section.settings.logo, logo_max_width : section.settings.logo_max_width , logo_img_white : section.settings.logo_white -%}</div><div class="other-content d-flex flex-row align-items-center justify-content-end" style="max-width: none;">
           
       <!-- SEARCHF FUNCTION -->
