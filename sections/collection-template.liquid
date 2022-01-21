@@ -8,32 +8,41 @@
   {% when 5 %}
     {%- assign max_height = 195 -%}
 {%- endcase -%}
+
 {%- if section.settings.layout == 'grid' -%}
-  {%- assign limit = section.settings.grid | times: section.settings.rows -%}
-{%- else -%}{%- assign limit = 16 -%}{%- endif -%}
+    {%- assign limit = section.settings.grid | times: section.settings.rows -%}
+  {%- else -%}
+    {%- assign limit = 16 -%}
+{%- endif -%}
+
+
 {%- assign tavrl_limit = 0 -%}
+
 {%- if collection.url contains '/all' -%}
-{% paginate collection.products by limit %}
-{% for product in collection.products %}
-{%- if product.tags contains 'travel' -%}
-{%- assign tavrl_limit = tavrl_limit | plus: 1 -%}
+  {% paginate collection.products by limit %}
+    {% for product in collection.products %}
+      {%- if product.tags contains 'travel' -%}
+      {%- assign tavrl_limit = tavrl_limit | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {% endpaginate %}
 {%- endif -%}
-{%- endfor -%}
-{% endpaginate %}
-{%- endif -%}
+
 {%- assign limit = limit | plus: tavrl_limit -%}
 {%- paginate collection.products by limit -%}
 {%- assign show_sbu_title = false -%}
     {%- if collection.url contains '/all' -%}
-    {% assign show_sbu_title = true %}
+      {% assign show_sbu_title = true %}
     {%- endif -%}    
     {%- assign collection_link_list = linklists['collections'].links -%}    
     {%- for link in collection_link_list -%}   
     	{%- if link.url == collection.url -%}
-    	{%- assign show_sbu_title = true -%}
-    	{%- break -%}
+        {%- assign show_sbu_title = true -%}
+        {%- break -%}
     	{%- endif -%}
     {%- endfor -%}
+
+
 <div data-section-id="{{ section.id }}" data-section-type="collection-template" {% unless collection.url contains '/all' %}class="show_bg_color_"{% endunless %}>
   {%- unless collection.url contains '/all' -%}<header class="collection-header wc_collection-header {% unless collection.url contains '/all' %}s-collection{% endunless %}">
     {%- assign is_filter_by_available = false -%}
@@ -148,6 +157,7 @@
               {%- endif -%}    
       {%- endfor -%}
         {%- else -%}    
+
           <ul class="grid grid--uniform{% if collection.products_count > 0 %} grid--view-items{% endif %}{% unless collection.url contains '/all' %} d-flex flex-wrap collection--grid{%- endunless -%}" id="AjaxinateContainer">
             {%- comment -%}{%- unless collection.url contains '/all' -%}
             <div class="verticle-coll-title">
@@ -158,7 +168,7 @@
             {%- if collection.url contains '/all' -%}
                 {%- unless product.tags contains 'travel' -%}
               <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
-                {% include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor %}
+                 {% include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor %}
               </li>{%- endunless -%}
             {%- else -%}        	
               <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
@@ -218,6 +228,7 @@
           {% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0%}
             {% for i in (1..4) %}
               <li class="list-view-item">
+
                 <a href="#" class="list-view-item__link">
                   <div class="list-view-item__image-column">
                     <div class="list-view-item__image-wrapper">

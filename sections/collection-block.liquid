@@ -44,7 +44,7 @@
       {%- endfor -%}</div><div class="coll_block_item coll_block_item_center small--hide">
         {%- for block in section.blocks -%}
           {%- if block.type == "center" -%}
-        	{%- assign _coll = collections[block.settings.collection] -%}          
+        	{%- assign _coll = collections[block.settings.collection] -%}       
             <div class="coll_img_center coll_img_div {% if forloop.index == 3 %}small--hide{% endif %}"><a href="{{_coll.url}}" title="{{ block.settings.title | default: _coll.title }}" id="{{ _coll.id }}" ><div class="img_wrapper"><div class="img lazyload {{ section.settings.enable_b-w }}" data-bgset="{{ block.settings.image | img_url:'' }}" style="background-image:url({{ block.settings.image | img_url:'100x' }})"></div></div><div class="text-wrapper">{%- if block.settings.subtitle != blank -%}<h3 class="h4 s-subtitle">{{ block.settings.subtitle }}</h3>{%- endif -%}{%- if block.settings.title != blank -%}<h2 class="h3 s-title">{{ block.settings.title }}</h2>{%- else -%}<h2 class="h3 s-title">{{ _coll.title }}</h2>{%- endif -%}</div></a>
             </div>{%- endif -%}
        {%- endfor -%}</div>{%- when 'right' -%}
