@@ -14685,6 +14685,7 @@ div[data-section-type="collection-template"]{ position: relative; background-col
 
   @media screen and (max-width: 991px) {
     width: 180px;
+    display: none;
     input{
       background-color: rgba(255, 255, 255, 0.71);
     }
@@ -14803,6 +14804,40 @@ div[data-section-type="collection-template"]{ position: relative; background-col
     }
   }
 }
+
+.form-mobile-wrapper{
+  display: none;
+  @media screen and (max-width: 991px){
+    display: block;
+  }
+}
+
+.search-form-mobile{
+  display: none;
+  @media screen and (max-width: 991px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px 25px;    
+    border-bottom: 1px solid #979797;
+    position: relative;
+    .search-form__input-mobile{
+      border:none;
+      border-bottom:1px solid gray;
+      background-color: transparent;
+      margin: 0 !important;
+      flex:1;
+    }
+    .search-form__submit-mobile{
+      background-color: transparent;
+      border:none;
+      padding: 0;
+      margin: 0;
+      right: 30px;
+      position: absolute;
+    }
+  }
+}
 // ------ END SEARCH FORM ------ //
 
 
@@ -14892,6 +14927,14 @@ div[data-section-type="collection-template"]{ position: relative; background-col
   justify-content: center;
   align-items: center;
   padding-bottom: none !important;
+
+  video{
+    aspect-ratio: 16/9;
+    top: initial;
+    height: auto;
+    width: 100%;
+  }
+
   iframe{
     aspect-ratio: 16/9;
     top: initial;
@@ -14916,4 +14959,28 @@ div[data-section-type="collection-template"]{ position: relative; background-col
   .announcement-bar-active{
     background-color: white !important;
   }
+  .site-nav__link--main {
+    .site-nav__label{
+      font-weight: 500 !important;
+    }
+  }
+  .site-nav__childlist-item{
+    .site-nav__label{
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      color: #767676 !important;
+    }
+  }
 }
+
+
+// .site-header-main{
+//   &::before{
+//     border-top: none !important;
+//     border-bottom: none !important;
+//   }
+//   @media screen and (min-width: 991px) {
+//     border-top: 1px solid white !important;
+//     border-bottom: 1px solid white !important;
+//   }
+// }

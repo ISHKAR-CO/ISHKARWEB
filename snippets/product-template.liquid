@@ -49,7 +49,11 @@
           <li class="product_image_item" data-image-url="{{ media | img_url:'' }}">
             {%if media.media_type == 'external_video'%}
               <div class="inner_wrapper video-external">
-                <div class="video-wrapper-external">{{ product.featured_media | external_video_tag }}</div>
+                <div class="video-wrapper-external">{{ media | external_video_tag }}</div>
+              </div>
+            {%elsif media.media_type == 'video'%}
+              <div class="inner_wrapper video-external">
+                <div class="video-wrapper-external">{{ media | video_tag: controls: true }}</div>
               </div>
             {%else%}
               <div class="inner_wrapper">
@@ -484,51 +488,51 @@
       dots: true,
     });
   });
-  document.addEventListener('DOMContentLoaded', (event) => {
-  $(window).scroll(function(e){
-    if( $('.product-single').length > 0 && $(window).outerWidth() > 991 ){
-      var scroll_top = $(this).scrollTop() + $('.site-header-main.header-fixed').outerHeight();
-      var window_height = $(window).outerHeight() - $('.site-header-main.header-fixed').outerHeight();
-      over_content = $('.product-single .product-inner').outerHeight() > window_height ? true : false;
-      var overall_height = ( $('.product-template__container_outer').offset().top + $('.product-template__container_outer').outerHeight() ) - $('.site-header-main.header-fixed').outerHeight();      
-      var xyz = $('.site-footer').offset().top - Number(($('.site-footer').css('margin-top')).replace("px", ""));    
-      setTimeout(function(){
-        var abc = fixed_part.offset().top + fixed_part.outerHeight();
+  // document.addEventListener('DOMContentLoaded', (event) => {
+  // $(window).scroll(function(e){
+  //   if( $('.product-single').length > 0 && $(window).outerWidth() > 991 ){
+  //     var scroll_top = $(this).scrollTop() + $('.site-header-main.header-fixed').outerHeight();
+  //     var window_height = $(window).outerHeight() - $('.site-header-main.header-fixed').outerHeight();
+  //     over_content = $('.product-single .product-inner').outerHeight() > window_height ? true : false;
+  //     var overall_height = ( $('.product-template__container_outer').offset().top + $('.product-template__container_outer').outerHeight() ) - $('.site-header-main.header-fixed').outerHeight();      
+  //     var xyz = $('.site-footer').offset().top - Number(($('.site-footer').css('margin-top')).replace("px", ""));    
+  //     setTimeout(function(){
+  //       var abc = fixed_part.offset().top + fixed_part.outerHeight();
 
-        if( scroll_top > offset_top_h && abc < overall_height ){
-          if( $('.product-single .product-inner').css('position') != "fixed" && fixed_part.hasClass('not-fixed') == false ){
-            $('.product-single .product-inner').css({"position":"fixed","top": ( $('.site-header-main.header-fixed').outerHeight() + 20)+"px",
-                                                     "right": _right_po +"px",
-                                                     "max-width" : fixed_part.parent().width()+"px" })
-            $('.product-single .product-inner').parent().addClass('pro-detail-sticky');
-          }
-          if( over_content ){
-            fixed_part.addClass("overflowed");
-            fixed_part.height(window_height);
-          }
-        }
-        if( abc >= overall_height || scroll_top >= overall_height && $('.product-single .product-inner').css('position') != 'absolute' ){
-          var off_top = overall_height - ( fixed_part.outerHeight() + $('.product-template__container_outer').offset().top );           
-          $('.product-single .product-inner').css({"position":"absolute","top": off_top+"px","right":"0px"})
-          $('.product-single .product-inner').addClass('not-fixed');
-        }
-        if(fixed_part.hasClass('not-fixed')){
-          if( scroll_top <= fixed_part.offset().top ){
-            $('.product-single .product-inner').css({"position":"fixed","top": ( $('.site-header-main.header-fixed').outerHeight() + 20)+"px",
-                                                     "right": _right_po +"px",
-                                                     "max-width" : fixed_part.parent().width()+"px" })
-            $('.product-single .product-inner').parent().addClass('pro-detail-sticky');
-            fixed_part.removeClass('not-fixed')
-          }
-        }         
-        if( scroll_top < $('.product-single').offset().top ){
-          $('.product-single .product-inner').css({"position":"relative","top": "0px","right": "0px","max-width" : ""});
-          fixed_part.removeClass("overflowed");
-          fixed_part.css('height','');
-          $('.product-single .product-inner').parent().removeClass('pro-detail-sticky');
-        }
-      },50)
-    }else{ $('.product-single .product-inner').removeAttr('style')  }
-  }); });
+  //       if( scroll_top > offset_top_h && abc < overall_height ){
+  //         if( $('.product-single .product-inner').css('position') != "fixed" && fixed_part.hasClass('not-fixed') == false ){
+  //           $('.product-single .product-inner').css({"position":"fixed","top": ( $('.site-header-main.header-fixed').outerHeight() + 20)+"px",
+  //                                                    "right": _right_po +"px",
+  //                                                    "max-width" : fixed_part.parent().width()+"px" })
+  //           $('.product-single .product-inner').parent().addClass('pro-detail-sticky');
+  //         }
+  //         if( over_content ){
+  //           fixed_part.addClass("overflowed");
+  //           fixed_part.height(window_height);
+  //         }
+  //       }
+  //       if( abc >= overall_height || scroll_top >= overall_height && $('.product-single .product-inner').css('position') != 'absolute' ){
+  //         var off_top = overall_height - ( fixed_part.outerHeight() + $('.product-template__container_outer').offset().top );           
+  //         $('.product-single .product-inner').css({"position":"absolute","top": off_top+"px","right":"0px"})
+  //         $('.product-single .product-inner').addClass('not-fixed');
+  //       }
+  //       if(fixed_part.hasClass('not-fixed')){
+  //         if( scroll_top <= fixed_part.offset().top ){
+  //           $('.product-single .product-inner').css({"position":"fixed","top": ( $('.site-header-main.header-fixed').outerHeight() + 20)+"px",
+  //                                                    "right": _right_po +"px",
+  //                                                    "max-width" : fixed_part.parent().width()+"px" })
+  //           $('.product-single .product-inner').parent().addClass('pro-detail-sticky');
+  //           fixed_part.removeClass('not-fixed')
+  //         }
+  //       }         
+  //       if( scroll_top < $('.product-single').offset().top ){
+  //         $('.product-single .product-inner').css({"position":"relative","top": "0px","right": "0px","max-width" : ""});
+  //         fixed_part.removeClass("overflowed");
+  //         fixed_part.css('height','');
+  //         $('.product-single .product-inner').parent().removeClass('pro-detail-sticky');
+  //       }
+  //     },50)
+  //   }else{ $('.product-single .product-inner').removeAttr('style')  }
+  // }); });
 </script>
 {%- endif -%}
